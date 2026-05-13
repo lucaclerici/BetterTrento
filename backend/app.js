@@ -14,7 +14,11 @@ app.get('/', (req, res) => {
 });
 
 // Connessione al DB
-mongoose.connect("mongodb+srv://user_betterTrento:BetterTrento1@cluster0.rgtitef.mongodb.net/")
+const string = "mongodb://user_betterTrento:BetterTrento1@ac-aekufuj-shard-00-00.rgtitef.mongodb.net:27017,ac-aekufuj-shard-00-01.rgtitef.mongodb.net:27017,ac-aekufuj-shard-00-02.rgtitef.mongodb.net:27017/?ssl=true&replicaSet=atlas-fq8b44-shard-0&authSource=admin&appName=Cluster0";
+
+const string2 = "mongodb://user_betterTrento:BetterTrento1@cluster0.rgtitef.mongodb.net/";
+
+mongoose.connect(string)
   .then(() => console.log("MongoDB connesso"))
   .catch(err => console.error(err));
 
