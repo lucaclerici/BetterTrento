@@ -1,7 +1,7 @@
 //VALIDAZIONE TOKEN
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = "supersegreto123"; //da sistemare poi
+const JWT_SECRET = process.env.JWT_SECRET;//va a prendersi nel file .env il codice segreto
 
 export function auth(req, res, next) {
   try {

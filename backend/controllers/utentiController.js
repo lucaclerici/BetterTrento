@@ -1,8 +1,10 @@
 import { Utente } from "../models/schema.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";//serve per leggere la chiave per i token e indirizzo del DB scritti nel file .env
+dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo del DB in chiaro contenente username psw
 
-const JWT_SECRET = "supersegreto123";//da sistemare poi
+const JWT_SECRET = process.env.JWT_SECRET;//va a prendersi nel file .env il codice segreto
 
 //GETPROFILO
 export async function getProfilo(req, res) {

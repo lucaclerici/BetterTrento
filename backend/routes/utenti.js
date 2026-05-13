@@ -13,7 +13,6 @@ router.post("/registrazione", registraUtente);
 // POST /api/utenti/login
 router.post("/login", loginUtente);
 
-
 //route protetta, ritorna i dati utente
 router.get("/me", auth, getProfilo);
 
