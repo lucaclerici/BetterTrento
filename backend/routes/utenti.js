@@ -1,9 +1,11 @@
 //login, logout e gestione profilo
 import express from "express";
+import { registraUtente } from "../controllers/utentiController.js";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Route utenti OK");
-});
+// POST /api/utenti/registrazione
+router.post("/registrazione", registraUtente);
 
 export default router;
+
