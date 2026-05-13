@@ -11,5 +11,11 @@ router.post("/registrazione", registraUtente);
 // POST /api/utenti/login
 router.post("/login", loginUtente);
 
+//TEST per validazione token
+import { auth } from "../middleware/auth.js";
+
+router.get("/me", auth, (req, res) => {
+  res.json({ utente: req.utente });
+});
 
 export default router;
