@@ -1,26 +1,74 @@
 import { Utente } from "../models/schema.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = "supersegreto123";//da sistemare poi
+
+//LOGIN UTENTE
+export async function loginUtente(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Controllo campi
+    if (!email || !password) {
+      return res.status(400).json({ errore: "Email e password sono obbligatorie" });
+    }
+
+    // 2. Cerco l'utente
+    const utente = await Utente.findOne({ email });
+    if (!utente) {
+      return res.status(400).json({ errore: "Credenziali non valide" });
+    }
+
+    // 3. Confronto password
+    const passwordCorretta = await bcrypt.compare(password, utente.password);
+    if (!passwordCorretta) {
+      return res.status(400).json({ errore: "Credenziali non valide" });
+    }
+
+    // 4. Genero token JWT
+    const token = jwt.sign(
+      {
+        id: utente._id,
+        ruolo: utente.ruolo
+      },
+      JWT_SECRET,
+      { expiresIn: "2h" }
+    );
+
+    // 5. Risposta
+    res.json({
+      messaggio: "Login effettuato",
+      token
+    });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errore: "Errore del server" });
+  }
+}
+
 
 // REGISTRAZIONE UTENTE
 export async function registraUtente(req, res) {
   try {
     const { email, password, nome, cognome } = req.body;
 
-    // 1. Controllo che i campi ci siano
+    //Controllo che i campi ci siano
     if (!email || !password || !nome || !cognome) {
       return res.status(400).json({ errore: "Tutti i campi sono obbligatori" });
     }
 
-    // 2. Controllo se l'email è già registrata
+    //se l'email è già registrata
     const esiste = await Utente.findOne({ email });
     if (esiste) {
       return res.status(400).json({ errore: "Email già registrata" });
     }
 
-    // 3. Cripto la password
+    //Cripto la password
     const passwordCriptata = await bcrypt.hash(password, 10);
 
-    // 4. Creo l'utente
+    //Creo l'utente
     const nuovoUtente = new Utente({
       email,
       password: passwordCriptata,
@@ -31,7 +79,7 @@ export async function registraUtente(req, res) {
 
     await nuovoUtente.save();
 
-    // 5. Risposta finale
+    //Risposta finale
     res.status(201).json({ messaggio: "Registrazione completata" });
 
   } catch (err) {

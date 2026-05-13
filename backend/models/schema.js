@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 const { Schema , SchemaTypes } = mongoose;
 
-mongoose.connect("mongodb+srv://user_betterTrento:BetterTrento1@cluster0.rgtitef.mongodb.net/").then(() => console.log("funzionante"))
-
 const userSchema = new Schema({
     email : {type: String, required: true},
     password : {type: String, required: true},
