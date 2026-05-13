@@ -4,29 +4,49 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = "supersegreto123";//da sistemare poi
 
+//GETPROFILO
+export async function getProfilo(req, res) {
+  try {
+    const idUtente = req.utente.id; // preso dal token
+
+    const utente = await Utente.findById(idUtente).select("-password");
+
+    if (!utente) {
+      return res.status(404).json({ errore: "Utente non trovato" });
+    }
+
+    res.json(utente);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errore: "Errore del server" });
+  }
+}
+
+
 //LOGIN UTENTE
 export async function loginUtente(req, res) {
   try {
     const { email, password } = req.body;
 
-    // 1. Controllo campi
+    //Controllo campi
     if (!email || !password) {
       return res.status(400).json({ errore: "Email e password sono obbligatorie" });
     }
 
-    // 2. Cerco l'utente
+    //Cerco l'utente
     const utente = await Utente.findOne({ email });
     if (!utente) {
       return res.status(400).json({ errore: "Credenziali non valide" });
     }
 
-    // 3. Confronto password
+    //Confronto password
     const passwordCorretta = await bcrypt.compare(password, utente.password);
     if (!passwordCorretta) {
       return res.status(400).json({ errore: "Credenziali non valide" });
     }
 
-    // 4. Genero token JWT
+    //Genero token JWT
     const token = jwt.sign(
       {
         id: utente._id,
@@ -36,7 +56,7 @@ export async function loginUtente(req, res) {
       { expiresIn: "2h" }
     );
 
-    // 5. Risposta
+    //Risposta
     res.json({
       messaggio: "Login effettuato",
       token

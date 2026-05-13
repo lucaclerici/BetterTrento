@@ -3,6 +3,8 @@
 import express from "express";
 import { registraUtente } from "../controllers/utentiController.js";//per registrazione
 import { loginUtente } from "../controllers/utentiController.js"; //per login
+import { auth } from "../middleware/auth.js";//per validazione
+import { getProfilo } from "../controllers/utentiController.js";//per dare i dati del profilo dell'utente
 
 const router = express.Router();
 
@@ -11,11 +13,8 @@ router.post("/registrazione", registraUtente);
 // POST /api/utenti/login
 router.post("/login", loginUtente);
 
-//TEST per validazione token
-import { auth } from "../middleware/auth.js";
 
-router.get("/me", auth, (req, res) => {
-  res.json({ utente: req.utente });
-});
+//route protetta, ritorna i dati utente
+router.get("/me", auth, getProfilo);
 
 export default router;
