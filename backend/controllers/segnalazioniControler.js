@@ -36,3 +36,14 @@ export async function mieSegnalazioni(req, res) {
 
   res.json(lista);
 }
+
+//LISTA TUTTE LE SEGNALAZIONI (per admin) -> GET /api/segnalazioni
+export async function tutteSegnalazioni(req, res) {
+  const lista = await Segnalazione
+    .find()
+    .populate("via")
+    .populate("problema")
+    .populate("utente", "nome cognome email");
+
+  res.json(lista);
+}
