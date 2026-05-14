@@ -26,3 +26,34 @@ app.get('/api/eventi', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server BetterTrento avviato su http://localhost:${PORT}`);
 });
+
+// Rotta per visualizzare la pagina di login/registrazione
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'auth.html'));
+});
+
+// Endpoint Registrazione (Modulo 2.2.1)
+app.post('/api/register', (req, res) => {
+    const { nome, cognome, email, password, indirizzo, cap } = req.body;
+    
+    // Nelle specifiche OCL: il nome e cognome non possono essere vuoti [cite: 237]
+    if (!nome || !cognome) {
+        return res.status(400).json({ error: "Nome e cognome obbligatori" });
+    }
+
+    console.log(`Registrazione nuovo utente: ${email}`);
+    // Qui verrebbe invocata la classe GestoreUtenti per il salvataggio [cite: 199]
+    res.json({ success: true, message: "Utente registrato con successo!" });
+});
+
+// Endpoint Login (Modulo 2.2.1)
+app.post('/api/login', (req, res) => {
+    const { email, password } = req.body;
+    
+    // Nelle specifiche: verifica credenziali e generazione token [cite: 52, 207]
+    if (email === "admin@trento.it") {
+        res.json({ success: true, token: "ADMIN-TOKEN", role: "ADMIN" });
+    } else {
+        res.json({ success: true, token: "USER-TOKEN", role: "REGISTRATO" });
+    }
+});
