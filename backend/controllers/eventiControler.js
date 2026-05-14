@@ -1,37 +1,63 @@
 import { Evento } from "../models/schema.js";
 
-const getEventiByVia = async (idVia) => {
-    if (!idVia) {return { error: "ID della via mancante" };}
+async function getEventiByVia(req, res){
     try {
+        const idVia = req.params.via;
         const eventi = await Evento.find({ via: idVia }).populate("via");
-        return eventi;
-    } catch (error) {return { error: "Errore durante il recupero degli eventi " + error.message };}
+        res.json(eventi);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Errore durante il recupero degli eventi " + error.message });
+    }
 }
 
-const getEventoById = async (id) => {
-    if (!id) {return { error: "ID dell'evento mancante" };}
-    try {
+async function getEventoById(req, res){
+    try{
+        const id = req.params.id;
         const evento = await Evento.findById(id).populate("via");
-        return evento;
-    } catch (error) {return { error: "Errore durante il recupero dell'evento " };}
+        res.json(evento);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Errore durante il recupero dell'evento " + error.message });
+    }
 }
 
-const createEvento = async (evento) => {
-    if (!evento) {return { error: "Dati dell'evento mancanti" };}
-    try {
-        const newEvento = new Evento(evento);
-        await newEvento.save();
-        return newEvento;
-    } catch (error) {return { error: "Errore durante la creazione dell'evento " + error.message };}
+async function createEvento(req, res){
+    try{
+        const { nome, descrizione, data, via } = req.body;
+        if (!nome || !descrizione || !data || !via) {
+            return res.status(400).json({ error: "Dati dell'evento mancanti" });
+        }
+
+        const newEvento = new Evento({ nome, descrizione, data, via });
+        const evento = await newEvento.save();
+        res.json(evento);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: "Errore durante la creazione dell'evento " + error.message });
+    }
 }
 
-const updateEvento = async (id, evento) => {
-    if (!id) {return { error: "ID dell'evento mancante" };}
-    if (!evento) {return { error: "Dati dell'evento mancanti" };}
-    try {
-        const updatedEvento = await Evento.findByIdAndUpdate(id, evento, { new: true });
-        return updateEvento;
-    } catch (error) {return { error: "Errore durante l'aggiornamento dell'evento " + error.message };}
+async function updateEvento(req, res){
+    try{
+        const id = req.params.id;
+        const { nome, descrizione, data, via } = req.body;
+
+        const aggiornamento = {};
+        if (nome) aggiornamento.nome = nome;
+        if (descrizione) aggiornamento.descrizione = descrizione;
+        if (data) aggiornamento.data = data;
+        if (via) aggiornamento.via = via;
+
+        const eventoAggiornato = await Evento.findByIdAndUpdate(id, aggiornamento, { new: true });
+        if (!eventoAggiornato) {
+            return res.status(404).json({ error: "Evento non trovato" });
+        }
+        res.json(eventoAggiornato);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Errore durante l'aggiornamento dell'evento " + error.message });
+    }
 }
 
 export { getEventiByVia, getEventoById, createEvento, updateEvento }
