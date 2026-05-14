@@ -47,13 +47,32 @@ app.post('/api/register', (req, res) => {
 });
 
 // Endpoint Login (Modulo 2.2.1)
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-    
-    // Nelle specifiche: verifica credenziali e generazione token [cite: 52, 207]
-    if (email === "admin@trento.it") {
-        res.json({ success: true, token: "ADMIN-TOKEN", role: "ADMIN" });
-    } else {
-        res.json({ success: true, token: "USER-TOKEN", role: "REGISTRATO" });
-    }
+    app.post('/api/login', (req, res) => {
+        const { email, password } = req.body;
+        
+        // Nelle specifiche: verifica credenziali e generazione token [cite: 52, 207]
+        if (email === "admin@trento.it") {
+            res.json({ success: true, token: "ADMIN-TOKEN", role: "ADMIN" });
+        } else {
+            res.json({ success: true, token: "USER-TOKEN", role: "REGISTRATO" });
+        }
+
+        app.post('/api/register', (req, res) => {
+        const { email, cap } = req.body;
+
+        // Controllo lato Server
+        if (emailExistsInDatabase(email)) {
+            return res.status(400).json({ success: false, message: "Email già presente!" });
+        }
+        
+        if (cap.length !== 5) {
+            return res.status(400).json({ success: false, message: "CAP non valido!" });
+        }
+
+    });
+
+    // Rotta per la pagina Numeri Utili
+    app.get('/numeri-utili', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'numeri-utili.html'));
+    });
 });

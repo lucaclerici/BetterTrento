@@ -6,7 +6,21 @@
     <title>BetterTrento - Accesso</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+
+<body class="no-scroll">
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Eventi</a></li>
+                <li><a href="#">Segnalazioni</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="auth-container">
         <div class="auth-box">
             <h2 id="auth-title">Accedi a BetterTrento</h2>
@@ -25,7 +39,10 @@
                 <input type="email" placeholder="Email" required>
                 <input type="password" placeholder="Password" required>
                 <input type="text" placeholder="Indirizzo (Via/Piazza)" required>
-                <input type="text" placeholder="CAP" maxlength="5" required>
+                <input type="text" placeholder="Città" required>
+                <input type="text" placeholder="CAP" pattern="[0-9]{5}" title="inserisci 5 numeri" required>
+                <input type="text" placeholder="Provincia" maxlenght="2" required>
+                <input type="text" placeholder="Nazione" required>
                 <button type="submit">Registrati</button>
             </form>
 
