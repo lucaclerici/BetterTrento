@@ -13,11 +13,6 @@ import { eliminaSegnalazione } from "../controllers/segnalazioniController.js";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.send("Route segnalazioni OK");
-});
-
-
 router.post("/", auth, creaSegnalazione);//per creare una segnalazione
 
 router.get("/mie", auth, mieSegnalazioni);//per vedere le segnalazioni create di un singolo utente
