@@ -68,3 +68,21 @@ export async function dettaglioSegnalazione(req, res) {
 
   res.json(seg);
 }
+
+
+//AGGIORNAMENTO STATO DELLA SEGNALAZIONE (per admin) -> PUT /api/segnalazioni/:id/stato
+export async function aggiornaStato(req, res) {
+  const { stato } = req.body;
+
+  const seg = await Segnalazione
+    .findByIdAndUpdate(
+      req.params.id,
+      { stato },
+      { new: true }
+    )
+    .populate("via")
+    .populate("problema")
+    .populate("utente", "nome cognome email");
+
+  res.json(seg);
+}
