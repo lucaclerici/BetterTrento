@@ -4,9 +4,12 @@ import utentiRoutes from "./routes/utenti.js";
 import segnalazioniRoutes from "./routes/segnalazioni.js";
 import eventiRoutes from "./routes/eventi.js";
 import informazioniRoutes from "./routes/informazioni.js";
+import dotenv from "dotenv";//serve per leggere la chiave per i token e indirizzo del DB scritti nel file .env
+dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo del DB in chiaro contenente username psw
 
 const app = express();
 app.use(express.json());
+
 
 // Route di test
 app.get('/', (req, res) => {
@@ -14,9 +17,9 @@ app.get('/', (req, res) => {
 });
 
 // Connessione al DB
-mongoose.connect("mongodb+srv://user_betterTrento:BetterTrento1@cluster0.rgtitef.mongodb.net/")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connesso"))
-  .catch(err => console.error(err));
+  .catch(err => console.error("Errore connessione MongoDB:", err));
 
 
 // ROUTES
