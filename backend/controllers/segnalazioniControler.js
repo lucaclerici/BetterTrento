@@ -37,6 +37,7 @@ export async function mieSegnalazioni(req, res) {
   res.json(lista);
 }
 
+
 //LISTA TUTTE LE SEGNALAZIONI (per admin) -> GET /api/segnalazioni
 export async function tutteSegnalazioni(req, res) {
   const lista = await Segnalazione
@@ -46,4 +47,24 @@ export async function tutteSegnalazioni(req, res) {
     .populate("utente", "nome cognome email");
 
   res.json(lista);
+}
+
+//VEDI IN DETTAGLIO LA SEGNALAZIONE -> GET /api/segnalazioni/:id
+export async function dettaglioSegnalazione(req, res) {
+  const seg = await Segnalazione
+    .findById(req.params.id)
+    .populate("via")
+    .populate("problema")
+    .populate("utente", "nome cognome email");
+
+  if (!seg)
+    return res.status(404).json({ errore: "Segnalazione non trovata" });
+
+  // Utente normale può vedere solo le sue
+  if (req.utente.ruolo !== "AMMINISTRATORE" &&
+      seg.utente._id.toString() !== req.utente.id) {
+    return res.status(403).json({ errore: "Accesso negato" });
+  }
+
+  res.json(seg);
 }
