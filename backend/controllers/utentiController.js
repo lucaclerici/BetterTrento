@@ -1,10 +1,38 @@
 import { Utente } from "../models/schema.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";//per criptare la psw
+import jwt from "jsonwebtoken";//per token di autenticazione
 import dotenv from "dotenv";//serve per leggere la chiave per i token e indirizzo del DB scritti nel file .env
 dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo del DB in chiaro contenente username psw
 
 const JWT_SECRET = process.env.JWT_SECRET;//va a prendersi nel file .env il codice segreto
+
+//MODIFICA PROFILO
+export async function aggiornaProfilo(req, res) {
+  try {
+    const idUtente = req.utente.id; // preso dal token
+
+    const { nome, cognome, via } = req.body;
+
+    const aggiornamenti = {};
+
+    if (nome) aggiornamenti.nome = nome;
+    if (cognome) aggiornamenti.cognome = cognome;
+    if (via) aggiornamenti.via = via;
+
+    const utenteAggiornato = await Utente.findByIdAndUpdate(
+      idUtente,
+      aggiornamenti,
+      { new: true }
+    ).select("-password");
+
+    res.json(utenteAggiornato);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errore: "Errore del server" });
+  }
+}
+
 
 //GETPROFILO
 export async function getProfilo(req, res) {
