@@ -86,3 +86,24 @@ export async function aggiornaStato(req, res) {
 
   res.json(seg);
 }
+
+
+//ELIMINA SEGNALAZIONE (per admin) -> DELETE /api/segnalazioni/:id
+export async function eliminaSegnalazione(req, res) {
+  await Segnalazione.findByIdAndDelete(req.params.id);
+  res.json({ messaggio: "Segnalazione eliminata" });
+}
+
+
+//VEDERE SEGNALAZIONI PER VIA -> GET /api/segnalazioni/per-via/:idVia
+export async function segnalazioniPerVia(req, res) {
+  const idVia = req.params.idVia;
+
+  const lista = await Segnalazione
+    .find({ via: idVia })
+    .populate("via")
+    .populate("problema")
+    .populate("utente", "nome cognome email");
+
+  res.json(lista);
+}
