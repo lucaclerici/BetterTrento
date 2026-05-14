@@ -1,3 +1,5 @@
+import { Segnalazione, Via, Problema } from "../models/schema.js";
+
 //CREA SEGNALAZIONE -> POST /api/segnalazioni
 export async function creaSegnalazione(req, res) {
   try {
@@ -13,7 +15,7 @@ export async function creaSegnalazione(req, res) {
       utente: req.utente.id
     });
 
-    const popolata = await nuova
+    const popolata = await Segnalazione.findById(nuova._id)
       .populate("via")
       .populate("problema")
       .populate("utente", "nome cognome email");
@@ -48,6 +50,7 @@ export async function tutteSegnalazioni(req, res) {
 
   res.json(lista);
 }
+
 
 //VEDI IN DETTAGLIO LA SEGNALAZIONE -> GET /api/segnalazioni/:id
 export async function dettaglioSegnalazione(req, res) {

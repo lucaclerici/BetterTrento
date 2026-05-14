@@ -1,5 +1,16 @@
 //GESTIONE SEGNALAZIONI
 import express from "express";
+import { auth } from "../middleware/auth.js";//per validazione
+import { autorizzaRuoli } from "../middleware/ruoli.js";
+import { creaSegnalazione } from "../controllers/segnalazioniController.js";
+import { mieSegnalazioni } from "../controllers/segnalazioniController.js"; 
+import { dettaglioSegnalazione } from "../controllers/segnalazioniController.js";
+import { tutteSegnalazioni } from "../controllers/segnalazioniController.js"; 
+import { segnalazioniPerVia } from "../controllers/segnalazioniController.js";
+import { aggiornaStato } from "../controllers/segnalazioniController.js"; 
+import { eliminaSegnalazione } from "../controllers/segnalazioniController.js"; 
+
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
