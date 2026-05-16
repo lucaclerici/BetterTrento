@@ -1,19 +1,28 @@
-//crea segnalazioni e gestione segnalazioni
+//GESTIONE SEGNALAZIONI
 import express from "express";
+import { auth } from "../middleware/auth.js";//per validazione
+import { autorizzaRuoli } from "../middleware/ruoli.js";
+import { creaSegnalazione } from "../controllers/segnalazioniController.js";
+import { mieSegnalazioni } from "../controllers/segnalazioniController.js"; 
+import { dettaglioSegnalazione } from "../controllers/segnalazioniController.js";
+import { tutteSegnalazioni } from "../controllers/segnalazioniController.js"; 
+import { segnalazioniPerVia } from "../controllers/segnalazioniController.js";
+import { aggiornaStato } from "../controllers/segnalazioniController.js"; 
+import { eliminaSegnalazione } from "../controllers/segnalazioniController.js"; 
+
+
 const router = express.Router();
 
-import { getProblematiche, createProblematica, getProblematicaById, updateProblematica } from "../controllers/segnalazioniControler.js";
+router.post("/", auth, creaSegnalazione);//per creare una segnalazione
 
-router.get("/", (req, res) => {
-  res.send("Route segnalazioni OK");
-});
+router.get("/mie", auth, mieSegnalazioni);//per vedere le segnalazioni create di un singolo utente
+router.get("/", auth, autorizzaRuoli("AMMINISTRATORE"), tutteSegnalazioni);//per vedere tutte le segnalazioni (solo admin)
+router.get("/:id", auth, dettaglioSegnalazione);//per vedere nel dettaglio una segnalazione
+router.get("/per-via/:idVia", auth, segnalazioniPerVia);//per vedere tutte le segnalazioni di una data via
 
-//testing middleware ruoli per segnalazioni
-import { auth } from "../middleware/auth.js";
-import { autorizzaRuoli } from "../middleware/ruoli.js";
+router.put("/:id/stato", auth, autorizzaRuoli("AMMINISTRATORE"), aggiornaStato);//per cambiare lo stato di una via (solo admin)
 
-router.get("/solo-admin", auth, autorizzaRuoli("AMMINISTRATORE"), (req, res) => {
-  res.json({ messaggio: "Accesso consentito: sei admin" });
-});
+router.delete("/:id", auth, autorizzaRuoli("AMMINISTRATORE"), eliminaSegnalazione);//per eliminare una segnalazione (solo admin)
+
 
 export default router;
