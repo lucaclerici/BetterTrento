@@ -28,7 +28,6 @@ export async function creaSegnalazione(req, res) {
   }
 }
 
-
 //LISTA SEGNALAZIONI CREATE DA UN UTENTE -> GET /api/segnalazioni/mie
 export async function mieSegnalazioni(req, res) {
   const lista = await Segnalazione
@@ -38,7 +37,6 @@ export async function mieSegnalazioni(req, res) {
 
   res.json(lista);
 }
-
 
 //LISTA TUTTE LE SEGNALAZIONI (per admin) -> GET /api/segnalazioni
 export async function tutteSegnalazioni(req, res) {
@@ -50,7 +48,6 @@ export async function tutteSegnalazioni(req, res) {
 
   res.json(lista);
 }
-
 
 //VEDI IN DETTAGLIO LA SEGNALAZIONE -> GET /api/segnalazioni/:id
 export async function dettaglioSegnalazione(req, res) {
@@ -71,8 +68,7 @@ export async function dettaglioSegnalazione(req, res) {
 
   res.json(seg);
 }
-
-
+""
 //AGGIORNAMENTO STATO DELLA SEGNALAZIONE (per admin) -> PUT /api/segnalazioni/:id/stato
 export async function aggiornaStato(req, res) {
   const { stato } = req.body;
