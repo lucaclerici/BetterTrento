@@ -75,4 +75,63 @@ app.post('/api/register', (req, res) => {
     app.get('/numeri-utili', (req, res) => {
         res.sendFile(path.join(__dirname, 'public', 'numeri-utili.html'));
     });
+
+        // Aggiungi questa rotta per servire la pagina HTML
+    app.get('/eventi', (req, res) => {
+        res.sendFile(path.join(__dirname, 'public', 'eventi.html'));
+    });
+
+    // Database simulato degli Eventi (Mock in linea con il modulo 2.2.3)
+    const databaseEventi = [
+        {
+            id: 1,
+            nome: "Mercato Artigianale d'Autunno",
+            descrizione: "Esposizione di prodotti fatti a mano dagli artigiani locali del Trentino. Un'occasione per riscoprire le tradizioni del nostro territorio.",
+            data: "2026-10-15",
+            luogo: "Piazza Duomo",
+            circoscrizione: "Centro Storico",
+            categoria: "Cultura",
+            immagine: "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            id: 2,
+            nome: "Assemblea Pubblica sulla Mobilità",
+            descrizione: "Incontro aperto a tutti i cittadini per discutere le nuove piste ciclabili e la viabilità sostenibile del quartiere.",
+            data: "2026-06-02",
+            luogo: "Sala Circoscrizionale",
+            circoscrizione: "Oltrefersina",
+            categoria: "Sociale",
+            immagine: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=500&q=80"
+        },
+        {
+            id: 3,
+            nome: "Corsa Podistica di Primavera",
+            descrizione: "Gara non competitiva aperta a famiglie e sportivi. Percorso di 5km attraverso i parchi fluviali della circoscrizione.",
+            data: "2026-05-24",
+            luogo: "Parco Mattarello",
+            circoscrizione: "Mattarello",
+            categoria: "Sport",
+            immagine: "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=500&q=80"
+        }
+    ];
+
+    // Endpoint API con logica di filtraggio avanzata
+    app.get('/api/eventi', (req, res) => {
+        const { zona, categoria } = req.query;
+        
+        let eventiFiltrati = databaseEventi;
+
+        // Filtro per Circoscrizione
+        if (zona && zona !== 'all') {
+            eventiFiltrati = eventiFiltrati.filter(e => e.circoscrizione === zona);
+        }
+
+        // Filtro per Categoria
+        if (categoria && categoria !== 'all') {
+            eventiFiltrati = eventiFiltrati.filter(e => e.categoria === categoria);
+        }
+
+        // Risposta sicura in formato JSON
+        res.json(eventiFiltrati);
+    });
 });
