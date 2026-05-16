@@ -2,6 +2,8 @@
 import express from "express";
 const router = express.Router();
 
+import { getProblematiche, createProblematica, getProblematicaById, updateProblematica } from "../controllers/segnalazioniControler.js";
+
 router.get("/", (req, res) => {
   res.send("Route segnalazioni OK");
 });
