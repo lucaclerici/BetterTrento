@@ -1,0 +1,14 @@
+import express from "express";
+const router = express.Router();
+
+import { getVie, getVieByString, getViaById, cercaVie} from "../controllers/vieController.js";
+import { auth } from "../middleware/auth.js";
+import { autorizzaRuoli } from "../middleware/ruoli.js";
+import { Via } from "../models/schema.js";
+
+router.get("/", getVie);
+router.get("/search/:string", getVieByString);
+router.get("/via/:id", getViaById);
+router.get("/search", cercaVie);
+
+export default router;
