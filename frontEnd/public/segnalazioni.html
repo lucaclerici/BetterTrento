@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BetterTrento - Segnalazioni Disservizi</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html">Eventi</a></li>
+                <li><a href="segnalazioni.html" style="color: #3498db; font-weight: bold;">Segnalazioni</a></li>
+                <li class="login-btn"><a href="auth.html">Accedi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <main class="reports-main">
+            <section class="form-section">
+                <div class="form-card">
+                    <h2>Invia una Segnalazione</h2>
+                    <p>Hai notato un problema in città? Segnalalo al Comune allegando una foto.</p>
+                    
+                    <form id="form-segnalazione" enctype="multipart/form-data">
+                        <div class="input-group">
+                            <label for="titolo">Titolo della segnalazione</label>
+                            <input type="text" id="titolo" name="titolo" placeholder="Es. Buca profonda sull'asfalto" required>
+                        </div>
+
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="categoria">Categoria</label>
+                                <select id="categoria" name="categoria" required>
+                                    <option value="Strade">Strade e Marciapiedi</option>
+                                    <option value="Illuminazione">Illuminazione Pubblica</option>
+                                    <option value="Rifiuti">Rifiuti e Degrado</option>
+                                    <option value="Verde">Verde Pubblico</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="via">Via / Piazza (Trento)</label>
+                                <input type="text" id="via" name="via" placeholder="Es. Via Belenzani" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="descrizione">Descrizione dettagliata</label>
+                            <textarea id="descrizione" name="descrizione" rows="4" placeholder="Fornisci maggiori dettagli per aiutare i tecnici..." required></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="foto" class="custom-file-upload">
+                                📷 Allega una fotografia
+                            </label>
+                            <input type="file" id="foto" name="foto" accept="image/*">
+                            <span id="file-name" class="file-name-text">Nessun file selezionato</span>
+                        </div>
+
+                        <button type="submit" class="btn-submit">Invia al Comune</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="list-section">
+                <div class="list-header">
+                    <h2>Segnalazioni sul Territorio</h2>
+                    <div class="search-box">
+                        <input type="text" id="search-via" placeholder="🔍 Cerca o filtra per via (es. Via Manci)..." oninput="fetchSegnalazioni()">
+                    </div>
+                </div>
+
+                <div id="reports-feed" class="reports-feed">
+                    </div>
+            </section>
+        </main>
+
+        <script>
+            // Mostra il nome del file quando viene selezionata una foto
+            document.getElementById('foto').addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : "Nessun file selezionato";
+                document.getElementById('file-name').textContent = fileName;
+            });
+
+            // 1. CARICAMENTO DELLE SEGNALAZIONI (CON FILTRO VIA)
+            async function fetchSegnalazioni() {
+                const viaTarget = document.getElementById('search-via').value;
+                const feed = document.getElementById('reports-feed');
+                
+                try {
+                    const response = await fetch(`/api/segnalazioni?via=${encodeURIComponent(viaTarget)}`);
+                    const segnalazioni = await response.json();
+                    
+                    feed.innerHTML = '';
+
+                    if (segnalazioni.length === 0) {
+                        feed.innerHTML = '<div class="no-data">Nessuna segnalazione attiva in questa zona.</div>';
+                        return;
+                    }
+
+                    segnalazioni.forEach(s => {
+                        const card = document.createElement('div');
+                        card.className = 'report-card reveal';
+                        
+                        // Gestione del badge di stato in base ai vincoli OCL
+                        let statusClass = s.stato.toLowerCase().replace(' ', '-'); // es. in-carico
+
+                        card.innerHTML = `
+                            <div class="report-card-header">
+                                <span class="badge ${statusClass}">${s.stato}</span>
+                                <span class="report-date">${new Date(s.data).toLocaleDateString('it-IT')}</span>
+                            </div>
+                            <h3>${s.titolo}</h3>
+                            <p class="report-via">📍 ${s.via} — <small>${s.categoria}</small></p>
+                            <p class="report-text">${s.descrizione}</p>
+                            ${s.fotoUrl ? `<div class="report-img-container"><img src="${s.fotoUrl}" alt="Foto danno"></div>` : ''}
+                        `;
+                        feed.appendChild(card);
+                    });
+
+                    // Attiva l'animazione scroll reveal sulle card caricate
+                    const reveals = document.querySelectorAll('.reveal');
+                    reveals.forEach(el => el.classList.add('active'));
+
+                } catch (error) {
+                    feed.innerHTML = '<div class="error-msg">Errore nel caricamento delle segnalazioni.</div>';
+                }
+            }
+
+            // 2. INVIO NUOVA SEGNALAZIONE (AJAX MULTIPART)
+            document.getElementById('form-segnalazione').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Usiamo FormData perché stiamo inviando un file binario (la foto)
+                const formData = new FormData(this);
+
+                try {
+                    const response = await fetch('/api/segnalazioni', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        alert('Segnalazione inviata con successo al Comune di Trento!');
+                        this.reset();
+                        document.getElementById('file-name').textContent = "Nessun file selezionato";
+                        fetchSegnalazioni(); // Ricarica la lista aggiornata
+                    } else {
+                        alert('Si è verificato un errore durante l\'invio.');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    alert('Errore di connessione con il server.');
+                }
+            });
+
+            // Carica le segnalazioni all'avvio della pagina
+            window.addEventListener('DOMContentLoaded', fetchSegnalazioni);
+        </script>
+
+        <footer>
+            <div class="footer-container">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21h18"></path><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path><path d="M19 21V11"></path><path d="M5 21V11"></path>
+                        </svg>
+                        <span>BetterTrento</span>
+                    </div>
+                    <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e rimanere informati.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Mappa del Sito</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="eventi.html">Esplora Eventi</a></li>
+                        <li><a href="#">Invia Segnalazione</a></li>
+                        <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Amministrazione</h4>
+                    <ul>
+                        <li><a href="auth.html">Accesso Personale</a></li>
+                        <li><a href="#">Linee Guida OCL</a></li>
+                        <li><a href="#">Privacy & Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+            </div>
+        </footer>
+    </body>
+</html>

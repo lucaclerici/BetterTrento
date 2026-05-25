@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Accesso</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="no-scroll">
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html">Eventi</a></li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn"><a href="auth.html" style="color: #3498db; font-weight: bold;">Accedi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2 id="auth-title">Accedi a BetterTrento</h2>
+            
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Accedi</button>
+                <div class="separator">oppure</div>
+                <button type="button" class="google-btn">Accedi con Google</button>
+            </form>
+
+            <form id="register-form" style="display: none;">
+                <input type="text" placeholder="Nome" required>
+                <input type="text" placeholder="Cognome" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <input type="text" placeholder="Indirizzo (Via/Piazza)" required>
+                <input type="text" placeholder="Città" required>
+                <input type="text" placeholder="CAP" pattern="[0-9]{5}" title="inserisci 5 numeri" required>
+                <input type="text" placeholder="Provincia" maxlenght="2" required>
+                <input type="text" placeholder="Nazione" required>
+                <button type="submit">Registrati</button>
+            </form>
+
+            <p class="toggle-text">
+                Non hai un account? <a href="#" id="show-register">Registrati qui</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const authTitle = document.getElementById('auth-title');
+        const showRegister = document.getElementById('show-register');
+
+        showRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                authTitle.innerText = 'Accedi a BetterTrento';
+                showRegister.innerText = 'Registrati qui';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                authTitle.innerText = 'Crea il tuo profilo';
+                showRegister.innerText = 'Accedi qui';
+            }
+        });
+
+        // Da aggiungere nel tag <script> di auth.html
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+            if (data.success) {
+                alert("Accesso eseguito! Token: " + data.token);
+                window.location.href = "/"; // Torna alla home dopo il login
+            } else {
+                alert("Errore durante l'accesso");
+            }
+        });
+    </script>
+
+<!--
+<footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path><path d="M19 21V11"></path><path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="eventi.html">Esplora Eventi</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html">Accesso Personale</a></li>
+                    <li><a href="#">Linee Guida OCL</a></li>
+                    <li><a href="#">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+-->
+</body>
+</html>

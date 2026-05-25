@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Eventi della Comunità</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html" style="color: #3498db; font-weight: bold;">Eventi</a></li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn"><a href="auth.html">Accedi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="events-hero">
+        <div class="hero-content">
+            <h1>Cosa succede a Trento</h1>
+            <p>Scopri iniziative culturali, mercati, assemblee di quartiere e attività sportive nelle tue circoscrizioni.</p>
+        </div>
+    </section>
+
+    <section class="filters-section">
+        <div class="filters-wrapper">
+            <div class="filter-group">
+                <label for="filter-circoscrizione">Circoscrizione</label>
+                <select id="filter-circoscrizione" onchange="fetchEventi()">
+                    <option value="all">Tutte le zone</option>
+                    <option value="Centro Storico">Centro Storico-Piedicastello</option>
+                    <option value="Oltrefersina">Oltrefersina</option>
+                    <option value="Mattarello">Mattarello</option>
+                    <option value="San Giuseppe">San Giuseppe-Santa Chiara</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="filter-categoria">Categoria</label>
+                <select id="filter-categoria" onchange="fetchEventi()">
+                    <option value="all">Tutte le categorie</option>
+                    <option value="Cultura">Cultura e Mostre</option>
+                    <option value="Sociale">Incontri e Sociale</option>
+                    <option value="Sport">Sport e Benessere</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <main class="events-main">
+        <div id="events-grid" class="events-grid">
+            </div>
+    </main>
+
+   <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path><path d="M19 21V11"></path><path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="eventi.html">Esplora Eventi</a></li>
+                    <li><a href="#">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html">Accesso Personale</a></li>
+                    <li><a href="#">Linee Guida OCL</a></li>
+                    <li><a href="#">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function fetchEventi() {
+            const circoscrizione = document.getElementById('filter-circoscrizione').value;
+            const categoria = document.getElementById('filter-categoria').value;
+            const grid = document.getElementById('events-grid');
+            
+            grid.innerHTML = '<div class="loading">Caricamento eventi in corso...</div>';
+
+            try {
+                // Chiamata API verso il backend Node.js con i parametri di filtro
+                const response = await fetch(`/api/eventi?zona=${circoscrizione}&categoria=${categoria}`);
+                const eventi = await response.json();
+
+                grid.innerHTML = '';
+
+                if (eventi.length === 0) {
+                    grid.innerHTML = '<div class="no-events">Nessun evento trovato per i filtri selezionati.</div>';
+                    return;
+                }
+
+                eventi.forEach(evento => {
+                    const card = document.createElement('article');
+                    card.className = 'event-card reveal'; // Include la classe reveal per l'animazione
+
+                    // Formattazione data elegante
+                    const opzioniData = { day: 'numeric', month: 'short' };
+                    const dataFormattata = new Date(evento.data).toLocaleDateString('it-IT', opzioniData).toUpperCase();
+
+                    card.innerHTML = `
+                        <div class="card-image-wrapper">
+                            <img src="${evento.immagine || 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80'}" alt="${evento.nome}">
+                            <div class="date-badge">${dataFormattata}</div>
+                        </div>
+                        <div class="card-content">
+                            <span class="category-tag">${evento.categoria}</span>
+                            <h3>${evento.nome}</h3>
+                            <p class="event-desc">${evento.descrizione}</p>
+                            <div class="card-meta">
+                                <span>📍 ${evento.luogo} (${evento.circoscrizione})</span>
+                            </div>
+                            <button class="btn-info" onclick="alert('Dettagli per: ${evento.nome}')">Scopri di più</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Riavvia l'Intersection Observer per le nuove card iniettate
+                inizializzaScrollReveal();
+
+            } catch (error) {
+                grid.innerHTML = '<div class="error-msg">Errore nel caricamento dei dati dal server.</div>';
+            }
+        }
+
+        function inizializzaScrollReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            reveals.forEach(el => observer.observe(el));
+        }
+
+        // Caricamento iniziale all'apertura della pagina
+        window.addEventListener('DOMContentLoaded', fetchEventi);
+    </script>
+</body>
+</html>
