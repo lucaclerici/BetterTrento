@@ -43,7 +43,7 @@ loginForm.addEventListener('submit', async (e) => {
 
     // Salva il token JWT
     localStorage.setItem("token", data.token);
-
+    localStorage.setItem("isLogged", "true");
     // Reindirizza alla homepage
     window.location.href = "index.html";
 });
