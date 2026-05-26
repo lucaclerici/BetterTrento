@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BetterTrento - Area Riservata</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetterTrento - Miglioriamo la città</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="frontend.js" defer></script>
-    <script src="profilo.js" defer></script>
-</head>
-<body>
-    <header>
+        <header>
         <nav>
             <div class="logo">
                 <img src="..\image\stemma_trentino.jpg" class="logo-img">
@@ -27,10 +25,37 @@
         </nav>
     </header>
 
-    <h1>Il mio profilo</h1>
-    <button id="logout-btn" class="logout-button">Logout</button>
+        <main class="auth-container">
+            <div class="auth-box">
+                <h2 id="profile-title">Il tuo Profilo</h2>
+                
+                <form id="profile-form">
+                    <div class="input-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
+                        <label style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">EMAIL (Non modificabile)</label>
+                        <input type="email" id="profile-email" disabled style="background-color: #e2e8f0; cursor: not-allowed;">
+                    </div>
 
-    <footer>
+                    <div class="input-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
+                        <label style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">NOME COMPLETO</label>
+                        <input type="text" id="profile-nome" required placeholder="Caricamento...">
+                    </div>
+
+                    <div class="input-group">
+                        <label>VIA DI RESIDENZA (Per calendario rifiuti)</label>
+                        <input type="text" id="profile-via" list="lista-vie" required placeholder="Caricamento...">
+                        <datalist id="lista-vie"></datalist>
+                    </div>
+
+                    <button type="submit" style="margin-bottom: 15px;">Salva Modifiche</button>
+                </form>
+
+                <div class="separator">oppure</div>
+
+                <button id="logout-btn" class="google-btn" style="background-color: #e74c3c !important;">Disconnetti / Logout</button>
+            </div>
+        </main>
+
+         <footer>
         <div class="footer-container">
             <div class="footer-col">
                 <div class="footer-logo">
@@ -72,6 +97,6 @@
         </div>
     </footer>
 
-</body>
-
+        <script src="./profilo.js"></script>
+    </body>
 </html>
