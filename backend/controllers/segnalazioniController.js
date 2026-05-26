@@ -106,3 +106,16 @@ export async function segnalazioniPerVia(req, res) {
 
   res.json(lista);
 }
+
+
+//RESTITUISCE LE PROBLEMATICHE, che "categorizzano" una segnalazione
+//serve per creare una segnalazione, l'utente sceglie una categoria, e il frontend inserisce il suo ID nella segnalazione
+export async function getProblemi(req, res) {
+  try {
+    const problemi = await Problema.find();
+    res.json(problemi);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Errore durante il recupero delle problematiche" });
+  }
+}
