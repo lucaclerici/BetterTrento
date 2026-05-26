@@ -901,3 +901,23 @@ input[type="file"] {
 .separator { text-align: center; margin: 15px 0; color: #777; font-size: 0.9rem; }
 
 .toggle-text { text-align: center; margin-top: 20px; font-size: 0.9rem; }
+
+
+/*Scritta Accedi*/
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.user-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-greeting {
+    font-weight: bold;
+    color: #3498db;
+}
