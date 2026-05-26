@@ -921,3 +921,22 @@ input[type="file"] {
     font-weight: bold;
     color: #3498db;
 }
+
+/*bottone logout temporaneo*/
+.logout-button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 200px;
+    margin-bottom: 100px;
+}
+
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
