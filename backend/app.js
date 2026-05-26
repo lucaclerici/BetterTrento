@@ -5,10 +5,12 @@ import segnalazioniRoutes from "./routes/segnalazioni.js";
 import eventiRoutes from "./routes/eventi.js";
 import informazioniRoutes from "./routes/informazioni.js";
 import vieRoutes from "./routes/vie.js";
+import cors from "cors";
 import dotenv from "dotenv";//serve per leggere la chiave per i token e indirizzo del DB scritti nel file .env
 dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo del DB in chiaro contenente username psw
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 
