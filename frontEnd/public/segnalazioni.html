@@ -11,7 +11,11 @@
 </head>
 
 <body>
-
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
     <header>
         <nav>
             <div class="logo">
@@ -87,89 +91,6 @@
             </div>
         </section>
     </main>
-
-    <script>
-        // Mostra il nome del file quando viene selezionata una foto
-        document.getElementById('foto').addEventListener('change', function (e) {
-            const fileName = e.target.files[0] ? e.target.files[0].name : "Nessun file selezionato";
-            document.getElementById('file-name').textContent = fileName;
-        });
-
-        // 1. CARICAMENTO DELLE SEGNALAZIONI (CON FILTRO VIA)
-        async function fetchSegnalazioni() {
-            const viaTarget = document.getElementById('search-via').value;
-            const feed = document.getElementById('reports-feed');
-
-            try {
-                const response = await fetch(`/api/segnalazioni?via=${encodeURIComponent(viaTarget)}`);
-                const segnalazioni = await response.json();
-
-                feed.innerHTML = '';
-
-                if (segnalazioni.length === 0) {
-                    feed.innerHTML = '<div class="no-data">Nessuna segnalazione attiva in questa zona.</div>';
-                    return;
-                }
-
-                segnalazioni.forEach(s => {
-                    const card = document.createElement('div');
-                    card.className = 'report-card reveal';
-
-                    // Gestione del badge di stato in base ai vincoli OCL
-                    let statusClass = s.stato.toLowerCase().replace(' ', '-'); // es. in-carico
-
-                    card.innerHTML = `
-                            <div class="report-card-header">
-                                <span class="badge ${statusClass}">${s.stato}</span>
-                                <span class="report-date">${new Date(s.data).toLocaleDateString('it-IT')}</span>
-                            </div>
-                            <h3>${s.titolo}</h3>
-                            <p class="report-via">📍 ${s.via} — <small>${s.categoria}</small></p>
-                            <p class="report-text">${s.descrizione}</p>
-                            ${s.fotoUrl ? `<div class="report-img-container"><img src="${s.fotoUrl}" alt="Foto danno"></div>` : ''}
-                        `;
-                    feed.appendChild(card);
-                });
-
-                // Attiva l'animazione scroll reveal sulle card caricate
-                const reveals = document.querySelectorAll('.reveal');
-                reveals.forEach(el => el.classList.add('active'));
-
-            } catch (error) {
-                feed.innerHTML = '<div class="error-msg">Errore nel caricamento delle segnalazioni.</div>';
-            }
-        }
-
-        // 2. INVIO NUOVA SEGNALAZIONE (AJAX MULTIPART)
-        document.getElementById('form-segnalazione').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            // Usiamo FormData perché stiamo inviando un file binario (la foto)
-            const formData = new FormData(this);
-
-            try {
-                const response = await fetch('/api/segnalazioni', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    alert('Segnalazione inviata con successo al Comune di Trento!');
-                    this.reset();
-                    document.getElementById('file-name').textContent = "Nessun file selezionato";
-                    fetchSegnalazioni(); // Ricarica la lista aggiornata
-                } else {
-                    alert('Si è verificato un errore durante l\'invio.');
-                }
-            } catch (error) {
-                console.error(error);
-                alert('Errore di connessione con il server.');
-            }
-        });
-
-        // Carica le segnalazioni all'avvio della pagina
-        window.addEventListener('DOMContentLoaded', fetchSegnalazioni);
-    </script>
 
     <footer>
         <div class="footer-container">

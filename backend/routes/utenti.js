@@ -18,6 +18,10 @@ router.get("/me", auth, getProfilo);
 //route protetta, per modificare il profilo
 router.put("/me", auth, aggiornaProfilo);
 
+router.get("/verificaToken", auth, (req, res) => {
+    res.json({ valido: true });
+});
+
 
 
 export default router;
