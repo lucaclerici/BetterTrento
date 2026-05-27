@@ -17,3 +17,47 @@ document.addEventListener("click", (e) => {
         window.location.href = "/frontEnd/public/profilo.html";
     }
 });
+
+
+/*per autocomplete nella scrittura delle vie*/
+const inputVia = document.getElementById("via");
+const lista = document.getElementById("autocomplete-vie");
+
+inputVia.addEventListener("input", async () => {
+    const query = inputVia.value.trim();
+
+    if (query.length < 2) {
+        lista.style.display = "none";
+        return;
+    }
+
+    const token = localStorage.getItem("token");
+
+    const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const vie = await res.json();
+
+    lista.innerHTML = "";
+    lista.style.display = "block";
+
+    vie.forEach(v => {
+        const item = document.createElement("div");
+        item.classList.add("autocomplete-item");
+        item.textContent = v.strada;
+
+        item.addEventListener("click", () => {
+            inputVia.value = v.strada;
+            lista.style.display = "none";
+        });
+
+        lista.appendChild(item);
+    });
+});
+// Chiudi la lista se clicchi fuori
+document.addEventListener("click", (e) => {
+    if (!lista.contains(e.target) && e.target !== inputVia) {
+        lista.style.display = "none";
+    }
+});

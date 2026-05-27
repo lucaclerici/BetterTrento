@@ -940,3 +940,26 @@ input[type="file"] {
     background-color: #c0392b;
 }
 
+/*per autocomplete per la via, standard*/
+.autocomplete-list {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    max-height: 180px;
+    overflow-y: auto;
+    width: 50%;
+    z-index: 1000;
+    display: none;
+    margin-top: 20%;
+}
+
+.autocomplete-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover {
+    background-color: #f0f0f0;
+}
+
