@@ -110,7 +110,7 @@
 
             try {
                 // Chiamata API verso il backend Node.js con i parametri di filtro
-                const response = await fetch(`/api/eventi?zona=${circoscrizione}&categoria=${categoria}`);
+                const response = await fetch(`http://localhost:3000/api/eventi?zona=${circoscrizione}&categoria=${categoria}`);
                 const eventi = await response.json();
 
                 grid.innerHTML = '';
@@ -169,7 +169,42 @@
         }
 
         // Caricamento iniziale all'apertura della pagina
-        window.addEventListener('DOMContentLoaded', fetchEventi);
+        //window.addEventListener('DOMContentLoaded', fetchEventi);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchEventi(); // Carica gli eventi normalmente
+
+            // 🔍 Recuperiamo il ruolo salvato nel browser
+            const ruoloGrezzo = localStorage.getItem("ruolo");
+            console.log("[DEBUG] Il ruolo letto nel LocalStorage è:", ruoloGrezzo);
+
+            // Trasformiamo in maiuscolo ed eliminiamo spazi vuoti per evitare errori umani
+            const ruoloUtente = ruoloGrezzo ? ruoloGrezzo.trim().toUpperCase() : "";
+
+            if (ruoloUtente === "AMMINISTRATORE") {
+                const menu = document.querySelector('nav ul'); // Trova il menu di navigazione
+                if (menu) {
+                    // Controlliamo che il tasto non esista già per evitare duplicati
+                    if (!document.getElementById('tasto-gestione-admin')) {
+                        const linkGestione = document.createElement('li');
+                        linkGestione.id = 'tasto-gestione-admin';
+                        linkGestione.innerHTML = `<a href="gestioneEventi.html" style="color: #e67e22; font-weight: bold;">🔧 Gestione</a>`;
+                        
+                        // Inseriamo il link subito prima dell'area di Login/Profilo ("Ciao")
+                        const loginArea = document.getElementById('login-area');
+                        if (loginArea) {
+                            menu.insertBefore(linkGestione, loginArea);
+                        } else {
+                            menu.appendChild(linkGestione);
+                        }
+                        console.log("[DEBUG] Tasto Gestione inserito con successo nel menu!");
+                    }
+                }
+            } else {
+                console.log("[DEBUG] Tasto non inserito. Il ruolo non corrisponde a AMMINISTRATORE.");
+            }
+        });
+
     </script>
 </body>
 </html>

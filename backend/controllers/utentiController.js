@@ -77,14 +77,18 @@ export async function loginUtente(req, res) {
     }
 
     //Genero token JWT
+    // Quando generi il Token, inserisci l'ID e il RUOLO dell'utente nel payload!
     const token = jwt.sign(
-      {
-        id: utente._id,
-        ruolo: utente.ruolo
-      },
-      JWT_SECRET,
-      { expiresIn: "2h" }
+        { id: utente._id, ruolo: utente.ruolo }, 
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
     );
+
+    // E quando rispondi al frontend invia SIA il token SIA il ruolo in chiaro!
+    return res.status(200).json({
+        token: token,
+        ruolo: utente.ruolo // Mandandolo qui, il frontend lo riceve direttamente!
+    });
 
     //Risposta
     res.json({

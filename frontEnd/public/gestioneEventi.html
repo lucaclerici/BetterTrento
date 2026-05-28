@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Gestione Eventi Admin</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script>
+    const ruolo = localStorage.getItem("ruolo");
+    // Ora controlliamo che sia esattamente "AMMINISTRATORE"
+    if (ruolo !== "AMMINISTRATORE") {
+        alert("Accesso negato! Questa pagina è riservata agli amministratori.");
+        window.location.href = "index.html";
+    }
+    </script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html">Eventi</a></li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li><a href="gestioneEventi.html" style="color: #e67e22; font-weight: bold;">🔧 Gestione</a></li>
+                <li class="login-btn" id="login-area">
+                    <a id="login-link" href="auth.html">Accedi</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="events-hero" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
+        <div class="hero-content">
+            <h1>Pannello Controllo Amministratore</h1>
+            <p>Qui puoi approvare, modificare o segnare come risolti gli eventi e le problematiche della città.</p>
+        </div>
+    </section>
+
+    <main class="events-main">
+        <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">Lista Eventi da Gestire</h2>
+        
+        <div id="admin-events-grid" class="events-grid">
+            </div>
+    </main>
+
+    <script>
+        // 1. CARICAMENTO EVENTI PER L'ADMIN
+        async function fetchEventiAdmin() {
+            const grid = document.getElementById('admin-events-grid');
+            grid.innerHTML = '<div class="loading">Caricamento pannello di controllo...</div>';
+
+            try {
+                // Chiamata al backend per prendere tutti gli eventi
+                const response = await fetch('/api/eventi');
+                const eventi = await response.json();
+
+                grid.innerHTML = '';
+
+                if (eventi.length === 0) {
+                    grid.innerHTML = '<div class="no-events">Non ci sono eventi nel database.</div>';
+                    return;
+                }
+
+                eventi.forEach(evento => {
+                    const card = document.createElement('article');
+                    // Usiamo la classe 'active' per mostrarle subito senza Intersection Observer complessei
+                    card.className = 'event-card active'; 
+
+                    const opzioniData = { day: 'numeric', month: 'short' };
+                    const dataFormattata = new Date(evento.data).toLocaleDateString('it-IT', opzioniData).toUpperCase();
+
+                    card.innerHTML = `
+                        <div class="card-image-wrapper">
+                            <img src="${evento.immagine || 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80'}" alt="${evento.nome}">
+                            <div class="date-badge">${dataFormattata}</div>
+                        </div>
+                        <div class="card-content">
+                            <span class="category-tag">${evento.categoria}</span>
+                            <h3>${evento.nome}</h3>
+                            <p class="event-desc">${evento.descrizione}</p>
+                            <div class="card-meta">
+                                <span>📍 ${evento.luogo} (${evento.circoscrizione})</span>
+                            </div>
+                            
+                            <div class="admin-buttons" style="margin-top: 15px; display: flex; gap: 10px; width: 100%;">
+                                <button style="background-color: #2ecc71; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; font-weight: bold;" onclick="risolviE('${evento._id}')">✅ Risolvi</button>
+                                <button style="background-color: #e67e22; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; flex: 1; font-weight: bold;" onclick="modificaE('${evento._id}')">✏️ Modifica</button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+            } catch (error) {
+                grid.innerHTML = '<div class="error-msg">Errore nel caricamento dei dati amministratore.</div>';
+            }
+        }
+
+        // 2. AZIONE TASTO RISOLVI
+        async function risolviE(idEvento) {
+            const token = localStorage.getItem("token");
+            if (!confirm("Sei sicuro di voler segnare questo evento come risolto?")) return;
+
+            try {
+                // Inviamo la richiesta PUT protetta dal token
+                const response = await fetch(`/api/eventi/${idEvento}/risolvi`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    alert("Evento archiviato/risolto con successo!");
+                    fetchEventiAdmin(); // Ricarica la griglia aggiornata
+                } else {
+                    const data = await response.json();
+                    alert(data.error || "Errore. Non hai i permessi di amministrazione sul server.");
+                }
+            } catch (error) {
+                console.error("Errore:", error);
+                alert("Errore di connessione con il server.");
+            }
+        }
+
+        // 3. AZIONE TASTO MODIFICA (Placeholder per il prossimo step)
+        function modificaE(idEvento) {
+            alert("Funzione di modifica per l'evento ID: " + idEvento + ".\nLa implementeremo nel prossimo passaggio!");
+        }
+
+        // Avvia il caricamento quando la pagina è pronta
+        window.addEventListener('DOMContentLoaded', fetchEventiAdmin);
+    </script>
+</body>
+</html>
