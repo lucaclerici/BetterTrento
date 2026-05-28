@@ -9,9 +9,11 @@ import cors from "cors";
 import dotenv from "dotenv";//serve per leggere la chiave per i token e indirizzo del DB scritti nel file .env
 dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo del DB in chiaro contenente username psw
 
+
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 
 // Route di test

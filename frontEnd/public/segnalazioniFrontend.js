@@ -25,8 +25,9 @@ async function proteggiPagina() {
     document.body.style.visibility = "visible";
 
 }
-
 proteggiPagina();
+setupAutocompleteVie("via");
+
 
 
 //CARICA I PROBLEMI DAL DB DENTRO LA CATEGORIA (nella creazione della segnalazione)
@@ -46,8 +47,8 @@ async function caricaProblemi() {
     select.appendChild(opt);
   });
 }
-
 caricaProblemi();
+
 
 
 // Mostra il nome del file quando viene selezionata una foto
@@ -56,3 +57,56 @@ document.getElementById('foto').addEventListener('change', function (e) {
     document.getElementById('file-name').textContent = fileName;
 });
 
+
+
+// INVIO DELLA SEGNALAZIONE AL BACKEND
+document.getElementById("form-segnalazione").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+
+    // ID VIA (dall'autocomplete)
+    const viaInput = document.getElementById("via");
+    const viaId = viaInput.dataset.viaId;
+
+    if (!viaId) {
+        alert("Seleziona una via valida dall'elenco.");
+        return;
+    }
+
+    // ID PROBLEMA/CATEGORIA
+    const problemaId = document.getElementById("categoria").value;
+
+    if (!problemaId) {
+        alert("Seleziona una categoria valida.");
+        return;
+    }
+
+    // PREPARA I DATI DA INVIARE
+    const formData = new FormData();
+    formData.append("nome", document.getElementById("titolo").value);
+    formData.append("descrizione", document.getElementById("descrizione").value);
+    formData.append("via", viaId);          // <-- ID VIA
+    formData.append("problema", problemaId); // <-- ID PROBLEMA
+
+    const foto = document.getElementById("foto").files[0];
+    if (foto) formData.append("immagini", foto);
+
+    // INVIO AL BACKEND
+    const res = await fetch("http://localhost:3000/api/segnalazioni/", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        body: formData
+    });
+
+    if (res.ok) {
+        alert("Segnalazione inviata con successo!");
+        document.getElementById("form-segnalazione").reset();
+        viaInput.dataset.viaId = ""; // reset ID via
+        fetchSegnalazioni(); // aggiorna lista
+    } else {
+        alert("Errore durante l'invio della segnalazione.");
+    }
+});

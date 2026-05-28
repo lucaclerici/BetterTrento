@@ -1,32 +1,55 @@
 import { Segnalazione, Via, Problema } from "../models/schema.js";
+import cloudinary from "../config/cloudinary.js";//import cloudinary per salvataggio foto
+
+
 
 //CREA SEGNALAZIONE -> POST /api/segnalazioni
 export async function creaSegnalazione(req, res) {
   try {
-    const { nome, descrizione, data, via, problema, immagini } = req.body;
+    const nome = req.body.nome;
+    const descrizione = req.body.descrizione;
+    const via = req.body.via;
+    const problema = req.body.problema;
 
-    const nuova = await Segnalazione.create({
+    if (!nome || !descrizione || !via || !problema) {
+      return res.status(400).json({ errore: "Dati mancanti" });
+    }
+
+    let imageUrl = null;
+
+    if (req.file) {
+      const result = await new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: "segnalazioni" },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        ).end(req.file.buffer);
+      });
+
+      imageUrl = result.secure_url;
+    }
+
+    const nuova = new Segnalazione({
       nome,
       descrizione,
-      data,
-      via,        // ObjectId della via
-      problema,   // ObjectId del problema
-      immagini,
-      utente: req.utente.id
+      via,
+      problema,
+      utente: req.utente.id,
+      immagini: imageUrl, // <-- SOLO LINK che punta all'immagine
     });
 
-    const popolata = await Segnalazione.findById(nuova._id)
-      .populate("via")
-      .populate("problema")
-      .populate("utente", "nome cognome email");
-
-    res.status(201).json(popolata);
+    await nuova.save();
+    res.json(nuova);
 
   } catch (err) {
     console.error(err);
-    res.status(500).json({ errore: "Errore del server" });
+    res.status(500).json({ errore: "Errore interno del server" });
   }
 }
+
+
 
 //LISTA SEGNALAZIONI CREATE DA UN UTENTE -> GET /api/segnalazioni/mie
 export async function mieSegnalazioni(req, res) {
@@ -62,7 +85,7 @@ export async function dettaglioSegnalazione(req, res) {
 
   // Utente normale può vedere solo le sue
   if (req.utente.ruolo !== "AMMINISTRATORE" &&
-      seg.utente._id.toString() !== req.utente.id) {
+    seg.utente._id.toString() !== req.utente.id) {
     return res.status(403).json({ errore: "Accesso negato" });
   }
 
