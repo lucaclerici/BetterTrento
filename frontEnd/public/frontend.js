@@ -24,20 +24,19 @@ function setupAutocompleteVie(inputId = "via") {
     const input = document.getElementById(inputId);
     if (!input) return;
 
-    let lista = document.getElementById("autocomplete-vie");
+    let lista = document.getElementById("autocomplete-vie-" + inputId);
     if (!lista) {
         lista = document.createElement("div");
-        lista.id = "autocomplete-vie";
+        lista.id = "autocomplete-vie-" + inputId;
         lista.classList.add("autocomplete-list");
         input.parentNode.appendChild(lista);
     }
 
-    // QUI SALVEREMO L'ID DELLA VIA
     input.dataset.viaId = "";
 
     input.addEventListener("input", async () => {
         const query = input.value.trim();
-        input.dataset.viaId = ""; // reset ID se l'utente modifica il testo
+        input.dataset.viaId = "";
 
         if (query.length < 2) {
             lista.style.display = "none";
@@ -54,6 +53,9 @@ function setupAutocompleteVie(inputId = "via") {
 
         lista.innerHTML = "";
         lista.style.display = "block";
+        if (inputId === "search-via") {//per questioni di stile CSS
+            lista.style.marginTop = "10px";
+        }
 
         vie.forEach(v => {
             const item = document.createElement("div");
@@ -62,17 +64,17 @@ function setupAutocompleteVie(inputId = "via") {
 
             item.addEventListener("click", () => {
                 input.value = v.strada;
-                input.dataset.viaId = v._id; // SALVIAMO L'ID QUI
+                input.dataset.viaId = v._id;
                 lista.style.display = "none";
+
+                // AGGIUNTA Che chiama il caricamento delle segnalazioni
+                if (inputId === "search-via") {
+                    caricaSegnalazioniPerVia(v._id);
+                }
             });
 
             lista.appendChild(item);
         });
     });
-
-    document.addEventListener("click", (e) => {
-        if (!lista.contains(e.target) && e.target !== input) {
-            lista.style.display = "none";
-        }
-    });
 }
+

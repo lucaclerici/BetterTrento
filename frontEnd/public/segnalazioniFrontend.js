@@ -26,9 +26,11 @@ async function proteggiPagina() {
 
 }
 proteggiPagina();
-setupAutocompleteVie("via");
 
-
+document.addEventListener("DOMContentLoaded", () => {
+    setupAutocompleteVie("via");
+    setupAutocompleteVie("search-via"); // ricerca segnalazioni
+});
 
 //CARICA I PROBLEMI DAL DB DENTRO LA CATEGORIA (nella creazione della segnalazione)
 async function caricaProblemi() {
@@ -110,3 +112,37 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
         alert("Errore durante l'invio della segnalazione.");
     }
 });
+
+
+
+//CARICA LE SEGNALAZIONI DATA UNA VIA
+async function caricaSegnalazioniPerVia(idVia) {
+    const feed = document.getElementById("reports-feed");
+    const token = localStorage.getItem("token");
+    const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`, {
+            headers: { "Authorization": "Bearer " + token }
+    });
+
+    const segnalazioni = await res.json();
+
+    feed.innerHTML = "";
+
+    if (segnalazioni.length === 0) {
+        feed.innerHTML = "<p>Nessuna segnalazione trovata per questa via.</p>";
+        return;
+    }
+
+    segnalazioni.forEach(seg => {
+        const card = document.createElement("div");
+        card.classList.add("report-card");
+
+        card.innerHTML = `
+            <h3>${seg.nome}</h3>
+            <p><strong>Descrizione: </strong>${seg.descrizione}</p>
+            <p><strong>Problema:</strong> ${seg.problema?.nome || "N/D"}</p>
+            ${seg.immagini ? `<img src="${seg.immagini}" class="report-img" style="max-width: 20%;">` : ""}
+        `;
+
+        feed.appendChild(card);
+    });
+}
