@@ -1,9 +1,9 @@
+//GESTIONE SCAMBIO FORM DI LOGIN E REGISTRAZIONE
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const authTitle = document.getElementById('auth-title');
 const showRegister = document.getElementById('show-register');
 
-// Gestione dello scambio tra form di Login e form di Registrazione
 showRegister.addEventListener('click', (e) => {
     e.preventDefault();
     if (loginForm.style.display === 'none') {
@@ -19,7 +19,9 @@ showRegister.addEventListener('click', (e) => {
     }
 });
 
-// Gestione dell'invio (Submit) del form di login
+
+
+//GESTIONE DELL'INVIO (Submit) DEL FORM DI LOGIN
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -27,7 +29,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
 
     try {
-        // Chiamata all'API di backend per effettuare il login
+        // Chiama l'API del backend per effettuare il login
         const response = await fetch('http://localhost:3000/api/utenti/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -37,21 +39,18 @@ loginForm.addEventListener('submit', async (e) => {
         const data = await response.json();
 
         if (!response.ok) {
-            // Usa data.errore in linea con la risposta del backend
             alert(data.errore || "Credenziali non valide");
             return;
         }
 
-        // Salviamo in modo sicuro le informazioni nel LocalStorage del browser
+        // Salviamo il token JWT
         localStorage.setItem("token", data.token);
         localStorage.setItem("isLogged", "true");
-        localStorage.setItem("ruolo", data.ruolo); // Memorizza "AMMINISTRATORE" o "UTENTE"
 
-        // Reindirizzamento diretto a eventi.html così verifichiamo subito il tasto!
+        // Reindirizzamento alla homepage
         window.location.href = "eventi.html";
 
-    } catch (error) {
+    } catch (error) {//in caso di login fallito:
         console.error("Errore durante il login:", error);
-        alert("Impossibile connettersi al server. Verifica che il backend sia avviato.");
     }
 });
