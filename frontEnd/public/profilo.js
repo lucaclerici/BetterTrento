@@ -1,20 +1,15 @@
-/*document.getElementById("logout-btn").addEventListener("click", () => {
-    localStorage.removeItem("token");
-    localStorage.setItem("isLogged", "false");
-    window.location.href = "index.html";
-});*/
 
 document.addEventListener("DOMContentLoaded", async () => {
-    
-    const token = localStorage.getItem("token");
+
+    const token = localStorage.getItem("token");//si prende il token salvato sul browser
     if (!token || localStorage.getItem("isLogged") !== "true") {
         window.location.href = "index.html";
         return;
     }
 
-    // ==========================================
-    // 1. CARICA I DATI DELL'UTENTE (INCLUSA LA VIA)
-    // ==========================================
+
+
+    //CARICA I DATI DELL'UTENTE: email - nome - cognome - via
     try {
         const response = await fetch('http://localhost:3000/api/utenti/me', {
             method: 'GET',
@@ -26,12 +21,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (response.ok) {
             const data = await response.json();
-            
-            // Popoliamo i campi (Ora c'è anche la via!)
+
+            //Popoliamo i campi
             document.getElementById("profile-email").value = data.email || "";
             document.getElementById("profile-nome").value = data.nome || "";
-            document.getElementById("profile-via").value = data.via || "";
+            document.getElementById("profile-cognome").value = data.cognome || "";
             
+            const viaId = data.via;
+            console.log(data.via);
+            const res = await fetch(`http://localhost:3000/api/via/${viaId}`, {//chiedo dal backend la via tramite ID
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            const result = await res.json();
+            console.log(result);
+            document.getElementById("profile-via").value = result.strada || "";
+
             if (data.nome) {
                 document.getElementById("profile-title").innerText = `Ciao, ${data.nome.split(' ')[0]}`;
             }
@@ -40,30 +48,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Errore nel caricamento del profilo:", error);
     }
 
-    // ==========================================
-    // 2. AUTOCOMPLETAMENTO VIE DAL DATABASE
-    // ==========================================
-    try {
-        // Chiama la rotta che hai già in app.js!
-        const vieResponse = await fetch('http://localhost:3000/api/vie');
-        if (vieResponse.ok) {
-            const vieDalDB = await vieResponse.json(); // Supponiamo ritorni un array di vie
-            const datalist = document.getElementById("lista-vie");
-            
-            // Per ogni via nel database, crea una <option> nei suggerimenti
-            vieDalDB.forEach(via => {
-                const option = document.createElement('option');
-                option.value = via.strada;
-                datalist.appendChild(option);
-            });
-        }
-    } catch (error) {
-        console.error("Errore nel caricamento delle vie:", error);
-    }
 
-    // ==========================================
-    // 3. SALVATAGGIO DELLE MODIFICHE
-    // ==========================================
+
+    //SALVATAGGIO DELLE MODIFICHE
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
         profileForm.addEventListener("submit", async (e) => {
@@ -94,16 +81,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // ==========================================
-    // 4. LOGOUT
-    // ==========================================
+
+
+    //LOGOUT
     const logoutBtn = document.getElementById("logout-btn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();
             localStorage.removeItem("token");
             localStorage.setItem("isLogged", "false");
-            window.location.href = "index.html";
+            window.location.href = "index.html";//Reindirizziamo alla Homepage
         });
     }
+
 });

@@ -23,5 +23,4 @@ router.get("/verificaToken", auth, (req, res) => {
 });
 
 
-
 export default router;
