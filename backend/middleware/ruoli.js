@@ -1,5 +1,7 @@
 //GESTIONE DEI RUOLI DEGLI UTENTI, 
 
+import mongoose from 'mongoose';
+
 export function autorizzaRuoli(...ruoliPermessi) {//ruoliPermessi contiene il ruolo richiesto per accedere a tale risorsa
   return (req, res, next) => {
     try {
@@ -16,3 +18,12 @@ export function autorizzaRuoli(...ruoliPermessi) {//ruoliPermessi contiene il ru
     }
   };
 }
+
+const utenteSchema = new mongoose.Schema({
+    nome: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    via: { type: String },
+    // 🌟 AGGIUNGI QUESTA RIGA:
+    ruolo: { type: String, enum: ['user', 'admin'], default: 'user' } 
+});
