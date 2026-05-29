@@ -112,32 +112,6 @@ export async function aggiornaStato(req, res) {
 
 
 //ELIMINA SEGNALAZIONE (per admin) -> DELETE /api/segnalazioni/:id
-/*export async function eliminaSegnalazione(req, res) {
-  try {
-    const seg = await Segnalazione.findById(req.params.id);
-
-    if (!seg) {//constrolla che esista la segnalazione
-      return res.status(404).json({ errore: "Segnalazione non trovata" });
-    }
-
-    //Cancella immagine da Cloudinary
-    console.log("FOTO NEL DB:", seg.immagini);
-    if (seg.immagini) {
-      const publicId = extractPublicId(seg.immagini);
-      if (publicId) {
-        await cloudinary.uploader.destroy(publicId);
-      }
-    }
-
-    //Cancella segnalazione dal DB
-    await Segnalazione.findByIdAndDelete(req.params.id);
-    res.json({ messaggio: "Segnalazione eliminata correttamente" });
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ errore: "Errore server" });
-  }
-}*/
 export async function eliminaSegnalazione(req, res) {
   try {
     const seg = await Segnalazione.findById(req.params.id);
