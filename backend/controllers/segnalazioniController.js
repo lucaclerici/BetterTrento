@@ -112,11 +112,65 @@ export async function aggiornaStato(req, res) {
 
 
 //ELIMINA SEGNALAZIONE (per admin) -> DELETE /api/segnalazioni/:id
-export async function eliminaSegnalazione(req, res) {
-  await Segnalazione.findByIdAndDelete(req.params.id);
-  res.json({ messaggio: "Segnalazione eliminata" });
-}
+/*export async function eliminaSegnalazione(req, res) {
+  try {
+    const seg = await Segnalazione.findById(req.params.id);
 
+    if (!seg) {//constrolla che esista la segnalazione
+      return res.status(404).json({ errore: "Segnalazione non trovata" });
+    }
+
+    //Cancella immagine da Cloudinary
+    console.log("FOTO NEL DB:", seg.immagini);
+    if (seg.immagini) {
+      const publicId = extractPublicId(seg.immagini);
+      if (publicId) {
+        await cloudinary.uploader.destroy(publicId);
+      }
+    }
+
+    //Cancella segnalazione dal DB
+    await Segnalazione.findByIdAndDelete(req.params.id);
+    res.json({ messaggio: "Segnalazione eliminata correttamente" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errore: "Errore server" });
+  }
+}*/
+export async function eliminaSegnalazione(req, res) {
+  try {
+    const seg = await Segnalazione.findById(req.params.id);
+
+    if (!seg) {
+      return res.status(404).json({ errore: "Segnalazione non trovata" });
+    }
+
+    console.log("FOTO NEL DB:", seg.immagini);
+
+    // Normalizzazione
+    let immagini = seg.immagini;
+    if (Array.isArray(immagini)) immagini = immagini[0];
+    if (typeof immagini !== "string") immagini = null;
+
+    // Cancella immagine da Cloudinary
+    const publicId = extractPublicId(immagini);
+
+    if (publicId) {
+      console.log("CANCELLO DA CLOUDINARY:", publicId);
+      await cloudinary.uploader.destroy(publicId);
+    }
+
+    // Cancella segnalazione dal DB
+    await Segnalazione.findByIdAndDelete(req.params.id);
+
+    res.json({ messaggio: "Segnalazione eliminata correttamente" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ errore: "Errore server" });
+  }
+}
 
 //VEDERE SEGNALAZIONI PER VIA -> GET /api/segnalazioni/per-via/:idVia
 export async function segnalazioniPerVia(req, res) {
@@ -141,5 +195,32 @@ export async function getProblemi(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Errore durante il recupero delle problematiche" });
+  }
+}
+
+//per cancellare la foto della segnalazione in cloudiary
+function extractPublicId(url) {
+
+  // Se non è una stringa non possiamo estrarre nulla
+  if (!url || typeof url !== "string") return null;
+
+  try {
+
+    const parts = url.split("/");
+
+    // Ultimo elemento: "abc123.jpg"
+    const file = parts.pop();
+
+    // Penultimo elemento: "segnalazioni"
+    const folder = parts.pop();
+
+    // Public ID: "segnalazioni/abc123"
+    const publicId = `${folder}/${file.split(".")[0]}`;
+
+    return publicId;
+
+  } catch (err) {
+    console.error("Errore extractPublicId:", err);
+    return null;
   }
 }
