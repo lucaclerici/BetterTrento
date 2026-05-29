@@ -78,3 +78,12 @@ function setupAutocompleteVie(inputId = "via") {
     });
 }
 
+
+//da il ruolo dell'utente
+function getUserRole() {
+    const token = localStorage.getItem("token");
+    if (!token) return "utente";
+
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.ruolo || "utente";
+}

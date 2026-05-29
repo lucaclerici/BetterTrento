@@ -118,14 +118,16 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
 //CARICA LE SEGNALAZIONI DATA UNA VIA
 async function caricaSegnalazioniPerVia(idVia) {
     const feed = document.getElementById("reports-feed");
+
     const token = localStorage.getItem("token");
     const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`, {
             headers: { "Authorization": "Bearer " + token }
     });
-
     const segnalazioni = await res.json();
 
     feed.innerHTML = "";
+
+    const ruolo = getUserRole();//prende il ruolo dalla funzione in frontend.js
 
     if (segnalazioni.length === 0) {
         feed.innerHTML = "<p>Nessuna segnalazione trovata per questa via.</p>";
@@ -138,11 +140,74 @@ async function caricaSegnalazioniPerVia(idVia) {
 
         card.innerHTML = `
             <h3>${seg.nome}</h3>
-            <p><strong>Descrizione: </strong>${seg.descrizione}</p>
+            <p>${seg.descrizione}</p>
             <p><strong>Problema:</strong> ${seg.problema?.nome || "N/D"}</p>
             ${seg.immagini ? `<img src="${seg.immagini}" class="report-img" style="max-width: 20%;">` : ""}
         `;
 
+        //SE ADMIN → AGGIUNGI I PULSANTI
+        if (ruolo === "AMMINISTRATORE") {
+            const adminControls = document.createElement("div");
+            adminControls.classList.add("admin-controls");
+
+            adminControls.innerHTML = `
+                <button class="btn-elimina" data-id="${seg._id}">🗑 Elimina</button>
+
+                <select class="select-stato" data-id="${seg._id}">
+                    <option value="APERTA">Aperta</option>
+                    <option value="INCARICO">In carico</option>
+                    <option value="RISOLTA">Risolta</option>
+                    <option value="RESPINTA">Respinta</option>
+                </select>
+            `;
+
+            card.appendChild(adminControls);
+        }
+
         feed.appendChild(card);
+    });
+
+    if (ruolo === "AMMINISTRATORE") {
+        setupAdminActions();
+    }
+}
+
+//OPERAZIONI PER ADMIN
+function setupAdminActions() {
+    const token = localStorage.getItem("token");
+
+    // ELIMINA
+    document.querySelectorAll(".btn-elimina").forEach(btn => {
+        btn.addEventListener("click", async () => {
+            const id = btn.dataset.id;
+
+            if (!confirm("Vuoi davvero eliminare questa segnalazione?")) return;
+
+            await fetch(`http://localhost:3000/api/segnalazioni/${id}`, {
+                method: "DELETE",
+                headers: { "Authorization": "Bearer " + token }
+            });
+
+            btn.closest(".report-card").remove();
+        });
+    });
+
+    // CAMBIO STATO
+    document.querySelectorAll(".select-stato").forEach(sel => {
+        sel.addEventListener("change", async () => {
+            const id = sel.dataset.id;
+            const nuovoStato = sel.value;
+
+            await fetch(`http://localhost:3000/api/segnalazioni/${id}/stato`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({ stato: nuovoStato })
+            });
+
+            alert("Stato aggiornato");
+        });
     });
 }
