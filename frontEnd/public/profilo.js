@@ -1,12 +1,11 @@
-
+//GESTISCE IL FORM DELLA PAGINA PROFILO, CHE RIASSUME I DATI DELL'UTENTE E NE PERMETTE LA MODIFICA, E LOGOUT
 document.addEventListener("DOMContentLoaded", async () => {
-
+    setupAutocompleteVie("profile-via");//chiamata della funzione in frontend.js
     const token = localStorage.getItem("token");//si prende il token salvato sul browser
     if (!token || localStorage.getItem("isLogged") !== "true") {
         window.location.href = "index.html";
         return;
     }
-
 
 
     //CARICA I DATI DELL'UTENTE: email - nome - cognome - via
@@ -26,10 +25,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("profile-email").value = data.email || "";
             document.getElementById("profile-nome").value = data.nome || "";
             document.getElementById("profile-cognome").value = data.cognome || "";
-            
+
             const viaId = data.via;
-            console.log(data.via);
-            const res = await fetch(`http://localhost:3000/api/via/${viaId}`, {//chiedo dal backend la via tramite ID
+            const res = await fetch(`http://localhost:3000/api/vie/via/${viaId}`, {//chiedo dal backend la via tramite ID
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 }
             });
             const result = await res.json();
-            console.log(result);
             document.getElementById("profile-via").value = result.strada || "";
 
             if (data.nome) {
@@ -57,16 +54,22 @@ document.addEventListener("DOMContentLoaded", async () => {
             e.preventDefault();
 
             const nome = document.getElementById("profile-nome").value;
-            const via = document.getElementById("profile-via").value;
+            const cognome = document.getElementById("profile-cognome").value;
+            const viaInput = document.getElementById("profile-via");
+            const viaId = viaInput.dataset.viaId;
+            if (!viaId) {
+                alert("Seleziona una via valida dall'autocomplete.");
+                return;
+            }
 
-            try {
+            try{//proviamo a chiamare l'API di modifica del profilo
                 const response = await fetch('http://localhost:3000/api/utenti/me', {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ nome, via })
+                    body: JSON.stringify({ nome, cognome, via: viaId })
                 });
 
                 if (response.ok) {
@@ -80,7 +83,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
-
 
 
     //LOGOUT

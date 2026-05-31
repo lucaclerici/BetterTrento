@@ -42,17 +42,20 @@
                 </div>
 
                 <div class="input-group" style="display: flex; flex-direction: column; margin-bottom: 15px;">
-                    <label style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">NOME</label>
+                    <label
+                        style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">NOME</label>
                     <input type="text" id="profile-nome" required placeholder="Caricamento...">
-                    <label style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">COGNOME</label>
+                    <label
+                        style="font-size: 0.85rem; font-weight: 600; color: #475569; margin-bottom: 5px;">COGNOME</label>
                     <input type="text" id="profile-cognome" required placeholder="Caricamento...">
                 </div>
 
                 <div class="input-group">
                     <label>VIA DI RESIDENZA</label>
-                    <input type="text" id="profile-via" list="lista-vie" required placeholder="Caricamento...">
-                    <datalist id="lista-vie"></datalist>
+                    <input type="text" id="profile-via">
+                    <div id="autocomplete-vie-profile-via" class="autocomplete-list"></div>
                 </div>
+
 
                 <button type="submit" style="margin-bottom: 15px;">Salva Modifiche</button>
             </form>
@@ -105,8 +108,6 @@
             <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
         </div>
     </footer>
-
-    <script src="./profilo.js"></script>
 </body>
 
 </html>
