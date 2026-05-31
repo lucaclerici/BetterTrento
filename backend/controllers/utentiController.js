@@ -6,6 +6,7 @@ dotenv.config();           //cosi evitiamo di scrivere nel codice l'indirizzo de
 
 const JWT_SECRET = process.env.JWT_SECRET;//va a prendersi nel file .env il codice segreto
 
+
 //MODIFICA PROFILO
 export async function aggiornaProfilo(req, res) {
   try {
@@ -34,6 +35,7 @@ export async function aggiornaProfilo(req, res) {
 }
 
 
+
 //GETPROFILO
 export async function getProfilo(req, res) {
   try {
@@ -52,6 +54,7 @@ export async function getProfilo(req, res) {
     res.status(500).json({ errore: "Errore del server" });
   }
 }
+
 
 
 //LOGIN UTENTE
@@ -77,18 +80,14 @@ export async function loginUtente(req, res) {
     }
 
     //Genero token JWT
-    // Quando generi il Token, inserisci l'ID e il RUOLO dell'utente nel payload!
     const token = jwt.sign(
-        { id: utente._id, ruolo: utente.ruolo }, 
-        process.env.JWT_SECRET,
-        { expiresIn: "1d" }
+      {
+        id: utente._id,
+        ruolo: utente.ruolo
+      },
+      JWT_SECRET,
+      { expiresIn: "2h" }
     );
-
-    // E quando rispondi al frontend invia SIA il token SIA il ruolo in chiaro!
-    return res.status(200).json({
-        token: token,
-        ruolo: utente.ruolo // Mandandolo qui, il frontend lo riceve direttamente!
-    });
 
     //Risposta
     res.json({
@@ -101,6 +100,7 @@ export async function loginUtente(req, res) {
     res.status(500).json({ errore: "Errore del server" });
   }
 }
+
 
 
 // REGISTRAZIONE UTENTE

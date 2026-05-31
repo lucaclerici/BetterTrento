@@ -1,11 +1,13 @@
-//quando una persona è loggata, nella navbar non ci sarà più ACCEDI, la img profilo e un "Ciao"
+//MODIFICA DELLA NAVBAR:
+// - UTENTE LOGGATO -> vede logo utente e un "Ciao" al posto di ACCEDI
+// - UTENTE NON LOGGATO -> vede ACCEDI
 const isLogged = localStorage.getItem("isLogged");
 const loginArea = document.getElementById("login-area");
 
 if (loginArea && isLogged === "true") {
     loginArea.innerHTML = `
         <div class="user-box" id="user-box">
-            <img src="../image/immagine_ominoProfilo.jpg" class="logo-img">
+            <img src="/frontEnd/image/immagine_ominoProfilo.jpg" class="user-icon">
             <span class="user-greeting">Ciao</span>
         </div>
     `;
@@ -14,12 +16,13 @@ if (loginArea && isLogged === "true") {
 document.addEventListener("click", (e) => {
     const userBox = document.getElementById("user-box");
     if (userBox && userBox.contains(e.target)) {
-        window.location.href = "profilo.html";
+        window.location.href = "/frontEnd/public/profilo.html";
     }
 });
 
 
-/*per autocomplete nella scrittura delle vie*/
+
+/*AUTOCOMPLETE SCRITTURA DELLE VIE*/
 function setupAutocompleteVie(inputId = "via") {
     const input = document.getElementById(inputId);
     if (!input) return;
@@ -45,6 +48,7 @@ function setupAutocompleteVie(inputId = "via") {
 
         const token = localStorage.getItem("token");
 
+        //chiama l'API del backend
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
             headers: { "Authorization": "Bearer " + token }
         });
@@ -67,7 +71,7 @@ function setupAutocompleteVie(inputId = "via") {
                 input.dataset.viaId = v._id;
                 lista.style.display = "none";
 
-                // AGGIUNTA Che chiama il caricamento delle segnalazioni
+                //Chiama il caricamento delle segnalazioni da segnalazioniFronend.js
                 if (inputId === "search-via") {
                     caricaSegnalazioniPerVia(v._id);
                 }
@@ -79,11 +83,12 @@ function setupAutocompleteVie(inputId = "via") {
 }
 
 
-//da il ruolo dell'utente
-function getUserRole() {
-    const token = localStorage.getItem("token");
-    if (!token) return "utente";
 
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.ruolo || "utente";
+//RITORNA IL RUOLO UTENTE
+function getUserRole() {
+    const token = localStorage.getItem("token");//prende il token
+    if (!token) return "utente";//se il token è vuoto
+
+    const payload = JSON.parse(atob(token.split(".")[1]));//dal token si prende il ruolo
+    return payload.ruolo || "utente"; 
 }
