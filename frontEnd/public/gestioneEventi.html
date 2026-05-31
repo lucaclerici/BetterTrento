@@ -21,6 +21,9 @@
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="eventi.html">Eventi</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
                 <li><a href="segnalazioni.html" style="color: #3498db; font-weight: bold;">Segnalazioni</a></li>
                 <li class="login-btn" id="login-area">
                     <a id="login-link" href="auth.html">Accedi</a>
@@ -32,16 +35,61 @@
     <section class="events-hero" style="background: linear-gradient(135deg, #2c3e50, #34495e);">
         <div class="hero-content">
             <h1>Pannello Controllo Amministratore</h1>
-            <p>Qui puoi approvare, modificare o segnare come risolti gli eventi e le problematiche della città.</p>
+            <p>Qui puoi inserire, modificare o eliminare gli eventi della città.</p>
         </div>
     </section>
 
-    <main class="events-main">
-        <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">Lista Eventi da Gestire</h2>
+    <main class="reports-main" style="min-width: 80%;">
+        <section class="form-section" style="min-width: 40%;">
+            <div class="form-card">
+                <h2>Crea un Evento</h2>
+                <p>C'è un evento in programma? Inseriscilo</p>
 
-        <div id="admin-events-grid" class="events-grid">
-        </div>
+                <form id="form-evento" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <label for="titolo">Titolo dell'evento</label>
+                        <input type="text" id="titolo" name="titolo" placeholder="Es. Rifacimento manto stradale"
+                            required>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" name="data" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="via">Via / Piazza</label>
+                            <input type="text" id="via" name="via" placeholder="Es. Via Belenzani" required>
+                            <div id="autocomplete-vie" class="autocomplete-list" style="margin-top: 200px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="descrizione">Descrizione dettagliata</label>
+                        <textarea id="descrizione" name="descrizione" rows="4"
+                            placeholder="Fornisci maggiori dettagli sull'evento" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Crea</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="list-section" style="min-width: 40%;">
+            <div class="list-header">
+                <h2>Eventi sul Territorio</h2>
+                <div class="search-box">
+                    <input type="text" id="search-eventi-via" placeholder="🔍 Tutti o filtra per via...">
+                    <div id="autocomplete-search-vie" class="autocomplete-list"
+                        style="margin-top: 10px; max-width: 20%;"></div>
+                    <button id="btn-vedi-tutti" style="max-height: 30px;">Vedi Tutti</button>
+                </div>
+            </div>
+            <div id="reports-feed" class="reports-feed">
+            </div>
+        </section>
     </main>
+
 
     <footer>
         <div class="footer-container">
