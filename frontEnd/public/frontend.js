@@ -60,6 +60,9 @@ function setupAutocompleteVie(inputId = "via") {
         if (inputId === "search-via") {//per questioni di stile CSS
             lista.style.marginTop = "10px";
         }
+        if (inputId === "search-eventi-via") {//per questioni di stile CSS
+            lista.style.marginTop = "10px";
+        }
 
         vie.forEach(v => {
             const item = document.createElement("div");
@@ -74,6 +77,11 @@ function setupAutocompleteVie(inputId = "via") {
                 //Chiama il caricamento delle segnalazioni da segnalazioniFronend.js
                 if (inputId === "search-via") {
                     caricaSegnalazioniPerVia(v._id);
+                }
+
+                // filtro eventi admin
+                if (inputId === "search-eventi-via") {
+                    caricaEventiPerVia(v._id);
                 }
             });
 
@@ -90,5 +98,5 @@ function getUserRole() {
     if (!token) return "utente";//se il token è vuoto
 
     const payload = JSON.parse(atob(token.split(".")[1]));//dal token si prende il ruolo
-    return payload.ruolo || "utente"; 
+    return payload.ruolo || "utente";
 }

@@ -1,14 +1,14 @@
 //CRUD eventi
 import express from "express";
 const router = express.Router();
-import { getEventiByVia, getEventoById, createEvento, updateEvento } from "../controllers/eventiControler.js";
+import { tuttiEventi, getEventiByVia, getEventoById, createEvento, updateEvento, eliminaEvento } from "../controllers/eventiControler.js";
 import { auth } from "../middleware/auth.js";
 import { autorizzaRuoli } from "../middleware/ruoli.js";
 import { Evento } from "../models/schema.js";
 
-router.get("/", (req, res) => {
-  res.send("Route eventi OK");
-});
+
+//get di tutti gli eventi 
+router.get("/", auth, autorizzaRuoli("AMMINISTRATORE"), tuttiEventi);
 
 //get eventi by via
 router.get("/via/:via", getEventiByVia);
@@ -21,5 +21,9 @@ router.post("/create", auth, autorizzaRuoli("AMMINISTRATORE"), createEvento);
 
 //update evento
 router.post("/update/:id", auth, autorizzaRuoli("AMMINISTRATORE"), updateEvento);
+
+//delete evento
+router.delete("/:id", auth, autorizzaRuoli("AMMINISTRATORE"), eliminaEvento);
+
 
 export default router;

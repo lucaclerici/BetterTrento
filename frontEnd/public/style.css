@@ -830,6 +830,7 @@ input[type="file"] {
     background-color: #cbd5e1; /* Cambia dinamicamente */
 }
 
+
 /* GRIGLIA SETTIMANALE */
 .settimana-grid {
     display: grid;
@@ -869,6 +870,7 @@ input[type="file"] {
     font-style: italic;
 }
 
+
 /* BADGE COLORATI RIFIUTI TRENTO */
 .rifiuto-tag {
     display: inline-block;
@@ -903,7 +905,7 @@ input[type="file"] {
 .toggle-text { text-align: center; margin-top: 20px; font-size: 0.9rem; }
 
 
-/*Scritta Accedi*/
+/*SCRITTA ACCEDI*/
 .user-box {
     display: flex;
     align-items: center;
@@ -922,7 +924,8 @@ input[type="file"] {
     color: #3498db;
 }
 
-/*bottone logout temporaneo*/
+
+/*BOTTONE LOGOUT/DISCONETTITI*/
 .logout-button {
     padding: 10px 20px;
     background-color: #e74c3c;
@@ -935,12 +938,12 @@ input[type="file"] {
     margin-bottom: 100px;
 }
 
-
 .logout-button:hover {
     background-color: #c0392b;
 }
 
-/*per autocomplete per la via, standard*/
+
+/*PER AUTOCOMPLETE DELLA VIA*/
 .autocomplete-list {
     position: absolute;
     background: white;
@@ -958,7 +961,6 @@ input[type="file"] {
     position: relative;
 }
 
-
 .autocomplete-item {
     padding: 8px 12px;
     cursor: pointer;
@@ -966,5 +968,33 @@ input[type="file"] {
 
 .autocomplete-item:hover {
     background-color: #f0f0f0;
+}
+
+
+/*SEZIONE GESTIONE EVENTI ADMIN*/
+.admin-eventi-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+}
+
+.col-sx, .col-dx {
+    flex: 1;
+}
+
+.evento-card {
+    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.autocomplete-list {
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    width: 100%;
+    z-index: 9999;
 }
 

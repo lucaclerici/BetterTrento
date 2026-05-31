@@ -1,6 +1,17 @@
 import { Evento } from "../models/schema.js";
 
-async function getEventiByVia(req, res){
+async function tuttiEventi(req, res) {
+    const lista = await Evento
+        .find()
+        .populate("nome")
+        .populate("data")
+        .populate("via")
+        .populate("descrizione");
+
+    res.json(lista);
+}
+
+async function getEventiByVia(req, res) {
     try {
         const idVia = req.params.via;
         const eventi = await Evento.find({ via: idVia }).populate("via");
@@ -11,8 +22,8 @@ async function getEventiByVia(req, res){
     }
 }
 
-async function getEventoById(req, res){
-    try{
+async function getEventoById(req, res) {
+    try {
         const id = req.params.id;
         const evento = await Evento.findById(id).populate("via");
         res.json(evento);
@@ -22,8 +33,8 @@ async function getEventoById(req, res){
     }
 }
 
-async function createEvento(req, res){
-    try{
+async function createEvento(req, res) {
+    try {
         const { nome, descrizione, data, via } = req.body;
         if (!nome || !descrizione || !data || !via) {
             return res.status(400).json({ error: "Dati dell'evento mancanti" });
@@ -38,8 +49,8 @@ async function createEvento(req, res){
     }
 }
 
-async function updateEvento(req, res){
-    try{
+async function updateEvento(req, res) {
+    try {
         const id = req.params.id;
         const { nome, descrizione, data, via } = req.body;
 
@@ -60,4 +71,16 @@ async function updateEvento(req, res){
     }
 }
 
-export { getEventiByVia, getEventoById, createEvento, updateEvento }
+async function eliminaEvento(req, res) {
+    try {
+        // Cancella segnalazione dal DB
+        await Evento.findByIdAndDelete(req.params.id);
+
+        res.json({ messaggio: "Evento eliminato correttamente" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Errore durante l'eliminazione dell'evento " + error.message });
+    }
+}
+
+export { tuttiEventi, getEventiByVia, getEventoById, createEvento, updateEvento, eliminaEvento }
