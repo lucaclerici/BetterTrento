@@ -1,3 +1,5 @@
+document.addEventListener("DOMContentLoaded", aggiornaNavbarRuolo);
+
 //MODIFICA DELLA NAVBAR:
 // - UTENTE LOGGATO -> vede logo utente e un "Ciao" al posto di ACCEDI
 // - UTENTE NON LOGGATO -> vede ACCEDI
@@ -18,7 +20,7 @@ document.addEventListener("click", (e) => {
     if (userBox && userBox.contains(e.target)) {
         window.location.href = "/frontEnd/public/profilo.html";
     }
-});
+});//da commento modifica della navbar a qui, si può inserire nella funzione aggiorna navbarRuolo...a fine file
 
 
 
@@ -99,4 +101,22 @@ function getUserRole() {
 
     const payload = JSON.parse(atob(token.split(".")[1]));//dal token si prende il ruolo
     return payload.ruolo || "utente";
+}
+
+//AGGIORNA LA NAVBAR
+async function aggiornaNavbarRuolo() {
+    const token = localStorage.getItem("token");
+
+    if (!token || localStorage.getItem("isLogged") !== "true") return;
+
+    const res = await fetch("http://localhost:3000/api/utenti/me", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const user = await res.json();
+
+    // 🔵 Mostra il link solo agli admin
+    if (user.ruolo === "AMMINISTRATORE") {
+        document.getElementById("nav-gestione-eventi").style.display = "block";
+    }
 }

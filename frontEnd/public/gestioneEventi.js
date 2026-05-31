@@ -1,8 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const token = localStorage.getItem("token");//si prende il token
 
     if (!token || localStorage.getItem("isLogged") !== "true") {
         window.location.href = "index.html";
+        return;
+    }
+
+
+    //controllo il ruolo per poter accedere alla pagina
+    const r = await proteggiPagina();
+    console.log("Ruolo fuori: ");
+    console.log(r);
+    if (r !== "AMMINISTRATORE") {
+        alert("Accesso negato. Questa pagina è riservata agli amministratori.");
+        //window.location.href = "index.html";
         return;
     }
 
@@ -23,6 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+async function proteggiPagina() {//ritorno il ruolo dell'utente
+    const token = localStorage.getItem("token");
+    //mi prendo il ruolo
+    const res = await fetch("http://localhost:3000/api/utenti/me", {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const user = await res.json();
+    console.log("Ruolo dentro proteggi:")
+    console.log(user.ruolo);
+    return user.ruolo;
+}
 
 //CARICA TUTTI GLI EVENTI
 async function caricaTuttiEventi() {
