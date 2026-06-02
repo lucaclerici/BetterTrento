@@ -48,7 +48,7 @@ loginForm.addEventListener('submit', async (e) => {
         localStorage.setItem("isLogged", "true");
 
         // Reindirizzamento alla homepage
-        window.location.href = "eventi.html";
+        window.location.href = "index.html";
 
     } catch (error) {//in caso di login fallito:
         console.error("Errore durante il login:", error);
