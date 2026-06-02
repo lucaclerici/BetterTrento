@@ -7,6 +7,7 @@
     <title>BetterTrento - Calendario Rifiuti</title>
     <link rel="stylesheet" href="style.css">
     <script src="frontend.js" defer></script>
+    <script src="rifiuti.js" defer></script>
 </head>
 
 <body>
@@ -31,142 +32,52 @@
         </nav>
     </header>
 
-    <main class="rifiuti-main">
-        <section class="rifiuti-search-section">
+     <main class="rifiuti-main">
+        <section class="rifiuti-search-section" style="text-align: center; padding: 40px 20px;">
             <h1>Calendario Raccolta Differenziata</h1>
-            <p>Seleziona o cerca la tua via a Trento per conoscere i giorni di esposizione dei cassonetti.</p>
-
-            <div class="search-container">
-                <input type="text" id="input-via" placeholder="Es. Via Maccani, Via Manci, Via Venezia..."
-                    oninput="cercaCalendario()">
-                <button class="btn-search" onclick="cercaCalendario()">Cerca</button>
+            <p>Cerca la tua via a Trento per conoscere i giorni di esposizione dei cassonetti.</p>
+            
+            <div class="search-filter-container" style="background: transparent; padding: 20px 0;">
+                <div class="search-box-wrapper" style="max-width: 550px; margin: 0 auto; display: flex; gap: 10px;">
+                    <div class="search-input-group" style="flex: 1; display: flex; align-items: center; border: 1px solid #ccc; padding: 8px 12px; border-radius: 4px; background: #fff;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="via" placeholder="Inserisci la tua via di residenza..." style="border: none; outline: none; width: 100%; font-size: 16px;">
+                        <div style="max-width: 200px;" class="autocomplete-list"></div>
+                    </div>
+                    <button class="search-btn" id="btn-cerca" style="padding: 10px 24px; background-color: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Cerca</button>
+                </div>
             </div>
         </section>
 
-        <section id="risultati-calendario" class="risultati-container" style="display: none;">
-
-            <div class="next-pickup-widget">
+        <section id="risultati-calendario" class="risultati-container" style="display: none; padding: 0 20px 40px 20px;">
+            <div class="next-pickup-widget" style="display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 5px solid #2c3e50; margin-bottom: 30px;">
                 <div class="widget-info">
-                    <span class="widget-label">PROSSIMO RITIRO</span>
-                    <h2 id="next-waste-type">Caricamento...</h2>
-                    <p id="next-waste-day">Esporre il bidone la sera precedente</p>
+                    <span class="widget-label" id="nome-via-rilevata" style="letter-spacing: 1px; font-weight: bold; color: #7f8c8d; font-size: 12px;">PROSSIMO RITIRO</span>
+                    <h2 id="next-waste-type" style="margin: 5px 0; color: #2c3e50;">Caricamento...</h2>
+                    <p id="next-waste-day" style="margin: 0; color: #7f8c8d; font-size: 14px;">Esporre il bidone la sera precedente</p>
                 </div>
-                <div class="widget-icon" id="widget-color-block"></div>
+                <div class="widget-icon" id="widget-color-block" style="width: 40px; height: 40px; border-radius: 50%;"></div>
             </div>
 
-            <h2>Pianificazione Settimanale</h2>
-            <div class="settimana-grid">
-                <div class="giorno-card" id="day-Lunedì">
-                    <h3>Lunedì</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Martedì">
-                    <h3>Martedì</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Mercoledì">
-                    <h3>Mercoledì</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Giovedì">
-                    <h3>Giovedì</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Venerdì">
-                    <h3>Venerdì</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Sabato">
-                    <h3>Sabato</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
-                <div class="giorno-card" id="day-Domenica">
-                    <h3>Domenica</h3>
-                    <div class="rifiuti-list"></div>
-                </div>
+            <h2 style="margin-top: 40px; margin-bottom: 20px; color: #2c3e50;">Pianificazione Settimanale</h2>
+            <div class="settimana-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div class="giorno-card" id="day-Lunedì" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Lunedì</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Martedì" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Martedì</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Mercoledì" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Mercoledì</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Giovedì" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Giovedì</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Venerdì" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Venerdì</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Sabato" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Sabato</h3><div class="rifiuti-list"></div></div>
+                <div class="giorno-card" id="day-Domenica" style="background: #fff; padding: 15px; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);"><h3 style="margin-top:0; border-bottom:1px solid #eee; padding-bottom:5px;">Domenica</h3><div class="rifiuti-list"></div></div>
             </div>
         </section>
 
-        <div id="placeholder-msg" class="placeholder-msg">
-            <p>🔍 Inserisci il nome di una via per visualizzare il calendario ecologico.</p>
+        <div id="placeholder-msg" class="placeholder-msg" style="text-align: center; padding: 40px 20px; color: #7f8c8d;">
+            <p>🔍 Inserisci il nome di una via o accedi per visualizzare il tuo calendario ecologico personalizzato.</p>
         </div>
     </main>
-
-    <script>
-        async function cercaCalendario() {
-            const viaInput = document.getElementById('input-via').value.trim();
-            const risultatiSezione = document.getElementById('risultati-calendario');
-            const placeholderMsg = document.getElementById('placeholder-msg');
-
-            if (viaInput.length < 3) {
-                risultatiSezione.style.display = 'none';
-                placeholderMsg.style.display = 'block';
-                placeholderMsg.innerHTML = '<p>🔍 Scrivi almeno 3 caratteri per la ricerca...</p>';
-                return;
-            }
-
-            try {
-                // Chiamata API asincrona verso il server Node.js
-                const response = await fetch(`/api/rifiuti?via=${encodeURIComponent(viaInput)}`);
-
-                if (!response.ok) {
-                    throw new Error("Via non trovata");
-                }
-
-                const data = await response.json();
-
-                // Mostriamo la griglia e nascondiamo il testo di benvenuto
-                placeholderMsg.style.display = 'none';
-                risultatiSezione.style.display = 'block';
-
-                // Aggiorniamo il Widget del Prossimo Ritiro
-                document.getElementById('next-waste-type').textContent = data.prossimoRitiro.tipo;
-                document.getElementById('next-waste-day').textContent = `Il prossimo ritiro sarà di ${data.prossimoRitiro.giorno}`;
-
-                // Cambia il colore del rettangolo del widget in base al rifiuto
-                const widgetColor = getColoreRifiuto(data.prossimoRitiro.tipo);
-                document.getElementById('widget-color-block').style.backgroundColor = widgetColor;
-
-                // Puliamo tutte le card dei giorni prima di riempirle
-                const giorni = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
-                giorni.forEach(g => {
-                    document.querySelector(`#day-${g} .rifiuti-list`).innerHTML = '<span class="nessun-ritiro">Nessun ritiro</span>';
-                });
-
-                // Iniettiamo i rifiuti nei giorni corrispondenti restituiti dal server
-                data.calendario.forEach(item => {
-                    const giornoContainer = document.querySelector(`#day-${item.giorno} .rifiuti-list`);
-
-                    // Se c'era la scritta "Nessun ritiro", la svuotiamo
-                    if (giornoContainer.querySelector('.nessun-ritiro')) {
-                        giornoContainer.innerHTML = '';
-                    }
-
-                    // Creiamo il tag del tipo di rifiuto con lo stile appropriato
-                    const tag = document.createElement('span');
-                    tag.className = `rifiuto-tag ${item.tipo.toLowerCase().replace(' ', '-')}`;
-                    tag.textContent = item.tipo;
-                    giornoContainer.appendChild(tag);
-                });
-
-            } catch (error) {
-                risultatiSezione.style.display = 'none';
-                placeholderMsg.style.display = 'block';
-                placeholderMsg.innerHTML = '<p>❌ Via non trovata o non coperta dal servizio automatizzato nel centro di Trento.</p>';
-            }
-        }
-
-        // Funzione di utilità per accoppiare il tipo di rifiuto al colore esatto di Trento
-        function getColoreRifiuto(tipo) {
-            switch (tipo.toLowerCase()) {
-                case 'organico': return '#5d4037'; // Marrone
-                case 'carta e cartone': return '#0288d1'; // Blu
-                case 'imballaggi leggeri': return '#fbc02d'; // Giallo (Plastica)
-                case 'residuo': return '#78909c'; // Grigio (Secco)
-                default: return '#cccccc';
-            }
-        }
-    </script>
 
     <footer>
         <div class="footer-container">
