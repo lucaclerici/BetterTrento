@@ -49,7 +49,7 @@ function setupAutocompleteVie(inputId = "via") {
         }
 
         const token = localStorage.getItem("token");
-
+        
         //chiama l'API del backend
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
             headers: { "Authorization": "Bearer " + token }
@@ -76,12 +76,17 @@ function setupAutocompleteVie(inputId = "via") {
                 input.dataset.viaId = v._id;
                 lista.style.display = "none";
 
+                //Carica il calendario in pagina rifiuti
+                if (inputId === "via" && typeof cercaCalendario === "function") {
+                    cercaCalendario(v.strada);
+                }
+
                 //Chiama il caricamento delle segnalazioni da segnalazioniFronend.js
                 if (inputId === "search-via") {
                     caricaSegnalazioniPerVia(v._id);
                 }
 
-                // filtro eventi admin
+                // filtro eventi admin in pagina gestione eventi
                 if (inputId === "search-eventi-via") {
                     caricaEventiPerVia(v._id);
                 }
@@ -102,6 +107,8 @@ function getUserRole() {
     const payload = JSON.parse(atob(token.split(".")[1]));//dal token si prende il ruolo
     return payload.ruolo || "utente";
 }
+
+
 
 //AGGIORNA LA NAVBAR
 async function aggiornaNavbarRuolo() {

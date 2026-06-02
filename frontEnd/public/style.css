@@ -951,10 +951,11 @@ input[type="file"] {
     border-radius: 6px;
     max-height: 180px;
     overflow-y: auto;
-    width: 50%;
+    max-width: 100%;
     z-index: 9999;
     display: none;
     margin-top: 20%;
+    text-align: left;
 }
 
 .input-group {
@@ -989,12 +990,3 @@ input[type="file"] {
     border-radius: 6px;
     background: #f8f9fa;
 }
-
-.autocomplete-list {
-    position: absolute;
-    background: white;
-    border: 1px solid #ccc;
-    width: 100%;
-    z-index: 9999;
-}
-
