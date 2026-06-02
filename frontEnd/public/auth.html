@@ -42,15 +42,12 @@
             </form>
 
             <form id="register-form" style="display: none;">
-                <input type="text" placeholder="Nome" required>
-                <input type="text" placeholder="Cognome" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <input type="text" placeholder="Indirizzo (Via/Piazza)" required>
-                <input type="text" placeholder="Città" required>
-                <input type="text" placeholder="CAP" pattern="[0-9]{5}" title="inserisci 5 numeri" required>
-                <input type="text" placeholder="Provincia" maxlenght="2" required>
-                <input type="text" placeholder="Nazione" required>
+                <input type="text" id="r-nome" placeholder="Nome" required>
+                <input type="text" id="r-cognome" placeholder="Cognome" required>
+                <input type="email" id="r-email" placeholder="Email" required>
+                <input type="password" id="r-psw" placeholder="Password" required>
+                <input type="text" id="via" placeholder="Indirizzo (Via/Piazza)" required>
+                <div class="autocomplete-list" id="autocomplete-vie-via" style="position: absolute; z-index: 1000; margin-top: 0%;"></div>
                 <button type="submit">Registrati</button>
             </form>
 
