@@ -104,21 +104,4 @@ window.addEventListener('DOMContentLoaded', () => {
     const ruoloGrezzo = localStorage.getItem("ruolo");
     const ruoloUtente = ruoloGrezzo ? ruoloGrezzo.trim().toUpperCase() : "";
 
-    if (ruoloUtente === "AMMINISTRATORE") {
-        const menu = document.querySelector('nav ul');
-        if (menu) {
-            if (!document.getElementById('tasto-gestione-admin')) {
-                const linkGestione = document.createElement('li');
-                linkGestione.id = 'tasto-gestione-admin';
-                linkGestione.innerHTML = `<a href="gestioneEventi.html" style="color: #e67e22; font-weight: bold;">🔧 Gestione</a>`;
-
-                const loginArea = document.getElementById('login-area');
-                if (loginArea) {
-                    menu.insertBefore(linkGestione, loginArea);
-                } else {
-                    menu.appendChild(linkGestione);
-                }
-            }
-        }
-    }
 });
