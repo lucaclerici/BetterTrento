@@ -19,10 +19,13 @@ const calendariDolomiti = {
 
 //RITORNA UN JSON DEL CALENDARIO DEI RIFIUTI
 async function getCalendarioRifiuti(viaTrovata = null) {
+    if (!viaTrovata) return null;
+
     // Determina la zona in base al nome della strada recuperata
     const nomeStrada = typeof viaTrovata === 'object' && viaTrovata !== null ? viaTrovata.strada : viaTrovata;
-    const stradaLower = nomeStrada.toLowerCase();
+    if (!nomeStrada) return null;
 
+    const stradaLower = nomeStrada.toLowerCase();
     let zonaSelezionata = "QUARTIERI";
 
     if (stradaLower.includes("belenzani") || stradaLower.includes("duomo") || stradaLower.includes("manci") || stradaLower.includes("roma")) {
@@ -77,6 +80,7 @@ async function cercaCalendario(viaSpecificata = null) {
 
     try {
         const response = await getCalendarioRifiuti(viaInput);
+        if (!response) return;
 
         placeholderMsg.style.display = 'none';
         risultatiSezione.style.display = 'block';
@@ -89,7 +93,7 @@ async function cercaCalendario(viaSpecificata = null) {
         document.getElementById('next-waste-day').textContent = `Il prossimo ritiro sarà di ${response.prossimoRitiro.giorno}`;
         document.getElementById('widget-color-block').style.backgroundColor = getColoreRifiuto(response.prossimoRitiro.tipo);
 
-        // SVUOTAMENTO COMPLETO E SICURO DELLE VECCHIE SCHEDE DEI GIORNI (Risolve il bug del blocco)
+        // SVUOTAMENTO COMPLETO E SICURO DELLE VECCHIE SCHEDE DEI GIORNI
         const giorni = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
         giorni.forEach(g => {
             const lista = document.querySelector(`#day-${g} .rifiuti-list`);
@@ -103,7 +107,7 @@ async function cercaCalendario(viaSpecificata = null) {
             const giornoContainer = document.querySelector(`#day-${item.giorno} .rifiuti-list`);
             if (giornoContainer) {
                 const noDataSpan = giornoContainer.querySelector('.nessun-ritiro');
-                if (noDataSpan) giornoContainer.innerHTML = ''; // Rimuove definitivamente la scritta provvisoria
+                if (noDataSpan) giornoContainer.innerHTML = ''; // Rimuove la scritta provvisoria
 
                 const tag = document.createElement('span');
                 tag.style.cssText = "display:block; margin:6px 0; padding:6px 10px; border-radius:4px; color:#fff; font-weight:bold; font-size:13px; text-align:center;";
@@ -127,7 +131,7 @@ async function controllaProfiloEVia() {
     const token = localStorage.getItem("token");
     if (token) {
         try {
-            const response = await fetch(`http://localhost:3000/api/utenti/me`, {//chiedo il profilo con all'interno la via
+            const response = await fetch(`http://localhost:3000/api/utenti/me`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -136,7 +140,7 @@ async function controllaProfiloEVia() {
                 const utente = await response.json();
                 if (utente.via) {
                     const viaId = utente.via;
-                    const res = await fetch(`http://localhost:3000/api/vie/via/${viaId}`, {//chiedo la via dell'utente con all'interno la strada
+                    const res = await fetch(`http://localhost:3000/api/vie/via/${viaId}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -145,9 +149,9 @@ async function controllaProfiloEVia() {
                     });
                     const r = await res.json();
                     const strada = r.strada;
-                    console.log(strada);
-                    document.getElementById('via').value = strada;//riempio di base la barra di ricerca della via con la via dell'utente
-                    cercaCalendario(strada);//cerco il calendario per la via dell'utente
+                    
+                    document.getElementById('via').value = strada;
+                    cercaCalendario(strada);
                 }
             }
         } catch (error) { }

@@ -675,6 +675,17 @@ input[type="file"] {
     box-sizing: border-box;
 }
 
+.search-input-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 15px;
+    position: relative;        /*FONDAMENTALE: permette alla tendina di allinearsi a questo box */
+}
+
 .reports-feed {
     display: flex;
     flex-direction: column;
@@ -921,7 +932,7 @@ input[type="file"] {
 
 .user-greeting {
     font-weight: bold;
-    color: #3498db;
+    color: #2ecc71;
 }
 
 
@@ -946,16 +957,17 @@ input[type="file"] {
 /*PER AUTOCOMPLETE DELLA VIA*/
 .autocomplete-list {
     position: absolute;
+    top: 100%;                  /* Si posiziona esattamente sotto l'input */
+    left: 0;
+    width: 100%;                /* Prende la stessa identica larghezza del box di ricerca */
     background: white;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    max-height: 180px;
-    overflow-y: auto;
-    max-width: 100%;
-    z-index: 9999;
-    display: none;
-    margin-top: 20%;
-    text-align: left;
+    border: 1px solid #cbd5e1;
+    border-radius: 0 0 8px 8px; /* Arrotonda solo i due angoli in basso */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 9999;              /* Sta sopra a qualsiasi altro elemento della pagina */
+    max-height: 200px;          /* Limita l'altezza massima se ci sono tante vie */
+    overflow-y: auto;           /* Se le vie superano l'altezza, crea una barra di scorrimento interna */
+    box-sizing: border-box;
 }
 
 .input-group {
@@ -989,4 +1001,67 @@ input[type="file"] {
     margin-bottom: 10px;
     border-radius: 6px;
     background: #f8f9fa;
+}
+
+/* ==========================================
+   GESTIONE COMPORTAMENTO MENU HAMBURGER 
+   ========================================== */
+
+/* Di base su computer il pulsante hamburger deve essere nascosto */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   AGGIUNTA RESPONSIVE: NAVBAR ED HAMBURGER MENU CORRETTO (LOGO A SINISTRA)
+   ========================================================================= */
+@media (max-width: 768px) {
+    /* Mostra il pulsante hamburger */
+    .menu-toggle {
+        display: block !important;
+    }
+
+    /* Permette agli elementi della nav di andare a capo, mantenendo la riga principale */
+    nav {
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* Il logo resta ancorato a sinistra e non si sposta */
+    .logo {
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    /* Nasconde la lista dei link e la mette in verticale al centro */
+    nav ul {
+        display: none;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        order: 3; /* Lo spinge sotto la riga del logo e dell'hamburger */
+        gap: 15px !important;
+        padding: 15px 0 5px 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Quando clicchi sull'hamburger, mostra la lista dei link */
+    nav ul.active {
+        display: flex !important;
+    }
+
+    /* ✨ STRUTTURA DEL "CIAO" SU MOBILE: non lo nascondiamo più a monte */
+    .user-box {
+        width: 100% !important;
+        justify-content: center !important; /* Forza il contenuto al centro */
+        order: 4; /* Lo mette sempre in fondo, sotto ai link */
+        margin: 10px 0 0 0 !important;
+        padding-bottom: 10px;
+    }
 }
