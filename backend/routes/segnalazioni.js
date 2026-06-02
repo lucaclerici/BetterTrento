@@ -22,10 +22,10 @@ router.post("/", auth, upload.single("immagini"), creaSegnalazione);//per creare
 router.get("/mie", auth, mieSegnalazioni);//per vedere le segnalazioni create di un singolo utente
 router.get("/", auth, autorizzaRuoli("AMMINISTRATORE"), tutteSegnalazioni);//per vedere tutte le segnalazioni (solo admin)
 
-router.get("/problemi", auth, getProblemi);//restituisce le segnalazioni presenti nel DB, serve per creazione di una segnalazione
+router.get("/problemi", auth, getProblemi);//restituisce i problemi della categoria presenti nel DB, serve per creazione di una segnalazione
 
 router.get("/:id", auth, dettaglioSegnalazione);//per vedere nel dettaglio una segnalazione
-router.get("/per-via/:idVia", auth, segnalazioniPerVia);//per vedere tutte le segnalazioni di una data via
+router.get("/per-via/:idVia", segnalazioniPerVia);//per vedere tutte le segnalazioni di una data via -> accessibile a tutti
 
 router.put("/:id/stato", auth, autorizzaRuoli("AMMINISTRATORE"), aggiornaStato);//per cambiare lo stato di una via (solo admin)
 

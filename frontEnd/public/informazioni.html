@@ -35,25 +35,25 @@
     <section class="events-hero">
         <div class="hero-content">
             <h1>Cosa succede a Trento</h1>
-            <p>Scopri iniziative culturali, mercati, assemblee di quartiere e attività sportive nelle tue
-                circoscrizioni.</p>
+            <p>Scopri iniziative culturali, eventi straordinari e segnalazioni nella tua via</p>
         </div>
     </section>
 
-    <section class="search-filter-container">
+    <section class="search-filter-container" style="height: 500px;">
         <div class="search-box-wrapper" style="max-width: 550px;">
             <div class="search-input-group">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                 </svg>
-                <input type="text" id="search-via" placeholder="Inserisci la tua via di residenza..."
+                <input type="text" id="via" placeholder="Inserisci la tua via di residenza..."
                     list="vie-suggerite">
-                <datalist id="vie-suggerite"></datalist>
+                <div class="autocomplete-list" style="margin-top: 0%;"></div>
             </div>
 
             <button id="btn-cerca" class="search-btn">Cerca</button>
         </div>
+        <div id="reports-feed" class="reports-feed"></div>
     </section>
 
     <main class="events-layout">
