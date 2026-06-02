@@ -48,13 +48,14 @@ function setupAutocompleteVie(inputId = "via") {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        /*const token = localStorage.getItem("token");
         
         //chiama l'API del backend
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
             headers: { "Authorization": "Bearer " + token }
-        });
-
+        });*/
+        
+        const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`);
         const vie = await res.json();
 
         lista.innerHTML = "";
