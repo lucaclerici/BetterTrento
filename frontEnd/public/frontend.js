@@ -122,7 +122,7 @@ async function aggiornaNavbarRuolo() {
 
     const user = await res.json();
 
-    // 🔵 Mostra il link solo agli admin
+    //Mostra il link solo agli admin
     if (user.ruolo === "AMMINISTRATORE") {
         document.getElementById("nav-gestione-eventi").style.display = "block";
     }

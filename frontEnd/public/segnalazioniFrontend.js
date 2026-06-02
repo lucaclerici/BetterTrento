@@ -120,9 +120,8 @@ async function caricaSegnalazioniPerVia(idVia) {
     const feed = document.getElementById("reports-feed");
 
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`, {
-            headers: { "Authorization": "Bearer " + token }
-    });
+    const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`);
+          
     const segnalazioni = await res.json();
 
     feed.innerHTML = "";
