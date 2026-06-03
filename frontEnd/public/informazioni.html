@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetterTrento - Eventi della Comunità</title>
+    <title>BetterTrento - Informazioni del Territorio</title>
     <link rel="stylesheet" href="style.css">
     <script src="frontend.js" defer></script>
+    <script src="informazioni.js" defer></script>
 </head>
 
 <body>
@@ -19,7 +20,7 @@
             </div>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="eventi.html" style="color: #3498db; font-weight: bold;">Eventi</a></li>
+                <li><a href="informazioni.html" style="color: #3498db; font-weight: bold;">Informazioni</a></li>
                 <li id="nav-gestione-eventi" style="display: none;">
                     <a href="gestioneEventi.html">Gestione Eventi</a>
                 </li>
@@ -34,46 +35,33 @@
     <section class="events-hero">
         <div class="hero-content">
             <h1>Cosa succede a Trento</h1>
-            <p>Scopri iniziative culturali, mercati, assemblee di quartiere e attività sportive nelle tue
-                circoscrizioni.</p>
+            <p>Scopri iniziative culturali, eventi straordinari e segnalazioni nella tua via</p>
         </div>
     </section>
 
-    <section class="filters-section">
-        <div class="filters-wrapper">
-            <div class="filter-group">
-                <label for="filter-circoscrizione">Circoscrizione</label>
-                <select id="filter-circoscrizione" onchange="fetchEventi()">
-                    <option value="all">Tutte le zone</option>
-                    <option value="Centro Storico">Centro Storico-Piedicastello</option>
-                    <option value="Oltrefersina">Oltrefersina</option>
-                    <option value="Mattarello">Mattarello</option>
-                    <option value="San Giuseppe">San Giuseppe-Santa Chiara</option>
-                </select>
+    <section class="search-filter-container">
+        <div class="search-box-wrapper" style="max-width: 550px;">
+            <div class="search-input-group">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <input type="text" id="via" placeholder="Inserisci la tua via di residenza..."
+                    list="vie-suggerite">
+                <div class="autocomplete-list" style="margin-top: 0%;"></div>
             </div>
 
-            <div class="filter-group">
-                <label for="filter-categoria">Categoria</label>
-                <select id="filter-categoria" onchange="fetchEventi()">
-                    <option value="all">Tutte le categorie</option>
-                    <option value="Cultura">Cultura e Mostre</option>
-                    <option value="Sociale">Incontri e Sociale</option>
-                    <option value="Sport">Sport e Benessere</option>
-                </select>
-            </div>
+            <button id="btn-cerca" class="search-btn">Cerca</button>
         </div>
+        <div id="reports-feed-eventi" class="reports-feed"></div>
+        <div id="reports-feed-segnalazioni" class="reports-feed"></div>
     </section>
-
-    <main class="events-main">
-        <div id="events-grid" class="events-grid">
-        </div>
-    </main>
 
     <footer>
         <div class="footer-container">
-            <div class="footer-col">
+            <div class="footer-col branding">
                 <div class="footer-logo">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 21h18"></path>
                         <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
@@ -90,8 +78,8 @@
                 <h4>Mappa del Sito</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="eventi.html">Esplora Eventi</a></li>
-                    <li><a href="#">Invia Segnalazione</a></li>
+                    <li><a href="informazioni.html">Esplora Eventi</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
                     <li><a href="numeri_utili.html">Numeri Utili</a></li>
                 </ul>
             </div>
@@ -105,12 +93,10 @@
                 </ul>
             </div>
         </div>
-
         <div class="footer-bottom">
-            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+            <p>&copy; 2025 BetterTrento - Comune di Trento. Tutti i diritti riservati.</p>
         </div>
     </footer>
-
 </body>
 
 </html>

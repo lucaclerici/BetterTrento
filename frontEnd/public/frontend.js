@@ -48,13 +48,14 @@ function setupAutocompleteVie(inputId = "via") {
             return;
         }
 
-        const token = localStorage.getItem("token");
+        /*const token = localStorage.getItem("token");
         
         // Chiama l'API del backend
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
             headers: { "Authorization": "Bearer " + token }
-        });
-
+        });*/
+        
+        const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`);
         const vie = await res.json();
 
         lista.innerHTML = "";
@@ -122,8 +123,8 @@ async function aggiornaNavbarRuolo() {
 
     const user = await res.json();
 
-    // 🔵 Mostra il link solo agli admin
-    if (user.ruolo === "AMMINISTRATORE" && document.getElementById("nav-gestione-eventi")) {
+    //Mostra il link solo agli admin
+    if (user.ruolo === "AMMINISTRATORE") {
         document.getElementById("nav-gestione-eventi").style.display = "block";
     }
 }

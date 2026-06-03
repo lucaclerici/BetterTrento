@@ -106,10 +106,10 @@ export async function loginUtente(req, res) {
 // REGISTRAZIONE UTENTE
 export async function registraUtente(req, res) {
   try {
-    const { email, password, nome, cognome } = req.body;
+    const { email, password, nome, cognome, via } = req.body;
 
     //Controllo che i campi ci siano
-    if (!email || !password || !nome || !cognome) {
+    if (!email || !password || !nome || !cognome || !via) {
       return res.status(400).json({ errore: "Tutti i campi sono obbligatori" });
     }
 
@@ -128,6 +128,7 @@ export async function registraUtente(req, res) {
       password: passwordCriptata,
       nome,
       cognome,
+      via,
       ruolo: "UTENTE"
     });
 
