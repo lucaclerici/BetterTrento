@@ -20,11 +20,11 @@ document.addEventListener("click", (e) => {
     if (userBox && userBox.contains(e.target)) {
         window.location.href = "/frontEnd/public/profilo.html";
     }
-});//da commento modifica della navbar a qui, si può inserire nella funzione aggiorna navbarRuolo...a fine file
+});
 
 
 
-/*AUTOCOMPLETE SCRITTURA DELLE VIE*/
+/*AUTOCOMPLETE SCRITTURA DELLE VIE (CORRETTO)*/
 function setupAutocompleteVie(inputId = "via") {
     const input = document.getElementById(inputId);
     if (!input) return;
@@ -50,7 +50,7 @@ function setupAutocompleteVie(inputId = "via") {
 
         /*const token = localStorage.getItem("token");
         
-        //chiama l'API del backend
+        // Chiama l'API del backend
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
             headers: { "Authorization": "Bearer " + token }
         });*/
@@ -60,36 +60,36 @@ function setupAutocompleteVie(inputId = "via") {
 
         lista.innerHTML = "";
         lista.style.display = "block";
-        if (inputId === "search-via") {//per questioni di stile CSS
-            lista.style.marginTop = "10px";
-        }
-        if (inputId === "search-eventi-via") {//per questioni di stile CSS
+        if (inputId === "search-via" || inputId === "search-eventi-via") {
             lista.style.marginTop = "10px";
         }
 
-        vie.forEach(v => {
+        // ✨ CORRETTO: Usiamo 'via' coerentemente ovunque nel ciclo
+        vie.forEach(via => {
+            if (!via || !via.strada) return;
+
             const item = document.createElement("div");
             item.classList.add("autocomplete-item");
-            item.textContent = v.strada;
+            item.textContent = via.strada;
 
             item.addEventListener("click", () => {
-                input.value = v.strada;
-                input.dataset.viaId = v._id;
+                input.value = via.strada;
+                input.dataset.viaId = via._id;
                 lista.style.display = "none";
 
-                //Carica il calendario in pagina rifiuti
+                // Carica il calendario in pagina rifiuti
                 if (inputId === "via" && typeof cercaCalendario === "function") {
-                    cercaCalendario(v.strada);
+                    cercaCalendario(via.strada);
                 }
 
-                //Chiama il caricamento delle segnalazioni da segnalazioniFronend.js
-                if (inputId === "search-via") {
-                    caricaSegnalazioniPerVia(v._id);
+                // Chiama il caricamento delle segnalazioni da segnalazioniFronend.js
+                if (inputId === "search-via" && typeof caricaSegnalazioniPerVia === "function") {
+                    caricaSegnalazioniPerVia(via._id);
                 }
 
-                // filtro eventi admin in pagina gestione eventi
-                if (inputId === "search-eventi-via") {
-                    caricaEventiPerVia(v._id);
+                // Filtro eventi admin in pagina gestione eventi
+                if (inputId === "search-eventi-via" && typeof caricaEventiPerVia === "function") {
+                    caricaEventiPerVia(via._id);
                 }
             });
 
@@ -102,10 +102,10 @@ function setupAutocompleteVie(inputId = "via") {
 
 //RITORNA IL RUOLO UTENTE
 function getUserRole() {
-    const token = localStorage.getItem("token");//prende il token
-    if (!token) return "utente";//se il token è vuoto
+    const token = localStorage.getItem("token");
+    if (!token) return "utente";
 
-    const payload = JSON.parse(atob(token.split(".")[1]));//dal token si prende il ruolo
+    const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.ruolo || "utente";
 }
 
@@ -128,3 +128,15 @@ async function aggiornaNavbarRuolo() {
         document.getElementById("nav-gestione-eventi").style.display = "block";
     }
 }
+
+// Gestione globale del menù a tendina mobile per tutte le pagine
+document.addEventListener("DOMContentLoaded", () => {
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navMenu = document.getElementById('nav-menu');
+
+    if (menuBtn && navMenu) {
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+    }
+});

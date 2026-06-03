@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetterTrento - Miglioriamo la città</title>
+    <title>BetterTrento - Linee Guida OCL</title>
     <link rel="stylesheet" href="style.css">
     <script src="frontend.js" defer></script>
 </head>
-
 <body>
+
     <header>
         <nav>
             <div class="logo">
                 <img src="..\image\stemma_trentino.jpg" class="logo-img">
                 <span><a href="index.html">BetterTrento</a></span>
             </div>
-            <!-- Bottone hamburger -->
+            <!--Bottone hamburger-->
             <button class="menu-toggle" id="mobile-menu-btn">☰</button>
             <ul id="nav-menu">
-                <li><a href="index.html" style="color: #3498db; font-weight: bold;">Home</a></li>
-                <li><a href="informazioni.html">Informazioni</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html">Eventi</a></li>
                 <li id="nav-gestione-eventi" style="display: none;">
                     <a href="gestioneEventi.html">Gestione Eventi</a>
                 </li>
@@ -32,31 +31,25 @@
         </nav>
     </header>
 
-    <main>
-        <section class="hero">
-            <h1>Rendi Trento un posto migliore</h1>
-            <p>Segnala problemi, consulta il calendario rifiuti e resta aggiornato sugli eventi della tua zona.</p>
-            <button onclick="window.location.href='segnalazioni.html'">Fai una Segnalazione</button>
-        </section>
+    <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1;">
+        <section style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h1 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Linee Guida della Community (OCL)</h1>
+            <p style="color: #7f8c8d; font-size: 0.95rem; line-height: 1.6;">Benvenuto su BetterTrento. Per garantire uno spazio digitale sicuro, costruttivo e rispettoso per tutti i cittadini di Trento, chiediamo di seguire queste regole fondamentali di comportamento all'interno della piattaforma.</p>
+            
+            <h3 style="color: #2c3e50; margin-top: 30px;">1. Segnalazioni Costruttive e Veritiere</h3>
+            <p style="color: #555; line-height: 1.6;">Quando invii una segnalazione riguardante disservizi urbani o rifiuti, assicurati di inserire dati reali, descrizioni chiare e la via corretta. Non è consentito l'invio di segnalazioni false o palesemente goliardiche al solo scopo di testare il sistema.</p>
 
-        <section class="services">
-            <div class="card">
-                <h3>Calendario Rifiuti</h3>
-                <p>Controlla la raccolta differenziata al tuo indirizzo.</p>
-                <button class="secondary" onclick="window.location.href='rifiuti.html'">Visualizza</button>
-            </div>
-            <div class="card">
-                <h3>Eventi Locali</h3>
-                <p>Scopri cosa succede nella tua circoscrizione.</p>
-                <button class="secondary" onclick="window.location.href='eventi.html'">Esplora</button>
-            </div>
-            <div class="card">
-                <h3>Numeri Utili</h3>
-                <p>Contatti rapidi per emergenze e servizi comunali.</p>
-                <button class="secondary" onclick="window.location.href='numeri_utili.html'">Chiama</button>
-            </div>
+            <h3 style="color: #2c3e50; margin-top: 25px;">2. Rispetto del Personale e della Community</h3>
+            <p style="color: #555; line-height: 1.6;">Nei testi delle segnalazioni o nelle interazioni relative agli eventi cittadini, è severamente vietato l'uso di un linguaggio offensivo, scurrile, diffamatorio o discriminatorio nei confronti degli altri utenti o del personale comunale incaricato della gestione.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">3. Protezione della Privacy Altrui</h3>
+            <p style="color: #555; line-height: 1.6;">Nelle descrizioni pubbliche o nelle eventuali immagini/allegati inseriti, evita di includere dati personali sensibili di terzi individui (es. volti nitidi di passanti, targhe automobilistiche leggibili o numeri di telefono privati) senza il loro esplicito consenso.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">4. Moderazione e Sanzioni</h3>
+            <p style="color: #555; line-height: 1.6;">Il team del Gruppo 26 si riserva il diritto di moderare, nascondere o rimuovere segnalazioni e contenuti che violino queste linee guida, provvedendo nei casi più gravi alla sospensione temporanea o permanente dell'account dell'utente.</p>
         </section>
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-col">
@@ -100,5 +93,4 @@
     </footer>
 
 </body>
-
 </html>

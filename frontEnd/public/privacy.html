@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetterTrento - Miglioriamo la città</title>
+    <title>BetterTrento - Privacy & Cookie Policy</title>
     <link rel="stylesheet" href="style.css">
     <script src="frontend.js" defer></script>
 </head>
-
 <body>
-    <header>
+
+   <header>
         <nav>
             <div class="logo">
                 <img src="..\image\stemma_trentino.jpg" class="logo-img">
                 <span><a href="index.html">BetterTrento</a></span>
             </div>
-            <!-- Bottone hamburger -->
+            <!--Bottone hamburger-->
             <button class="menu-toggle" id="mobile-menu-btn">☰</button>
             <ul id="nav-menu">
-                <li><a href="index.html" style="color: #3498db; font-weight: bold;">Home</a></li>
-                <li><a href="informazioni.html">Informazioni</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="eventi.html">Eventi</a></li>
                 <li id="nav-gestione-eventi" style="display: none;">
                     <a href="gestioneEventi.html">Gestione Eventi</a>
                 </li>
@@ -32,31 +31,25 @@
         </nav>
     </header>
 
-    <main>
-        <section class="hero">
-            <h1>Rendi Trento un posto migliore</h1>
-            <p>Segnala problemi, consulta il calendario rifiuti e resta aggiornato sugli eventi della tua zona.</p>
-            <button onclick="window.location.href='segnalazioni.html'">Fai una Segnalazione</button>
-        </section>
+    <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1;">
+        <section style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h1 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Informativa sulla Privacy & Cookie Policy</h1>
+            <p style="color: #7f8c8d; font-size: 0.95rem; line-height: 1.6;">In conformità al Regolamento Generale sulla Protezione dei Dati (GDPR - UE 2016/679), questa pagina descrive le modalità di trattamento dei dati personali raccolti durante l'utilizzo dell'applicazione web BetterTrento.</p>
+            
+            <h3 style="color: #2c3e50; margin-top: 30px;">1. Dati Raccolti e Finalità</h3>
+            <p style="color: #555; line-height: 1.6;">Raccogliamo i dati inseriti volontariamente in fase di registrazione (Nome, Email, Password crittografata e Via di residenza) al solo scopo di fornire i servizi personalizzati della piattaforma, come il caricamento automatico del calendario dei rifiuti e la gestione delle segnalazioni private dell'utente.</p>
 
-        <section class="services">
-            <div class="card">
-                <h3>Calendario Rifiuti</h3>
-                <p>Controlla la raccolta differenziata al tuo indirizzo.</p>
-                <button class="secondary" onclick="window.location.href='rifiuti.html'">Visualizza</button>
-            </div>
-            <div class="card">
-                <h3>Eventi Locali</h3>
-                <p>Scopri cosa succede nella tua circoscrizione.</p>
-                <button class="secondary" onclick="window.location.href='eventi.html'">Esplora</button>
-            </div>
-            <div class="card">
-                <h3>Numeri Utili</h3>
-                <p>Contatti rapidi per emergenze e servizi comunali.</p>
-                <button class="secondary" onclick="window.location.href='numeri_utili.html'">Chiama</button>
-            </div>
+            <h3 style="color: #2c3e50; margin-top: 25px;">2. Conservazione e Sicurezza</h3>
+            <p style="color: #555; line-height: 1.6;">Tutti i dati sono memorizzati in modo sicuro all'interno di un database MongoDB protetto. Le credenziali d'accesso vengono cifrate e le sessioni sono gestite tramite token JWT (JSON Web Token) scambiati in modo sicuro tra client e server.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">3. Utilizzo dei Cookie</h3>
+            <p style="color: #555; line-height: 1.6;">BetterTrento non utilizza cookie di profilazione a scopi pubblicitari o di tracciamento di terze parti. Utilizziamo esclusivamente lo spazio di archiviazione locale del browser (<code>localStorage</code>) per salvare temporaneamente il token di autenticazione dell'utente per mantenerlo loggato tra le diverse pagine del sito.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">4. Diritti dell'Utente</h3>
+            <p style="color: #555; line-height: 1.6;">Ogni utente registrato ha il diritto in qualunque momento di accedere ai propri dati tramite la sezione Profilo, chiederne la modifica o richiedere la cancellazione totale del proprio account inviando una comunicazione agli amministratori del progetto (Gruppo 26).</p>
         </section>
     </main>
+
     <footer>
         <div class="footer-container">
             <div class="footer-col">
@@ -100,5 +93,4 @@
     </footer>
 
 </body>
-
 </html>

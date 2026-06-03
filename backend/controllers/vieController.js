@@ -39,17 +39,19 @@ async function cercaVie(req, res) {
     const query = req.query.query;
 
     if (!query) {
-      return res.status(400).json({ error: "Parametro 'query' mancante" });
+      return res.json([]);
     }
 
-    const vie = await Via.find({
-      strada: { $regex: query, $options: "i" }
-    }).limit(10);
+    //Usiamo 'strada' (che è il campo reale del DB) al posto di 'nome'
+    // E usiamo $options: "i" per ignorare maiuscole e minuscole
+    const vie = await Via.find({ 
+      strada: { $regex: query, $options: "i" } 
+    }).limit(20); // Alzato a 20 per darti molte più vie simultanee nella tendina
 
     res.json(vie);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Errore server" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Errore durante la ricerca delle vie: " + error.message });
   }
 }
 
