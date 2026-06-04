@@ -18,7 +18,9 @@
                 <img src="..\image\stemma_trentino.jpg" class="logo-img">
                 <span><a href="index.html">BetterTrento</a></span>
             </div>
-            <ul>
+            <!-- Bottone hamburger -->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="informazioni.html" style="color: #3498db; font-weight: bold;">Informazioni</a></li>
                 <li id="nav-gestione-eventi" style="display: none;">
@@ -36,32 +38,42 @@
         <div class="hero-content">
             <h1>Cosa succede a Trento</h1>
             <p>Scopri iniziative culturali, eventi straordinari e segnalazioni nella tua via</p>
+            
+            <div class="modern-search-box-container">
+                <div class="modern-search-box">
+                    <div class="search-input-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="geo-icon">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="via" placeholder="Inserisci la tua via di residenza... (Es. Piazza Duomo)" autocomplete="off">
+                    </div>
+                    <button type="button" id="btn-cerca" class="btn-search-modern">
+                        <span>Cerca</span>
+                    </button>
+                </div>
+                <div id="autocomplete-vie-via" class="autocomplete-list" style="display: none;"></div>
+            </div>
         </div>
     </section>
 
     <section class="search-filter-container">
-        <div class="search-box-wrapper" style="max-width: 550px;">
-            <div class="search-input-group">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <input type="text" id="via" placeholder="Inserisci la tua via di residenza..."
-                    list="vie-suggerite">
-                <div class="autocomplete-list" style="margin-top: 0%;"></div>
-            </div>
-
-            <button id="btn-cerca" class="search-btn">Cerca</button>
+        <div class="info-container-centrato">
+            <div id="reports-feed-eventi" class="reports-feed"></div>
         </div>
-        <div id="reports-feed-eventi" class="reports-feed"></div>
-        <div id="reports-feed-segnalazioni" class="reports-feed"></div>
+        
+        <div style="height: 30px; width: 100%;"></div>
+
+        <div class="info-container-centrato">
+            <div id="reports-feed-segnalazioni" class="reports-feed"></div>
+        </div>
     </section>
 
     <footer>
         <div class="footer-container">
-            <div class="footer-col branding">
+            <div class="footer-col">
                 <div class="footer-logo">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 21h18"></path>
                         <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
@@ -78,7 +90,7 @@
                 <h4>Mappa del Sito</h4>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="informazioni.html">Esplora Eventi</a></li>
+                    <li><a href="informazioni.html">Esplora le Informazioni</a></li>
                     <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
                     <li><a href="numeri_utili.html">Numeri Utili</a></li>
                 </ul>
@@ -88,13 +100,14 @@
                 <h4>Amministrazione</h4>
                 <ul>
                     <li><a href="auth.html">Accesso Personale</a></li>
-                    <li><a href="#">Linee Guida OCL</a></li>
-                    <li><a href="#">Privacy & Cookie Policy</a></li>
+                    <li><a href="linee_guida.html">Linee Guida OCL</a></li>
+                    <li><a href="privacy.html">Privacy & Cookie Policy</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2025 BetterTrento - Comune di Trento. Tutti i diritti riservati.</p>
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
         </div>
     </footer>
 </body>
