@@ -87,7 +87,7 @@ async function caricaSegnalazioni(via = null) {
             card.classList.add("modern-info-card");
             
             card.innerHTML = `
-                <div class="card-badge-stato stato-aperto">APERTO</div>
+                <div class="card-badge-stato stato-aperto">${seg.stato}</div>
                 <h3>Segn: ${seg.nome}</h3>
                 <p class="card-desc">${seg.descrizione || "Nessuna descrizione."}</p>
                 <div class="card-meta">
