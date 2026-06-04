@@ -34,20 +34,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //CARICA I PROBLEMI DAL DB DENTRO LA CATEGORIA (nella creazione della segnalazione)
 async function caricaProblemi() {
-  const problemi = await fetch("http://localhost:3000/api/segnalazioni/problemi", {
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
-  }).then(r => r.json());
+    const problemi = await fetch("http://localhost:3000/api/segnalazioni/problemi", {
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    }).then(r => r.json());
 
-  const select = document.getElementById("categoria");
+    const select = document.getElementById("categoria");
 
-  problemi.forEach(p => {
-    const opt = document.createElement("option");
-    opt.value = p._id;
-    opt.textContent = p.nome;
-    select.appendChild(opt);
-  });
+    problemi.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p._id;
+        opt.textContent = p.nome;
+        select.appendChild(opt);
+    });
 }
 caricaProblemi();
 
@@ -121,7 +121,7 @@ async function caricaSegnalazioniPerVia(idVia) {
 
     const token = localStorage.getItem("token");
     const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`);
-          
+
     const segnalazioni = await res.json();
 
     feed.innerHTML = "";
@@ -133,7 +133,7 @@ async function caricaSegnalazioniPerVia(idVia) {
         return;
     }
 
-    segnalazioni.forEach(seg => {
+    segnalazioni.forEach(seg => {//per ogni segnalazione
         const card = document.createElement("div");
         card.classList.add("report-card");
 
@@ -149,20 +149,39 @@ async function caricaSegnalazioniPerVia(idVia) {
             const adminControls = document.createElement("div");
             adminControls.classList.add("admin-controls");
 
+            //tutti gli stati possibili di una segnalazione
+            const tuttiGliStati = ["APERTA", "INCARICO", "RISOLTA", "RESPINTA"];
+
+            //lo stato corrente della segnalazione
+            const statoCorrente = seg.stato || "APERTA";
+
+            //lo stato corrente va al primo posto, gli altri seguono
+            const statiOrdinati = [
+                statoCorrente,
+                ...tuttiGliStati.filter(s => s !== statoCorrente)
+            ];
+
+            //creiamo i tag <option> nell'ordine corretto
+            //mettiamo l'attributo selected solo sulla prima opzione, cioè quella corrente
+            const opzioniHTML = statiOrdinati.map(stato => {
+                // Rendiamo il testo formattato bene (es: INCARICO -> In carico, APERTA -> Aperta)
+                let testoVisualizzato = stato.charAt(0) + stato.slice(1).toLowerCase();
+                if (stato === "INCARICO") testoVisualizzato = "In carico";
+
+                const isSelected = stato === statoCorrente ? "selected" : "";
+
+                return `<option value="${stato}" ${isSelected}>${testoVisualizzato}</option>`;
+            }).join(""); // Uniamo l'array di stringhe in un'unica grande stringa
+
             adminControls.innerHTML = `
                 <button class="btn-elimina" data-id="${seg._id}">🗑 Elimina</button>
 
                 <select class="select-stato" data-id="${seg._id}">
-                    <option value="APERTA">Aperta</option>
-                    <option value="INCARICO">In carico</option>
-                    <option value="RISOLTA">Risolta</option>
-                    <option value="RESPINTA">Respinta</option>
+                    ${opzioniHTML}
                 </select>
             `;
-
             card.appendChild(adminControls);
         }
-
         feed.appendChild(card);
     });
 
@@ -170,6 +189,7 @@ async function caricaSegnalazioniPerVia(idVia) {
         setupAdminActions();
     }
 }
+
 
 //OPERAZIONI PER ADMIN
 function setupAdminActions() {

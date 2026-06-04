@@ -39,7 +39,7 @@
     </header>
 
     <main class="reports-main">
-        <section class="form-section">
+        <section class="form-section" style="min-width: 50%;">
             <div class="form-card">
                 <h2>Invia una Segnalazione</h2>
                 <p>Hai notato un problema in città? Segnalalo al Comune allegando una foto.</p>
@@ -61,6 +61,7 @@
                         <div class="input-group">
                             <label for="via">Via / Piazza</label>
                             <input type="text" id="via" name="via" placeholder="Es. Via Belenzani" required>
+                            <div class="autocomplete-list" id="autocomplete-vie-via" style="top: 98%;"></div>
                         </div>
                     </div>
 
@@ -88,6 +89,7 @@
                 <h2>Segnalazioni sul Territorio</h2>
                 <div class="search-box">
                     <input type="text" id="search-via" placeholder="🔍 Cerca o filtra per via...">
+                    <div class="autocomplete-list" id="autocomplete-vie-search-via" style="max-width: 250px;"></div>
                 </div>
             </div>
             <div id="reports-feed" class="reports-feed">
