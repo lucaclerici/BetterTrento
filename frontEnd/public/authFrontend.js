@@ -19,6 +19,8 @@ showRegister.addEventListener('click', (e) => {
     }
 });
 
+
+
 //GESTIONE DELL'INVIO (Submit) DEL FORM DI LOGIN
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -75,13 +77,13 @@ registerForm.addEventListener('submit', async (e) => {
         });
         if(!response.ok){
             const r = await response.json();
-            alert(r.errore);
+            alert(r.errore);//stampo l'errore del backend
             window.location.href = "auth.html";
             return;
         }
         alert("REGISTRAZIONE andata a buon fine! Grazie");
         window.location.href = "auth.html";
-    } catch (error) {
+    } catch (error) {//se errore nella richiesta API
         console.error("Errore durante la registrazione:", error);
         alert("REGISTRAZIONE andata male, riprovare");
         window.location.href = "auth.html";

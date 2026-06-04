@@ -961,8 +961,6 @@ input[type="file"] {
 .autocomplete-list {
     display: none;
     position: absolute;
-    top: 100%;                  /* Si posiziona esattamente sotto l'input */
-    left: 0;
     width: 100%;                /* Prende la stessa identica larghezza del box di ricerca */
     background: white;
     border: 1px solid #cbd5e1;
