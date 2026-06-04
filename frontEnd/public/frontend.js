@@ -85,6 +85,11 @@ function setupAutocompleteVie(inputId = "via") {
                 if (inputId === "search-eventi-via" && typeof caricaEventiPerVia === "function") {
                     caricaEventiPerVia(via._id);
                 }
+
+                //per informazioni
+                if(inputId === "via-info" && typeof caricaTutto ==="function"){
+                    caricaTutto(via._id);
+                }
             });
 
             lista.appendChild(item);
