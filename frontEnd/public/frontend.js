@@ -54,7 +54,7 @@ function setupAutocompleteVie(inputId = "via") {
         lista.style.display = "block";
 
         //per motivi di CSS
-        if (inputId === "search-via" || inputId === "search-eventi-via") {
+        if (inputId === "search-via") {
             lista.style.marginTop = "10px";
         }
 
