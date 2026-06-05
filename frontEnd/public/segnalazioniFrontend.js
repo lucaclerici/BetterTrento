@@ -2,26 +2,26 @@
 async function proteggiPagina() {
     const token = localStorage.getItem("token");
 
-    // Se non c’è token → popup + redirect
+    //Se non c’è token
     if (!token) {
         alert("Bisogna essere loggati per accedere alla sezione Segnalazioni");
         window.location.href = "auth.html";
         return;
     }
 
-    // Verifica token col backend
+    //Verifica token col backend
     const res = await fetch("http://localhost:3000/api/utenti/verificaToken", {
         headers: { "Authorization": "Bearer " + token }
     });
 
-    // Se token invalido → popup + logout + redirect
+    //Se il token è invalido allora:
     if (!res.ok) {
         alert("La sessione è scaduta. Effettua di nuovo il login.");
         localStorage.removeItem("token");
         window.location.href = "auth.html";
     }
 
-    // Token valido → mostra la pagina
+
     document.body.style.visibility = "visible";
 
 }
@@ -29,7 +29,7 @@ proteggiPagina();
 
 document.addEventListener("DOMContentLoaded", () => {
     setupAutocompleteVie("via");
-    setupAutocompleteVie("search-via"); // ricerca segnalazioni
+    setupAutocompleteVie("search-via"); //ricerca segnalazioni
 });
 
 //CARICA I PROBLEMI DAL DB DENTRO LA CATEGORIA (nella creazione della segnalazione)
@@ -53,7 +53,7 @@ caricaProblemi();
 
 
 
-// Mostra il nome del file quando viene selezionata una foto
+//Mostra il nome del file quando viene selezionata una foto
 document.getElementById('foto').addEventListener('change', function (e) {
     const fileName = e.target.files[0] ? e.target.files[0].name : "Nessun file selezionato";
     document.getElementById('file-name').textContent = fileName;
@@ -61,13 +61,13 @@ document.getElementById('foto').addEventListener('change', function (e) {
 
 
 
-// INVIO DELLA SEGNALAZIONE AL BACKEND
+//INVIO DELLA SEGNALAZIONE AL BACKEND
 document.getElementById("form-segnalazione").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const token = localStorage.getItem("token");
 
-    // ID VIA (dall'autocomplete)
+    //ID VIA (dall'autocomplete)
     const viaInput = document.getElementById("via");
     const viaId = viaInput.dataset.viaId;
 
@@ -76,7 +76,7 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
         return;
     }
 
-    // ID PROBLEMA/CATEGORIA
+    //ID PROBLEMA/CATEGORIA
     const problemaId = document.getElementById("categoria").value;
 
     if (!problemaId) {
@@ -84,17 +84,17 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
         return;
     }
 
-    // PREPARA I DATI DA INVIARE
+    //PREPARA I DATI DA INVIARE
     const formData = new FormData();
     formData.append("nome", document.getElementById("titolo").value);
     formData.append("descrizione", document.getElementById("descrizione").value);
-    formData.append("via", viaId);          // <-- ID VIA
-    formData.append("problema", problemaId); // <-- ID PROBLEMA
+    formData.append("via", viaId);          // ID VIA
+    formData.append("problema", problemaId); // ID PROBLEMA
 
     const foto = document.getElementById("foto").files[0];
     if (foto) formData.append("immagini", foto);
 
-    // INVIO AL BACKEND
+    //INVIO AL BACKEND
     const res = await fetch("http://localhost:3000/api/segnalazioni/", {
         method: "POST",
         headers: {
@@ -106,8 +106,8 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
     if (res.ok) {
         alert("Segnalazione inviata con successo!");
         document.getElementById("form-segnalazione").reset();
-        viaInput.dataset.viaId = ""; // reset ID via
-        fetchSegnalazioni(); // aggiorna lista
+        viaInput.dataset.viaId = ""; //reset ID via
+        fetchSegnalazioni(); //aggiorna lista
     } else {
         alert("Errore durante l'invio della segnalazione.");
     }
@@ -144,7 +144,7 @@ async function caricaSegnalazioniPerVia(idVia) {
             ${seg.immagini ? `<img src="${seg.immagini}" class="report-img" style="max-width: 20%;">` : ""}
         `;
 
-        //SE ADMIN → AGGIUNGI I PULSANTI
+        //SE ADMIN è AGGIUNGI I PULSANTI
         if (ruolo === "AMMINISTRATORE") {
             const adminControls = document.createElement("div");
             adminControls.classList.add("admin-controls");
@@ -171,7 +171,7 @@ async function caricaSegnalazioniPerVia(idVia) {
                 const isSelected = stato === statoCorrente ? "selected" : "";
 
                 return `<option value="${stato}" ${isSelected}>${testoVisualizzato}</option>`;
-            }).join(""); // Uniamo l'array di stringhe in un'unica grande stringa
+            }).join(""); 
 
             adminControls.innerHTML = `
                 <button class="btn-elimina" data-id="${seg._id}">🗑 Elimina</button>
@@ -195,7 +195,7 @@ async function caricaSegnalazioniPerVia(idVia) {
 function setupAdminActions() {
     const token = localStorage.getItem("token");
 
-    // ELIMINA
+    //ELIMINA
     document.querySelectorAll(".btn-elimina").forEach(btn => {
         btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
@@ -211,7 +211,7 @@ function setupAdminActions() {
         });
     });
 
-    // CAMBIO STATO
+    //CAMBIO STATO
     document.querySelectorAll(".select-stato").forEach(sel => {
         sel.addEventListener("change", async () => {
             const id = sel.dataset.id;
