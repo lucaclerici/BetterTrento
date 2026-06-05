@@ -15,33 +15,38 @@ export async function creaSegnalazione(req, res) {
       return res.status(400).json({ errore: "Dati mancanti" });
     }
 
-    let imageUrl = null;
-
-    if (req.file) {
-      const result = await new Promise((resolve, reject) => {
-        cloudinary.uploader.upload_stream(
-          { folder: "segnalazioni" },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        ).end(req.file.buffer);
-      });
-
-      imageUrl = result.secure_url;
-    }
-
-    const nuova = new Segnalazione({
+    const nuova = new Segnalazione({//creiamo subito la segnalazione
       nome,
       descrizione,
       via,
       problema,
       utente: req.utente.id,
-      immagini: imageUrl, // <-- SOLO LINK che punta all'immagine
+      immagini: null, // <-- SOLO LINK che punta all'immagine in cloudiary, inizialmente null, perchè non abbiamo ancora il link di cloudiary all'img, una volta che l'img è caricata il link viene aggiornato
     });
 
     await nuova.save();
     res.json(nuova);
+
+    //immagine caricata in backgorund
+    if (req.file) {
+      new Promise((resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: "segnalazioni" },
+          async (error, result) => {
+            if (error){
+              console.log("Errore upload cloudiary in background:", error);
+              reject(error);
+            }
+            else{
+              await Segnalazione.findByIdAndUpdate(nuova._id, {
+                immagini: result.secure_url //aggiornamo il link all'img sul DB dopo che è stata caricata su cloudiary
+              });
+              resolve(result);
+            }
+          }
+        ).end(req.file.buffer);
+      });
+    }
 
   } catch (err) {
     console.error(err);
@@ -120,7 +125,6 @@ export async function eliminaSegnalazione(req, res) {
       return res.status(404).json({ errore: "Segnalazione non trovata" });
     }
 
-    console.log("FOTO NEL DB:", seg.immagini);
 
     // Normalizzazione
     let immagini = seg.immagini;
@@ -131,7 +135,6 @@ export async function eliminaSegnalazione(req, res) {
     const publicId = extractPublicId(immagini);
 
     if (publicId) {
-      console.log("CANCELLO DA CLOUDINARY:", publicId);
       await cloudinary.uploader.destroy(publicId);
     }
 
