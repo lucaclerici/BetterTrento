@@ -1,4 +1,9 @@
-// 📅 FUNZIONE CARICA EVENTI
+async function caricaTutto(via=null) {
+    caricaEventi(via);
+    caricaSegnalazioni(via);
+}
+
+//CARICA GLI EVENTI
 async function caricaEventi(via = null) {
     const container = document.getElementById("reports-feed-eventi");
     if (!container) return;
@@ -49,7 +54,7 @@ async function caricaEventi(via = null) {
 }
 
 
-// ⚠️ FUNZIONE CARICA SEGNALAZIONI
+//CARICA LE SEGNALAZIONI
 async function caricaSegnalazioni(via = null) {
     const feed = document.getElementById("reports-feed-segnalazioni");
     if (!feed) return;
@@ -82,7 +87,7 @@ async function caricaSegnalazioni(via = null) {
             card.classList.add("modern-info-card");
             
             card.innerHTML = `
-                <div class="card-badge-stato stato-aperto">APERTO</div>
+                <div class="card-badge-stato stato-aperto">${seg.stato}</div>
                 <h3>Segn: ${seg.nome}</h3>
                 <p class="card-desc">${seg.descrizione || "Nessuna descrizione."}</p>
                 <div class="card-meta">
@@ -140,10 +145,9 @@ async function controllaProfiloEVia() {
 }
 
 
-// ASCOLTO CLICK E GESTIONE AVANZATA ANTI-BLOCCO
 window.addEventListener('DOMContentLoaded', () => {
     controllaProfiloEVia();
-    setupAutocompleteVie("via");
+    setupAutocompleteVie("via-info");
 
     const bottoneCerca = document.getElementById("btn-cerca");
     if (bottoneCerca) {
@@ -159,34 +163,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 🛡️ SISTEMA DI EMERGENZA RECOVERY SE L'AUTOCOMPLETE NON PASSA L'ID
-            if (!viaId || viaId === "undefined" || viaId.trim() === "") {
-                console.log("⚠️ ID mancante, provo a recuperarlo tramite il testo scritto...");
-                try {
-                    // Chiediamo all'elenco generale delle vie se esiste una corrispondenza
-                    const resVie = await fetch(`http://localhost:3000/api/vie`);
-                    if (resVie.ok) {
-                        const listaVie = await resVie.json();
-                        // Trova la via che corrisponde (senza fare distinzione tra maiuscole e minuscole)
-                        const viaTrovata = listaVie.find(v => v.strada.toLowerCase() === testoScritto.toLowerCase());
-                        
-                        if (viaTrovata) {
-                            viaId = viaTrovata._id || viaTrovata.id;
-                            viaInput.dataset.viaId = viaId; // Lo salviamo per i click successivi
-                        }
-                    }
-                } catch (e) {
-                    console.error("Errore nel recupero d'emergenza della via:", e);
-                }
-            }
-
-            // Se dopo il controllo l'ID non si trova ancora, avvisiamo l'utente
-            if (!viaId || viaId === "undefined") {
-                alert("⚠️ Via non riconosciuta. Per favore digita e clicca su uno dei suggerimenti della lista!");
-                return;
-            }
-
-            console.log("🚀 Ricerca avviata con successo per l'ID:", viaId);
             caricaEventi(viaId);
             caricaSegnalazioni(viaId);
         });

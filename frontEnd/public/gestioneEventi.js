@@ -9,11 +9,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //controllo il ruolo per poter accedere alla pagina
     const r = await proteggiPagina();
-    console.log("Ruolo fuori: ");
-    console.log(r);
     if (r !== "AMMINISTRATORE") {
         alert("Accesso negato. Questa pagina è riservata agli amministratori.");
-        //window.location.href = "index.html";
+        window.location.href = "index.html";
         return;
     }
 
@@ -30,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("btn-vedi-tutti").addEventListener("click", () => {
         caricaTuttiEventi();
-        document.getElementById("search-via").value = "";
+        document.getElementById("search-eventi-via").value = "";
     });
 });
 
@@ -42,10 +40,9 @@ async function proteggiPagina() {//ritorno il ruolo dell'utente
     });
 
     const user = await res.json();
-    console.log("Ruolo dentro proteggi:")
-    console.log(user.ruolo);
     return user.ruolo;
 }
+
 
 //CARICA TUTTI GLI EVENTI
 async function caricaTuttiEventi() {

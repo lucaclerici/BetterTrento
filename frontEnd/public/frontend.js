@@ -1,5 +1,3 @@
-document.addEventListener("DOMContentLoaded", aggiornaNavbarRuolo);
-
 //MODIFICA DELLA NAVBAR:
 // - UTENTE LOGGATO -> vede logo utente e un "Ciao" al posto di ACCEDI
 // - UTENTE NON LOGGATO -> vede ACCEDI
@@ -24,7 +22,7 @@ document.addEventListener("click", (e) => {
 
 
 
-/*AUTOCOMPLETE SCRITTURA DELLE VIE (CORRETTO)*/
+/*AUTOCOMPLETE SCRITTURA DELLE VIE*/
 function setupAutocompleteVie(inputId = "via") {
     const input = document.getElementById(inputId);
     if (!input) return;
@@ -47,24 +45,20 @@ function setupAutocompleteVie(inputId = "via") {
             lista.style.display = "none";
             return;
         }
-
-        /*const token = localStorage.getItem("token");
         
-        // Chiama l'API del backend
-        const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`, {
-            headers: { "Authorization": "Bearer " + token }
-        });*/
-        
+        //chiediamo al backend tutte le vie che iniziano con quella stringa
         const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`);
         const vie = await res.json();
 
         lista.innerHTML = "";
         lista.style.display = "block";
-        if (inputId === "search-via" || inputId === "search-eventi-via") {
+
+        //per motivi di CSS
+        if (inputId === "search-via") {
             lista.style.marginTop = "10px";
         }
 
-        // ✨ CORRETTO: Usiamo 'via' coerentemente ovunque nel ciclo
+        //per ogni via
         vie.forEach(via => {
             if (!via || !via.strada) return;
 
@@ -90,6 +84,11 @@ function setupAutocompleteVie(inputId = "via") {
                 // Filtro eventi admin in pagina gestione eventi
                 if (inputId === "search-eventi-via" && typeof caricaEventiPerVia === "function") {
                     caricaEventiPerVia(via._id);
+                }
+
+                //per informazioni
+                if(inputId === "via-info" && typeof caricaTutto ==="function"){
+                    caricaTutto(via._id);
                 }
             });
 
@@ -117,7 +116,7 @@ async function aggiornaNavbarRuolo() {
 
     if (!token || localStorage.getItem("isLogged") !== "true") return;
 
-    const res = await fetch("http://localhost:3000/api/utenti/me", {
+    const res = await fetch("http://localhost:3000/api/utenti/me", {//richiesta profilo per vedere il ruolo
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -129,8 +128,11 @@ async function aggiornaNavbarRuolo() {
     }
 }
 
-// Gestione globale del menù a tendina mobile per tutte le pagine
+
+
+//GESTIONE DEL MENù A TENDINA MOBILE
 document.addEventListener("DOMContentLoaded", () => {
+    aggiornaNavbarRuolo();
     const menuBtn = document.getElementById('mobile-menu-btn');
     const navMenu = document.getElementById('nav-menu');
 

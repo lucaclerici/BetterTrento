@@ -961,8 +961,6 @@ input[type="file"] {
 .autocomplete-list {
     display: none;
     position: absolute;
-    top: 100%;                  /* Si posiziona esattamente sotto l'input */
-    left: 0;
     width: 100%;                /* Prende la stessa identica larghezza del box di ricerca */
     background: white;
     border: 1px solid #cbd5e1;
@@ -1007,10 +1005,7 @@ input[type="file"] {
     background: #f8f9fa;
 }
 
-/* ==========================================
-   GESTIONE COMPORTAMENTO MENU HAMBURGER 
-   ========================================== */
-
+/* GESTIONE COMPORTAMENTO MENU HAMBURGER */
 /* Di base su computer il pulsante hamburger deve essere nascosto */
 .menu-toggle {
     display: none;
@@ -1021,9 +1016,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-/* ==========================================================================
-   AGGIUNTA RESPONSIVE: NAVBAR ED HAMBURGER MENU CORRETTO (LOGO A SINISTRA)
-   ========================================================================= */
+/*AGGIUNTA RESPONSIVE: NAVBAR ED HAMBURGER MENU CORRETTO (LOGO A SINISTRA)*/
 @media (max-width: 768px) {
     /* Mostra il pulsante hamburger */
     .menu-toggle {
@@ -1060,7 +1053,7 @@ input[type="file"] {
         display: flex !important;
     }
 
-    /* ✨ STRUTTURA DEL "CIAO" SU MOBILE: non lo nascondiamo più a monte */
+    /*STRUTTURA DEL "CIAO" SU MOBILE: non lo nascondiamo più a monte */
     .user-box {
         width: 100% !important;
         justify-content: center !important; /* Forza il contenuto al centro */
@@ -1070,7 +1063,7 @@ input[type="file"] {
     }
 }
 
-/* SEZIONE HERO CON CAROSELLO CORRETTO E COSTRRETTO A RIMANERE VISIBILE */
+/* SEZIONE HERO CON CAROSELLO COSTRRETTO A RIMANERE VISIBILE */
 .hero {
     position: relative;
     text-align: center;
@@ -1110,7 +1103,7 @@ input[type="file"] {
     animation: caroselloAnimazione 18s infinite linear;
 }
 
-/* Pellicola scura sopra le foto per garantire la leggibilità del testo */
+/* Pellicola scura sopra le foto per leggibilità del testo */
 .hero-carousel::after {
     content: '';
     position: absolute;
@@ -1135,7 +1128,7 @@ input[type="file"] {
     margin: 0 auto;     
 }
 
-/* 2. ASSICURIAMOCI CHE I TESTI SIANOD EVITAMENTI VISIBILI */
+/*ASSICURA CHE I TESTI SIANO VISIBILI */
 .hero h1 {
     font-size: 3rem;
     margin-bottom: 20px;
@@ -1151,7 +1144,7 @@ input[type="file"] {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-/* 3. IL TUO BOTTONE BELLISSIMO */
+/*IL  BOTTONE stile moderno*/
 .btn-hero-modern {
     display: inline-flex;
     align-items: center;
@@ -1198,9 +1191,7 @@ input[type="file"] {
     100% { opacity: 0; }
 }
 
-/* ==========================================================================
-   ✨ NUOVO LAYOUT BARRA DI RICERCA UNIFICATA (PAGINA INFORMAZIONI)
-   ========================================================================= */
+/*LAYOUT BARRA DI RICERCA UNIFICATA (PAGINA INFORMAZIONI)*/
 .modern-search-box-container {
     position: relative;
     width: 100%;
@@ -1283,10 +1274,7 @@ input[type="file"] {
     display: none; /* Gestito dallo script frontend.js */
 }
 
-/* ==========================================================================
-   🎨 PERSONALIZZAZIONE DEI SUGGERIMENTI DELLE VIE (AUTOCOMPLETE)
-   ========================================================================= */
-
+/*PERSONALIZZAZIONE DEI SUGGERIMENTI DELLE VIE (AUTOCOMPLETE)*/
 /* Forza il colore del testo di ogni via proposta a grigio scuro/nero per leggerlo perfettamente */
 .autocomplete-item {
     padding: 12px 18px !important;
@@ -1294,10 +1282,10 @@ input[type="file"] {
     text-align: left !important;         /* Allinea i nomi delle vie a sinistra */
     font-size: 1rem !important;
     font-weight: 500 !important;
-    color: #2c3e50 !important;           /* 👈 Grigio scuro/Antracite ad alta leggibilità */
+    color: #2c3e50 !important;           /*Grigio scuro/Antracite, alta leggibilità */
     background-color: #ffffff !important; /* Forza lo sfondo della singola riga bianco */
     transition: background-color 0.2s ease, color 0.2s ease !important;
-    border-bottom: 1px solid #f1f5f9 !important; /* Sottile linea di divisione tra una via e l'altra */
+    border-bottom: 1px solid #f1f5f9 !important; /* Sottile linea tra una via e l'altra */
 }
 
 /* Rimuove l'ultimo bordino in basso per non rovinare gli angoli arrotondati */
@@ -1307,14 +1295,11 @@ input[type="file"] {
 
 /* Effetto evidenziatore quando passi sopra a una via con il mouse o con il dito */
 .autocomplete-item:hover {
-    background-color: #3498db !important; /* 👈 Lo sfondo della riga diventa azzurro/blu BetterTrento */
-    color: #ffffff !important;            /* 👈 Il testo della via diventa bianco per un contrasto perfetto */
+    background-color: #3498db !important; /*Lo sfondo della riga diventa azzurro/blu BetterTrento */
+    color: #ffffff !important;            /*Il testo della via diventa bianco per un contrasto perfetto */
 }
 
-/* ==========================================================================
-   ✨ STILIZZAZIONE MODERNA FEED RISULTATI E CARDS (INFORMAZIONI)
-   ========================================================================= */
-
+/*STILIZZAZIONE FEED RISULTATI E CARDS (INFORMAZIONI)*/
 /* Titoli delle sezioni dei feed */
 .feed-section-title {
     font-size: 1.6rem;
@@ -1429,10 +1414,7 @@ input[type="file"] {
     font-weight: 500;
 }
 
-/* ==========================================================================
-   🎯 CENTRATURA E ALLINEAMENTO FEED EVENTI
-   ========================================================================= */
-
+/*CENTRATURA E ALLINEAMENTO FEED EVENTI*/
 /* Contenitore principale per limitare la larghezza e centrare il contenuto */
 .info-container-centrato {
     max-width: 1200px;
