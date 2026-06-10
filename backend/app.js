@@ -1,5 +1,6 @@
-import express from "express";
+import express, { json } from "express";
 import mongoose from "mongoose";
+import path from "path";
 import utentiRoutes from "./routes/utenti.js";
 import segnalazioniRoutes from "./routes/segnalazioni.js";
 import eventiRoutes from "./routes/eventi.js";
@@ -13,11 +14,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
+app.use("/frontEnd", express.static(path.resolve("../frontEnd")));
 
 
 // Route di test
 app.get('/', (req, res) => {
-  res.send('API BetterTrento attiva!');
+  //res.send('API BetterTrento attiva!');
+  res.redirect("/frontEnd/public");
 });
 
 // Connessione al DB
