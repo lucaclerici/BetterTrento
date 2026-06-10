@@ -36,7 +36,7 @@ async function caricaEventi(via = null) {
             card.classList.add("modern-info-card");
             card.innerHTML = `
                 <div class="card-badge">Nuovo Evento</div>
-                <h3>Evento: ${ev.nome}</h3>
+                <h3>${ev.nome}</h3>
                 <p class="card-desc">${ev.descrizione}</p>
                 <div class="card-meta">
                     <span><strong>Data:</strong> ${new Date(ev.data).toLocaleDateString()}</span>
@@ -88,7 +88,7 @@ async function caricaSegnalazioni(via = null) {
             
             card.innerHTML = `
                 <div class="card-badge-stato stato-aperto">${seg.stato}</div>
-                <h3>Segn: ${seg.nome}</h3>
+                <h3>${seg.nome}</h3>
                 <p class="card-desc">${seg.descrizione || "Nessuna descrizione."}</p>
                 <div class="card-meta">
                     <span><strong>Problema:</strong> ${seg.problema?.nome || "N/D"}</span>

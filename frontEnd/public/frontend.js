@@ -3,8 +3,10 @@
 // - UTENTE NON LOGGATO -> vede ACCEDI
 const isLogged = localStorage.getItem("isLogged");
 const loginArea = document.getElementById("login-area");
+const linkAccesso = document.getElementById("accesso-personale");
 
 if (loginArea && isLogged === "true") {
+    linkAccesso.href = "profilo.html";
     loginArea.innerHTML = `
         <div class="user-box" id="user-box">
             <img src="/frontEnd/image/immagine_ominoProfilo.jpg" class="user-icon">
