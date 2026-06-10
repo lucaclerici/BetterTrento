@@ -69,7 +69,6 @@ async function cercaCalendario(viaSpecificata = null) {
     // Estrae il valore corrente nella barra di ricerca della via
     const viaInput = viaSpecificata || document.getElementById('via').value.trim();
 
-    alert(document.getElementById('via').value.trim());
     const risultatiSezione = document.getElementById('risultati-calendario');
     const placeholderMsg = document.getElementById('placeholder-msg');
 
