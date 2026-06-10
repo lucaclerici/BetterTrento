@@ -9,7 +9,8 @@ if (loginArea && isLogged === "true") {
     linkAccesso.href = "profilo.html";
     loginArea.innerHTML = `
         <div class="user-box" id="user-box">
-            <img src="../image/immagine_ominoProfilo.jpg" class="user-icon">
+            <img src="<img src="../image/immagine_ominoProfilo.jpg" class="user-icon">" class="user-icon">
+            
             <span class="user-greeting">Ciao</span>
         </div>
     `;
