@@ -68,6 +68,8 @@ async function getCalendarioRifiuti(viaTrovata = null) {
 async function cercaCalendario(viaSpecificata = null) {
     // Estrae il valore corrente nella barra di ricerca della via
     const viaInput = viaSpecificata || document.getElementById('via').value.trim();
+
+    alert(document.getElementById('via').value.trim());
     const risultatiSezione = document.getElementById('risultati-calendario');
     const placeholderMsg = document.getElementById('placeholder-msg');
 
@@ -170,8 +172,53 @@ function getColoreRifiuto(tipo) {
     }
 }
 
+function localizzaUtente() {
+    const status = document.getElementById("localizzazione-status");
+    const nomeEl = document.getElementById('nome-utente');
+
+    if (!navigator.geolocation) {
+        if (status) status.textContent = "Geolocalizzazione non supportata dal browser.";
+        console.log("Geolocalizzazione non supportata dal browser.");
+        return;
+    }
+
+    if (status) status.textContent = "Recupero posizione in corso...";
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            console.log(position);
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            // Reverse geocoding via Nominatim to extract city and house number
+            const nominatimUrl = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lon+"&accept-language=it";
+
+            fetch(nominatimUrl)
+                .then(res => res.json())
+                .then(data => {
+                    const addr = data.address || {};
+                    const city = addr.city || addr.town || addr.village || addr.municipality || addr.county || '';
+                    const house = addr.house_number || '';
+                    const road = addr.road || addr.pedestrian || addr.residential || '';
+                    const vie = document.getElementById("via");
+                    if (vie) vie.value = road;
+                    status.textContent = "Positione rilevata: " + (road ? road + " " : "") + (house ? house + ", " : "") + city;
+                })
+                .catch(err => {
+                    console.log(err);
+                    if (status) status.textContent = "Impossibile risolvere indirizzo";
+                });
+        },
+        (error) => {
+            if (status) status.textContent = "Impossibile ottenere la posizione.";
+            console.log(error.message);
+        }
+    );
+}
+
 
 document.getElementById('btn-cerca').addEventListener('click', () => cercaCalendario());
+document.getElementById('btn-localizza').addEventListener('click', localizzaUtente);
 document.getElementById('via').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') cercaCalendario();
 });
