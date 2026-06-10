@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Miglioriamo la città</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="frontend.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <!-- Bottone hamburger -->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html" style="color: #3498db; font-weight: bold;">Home</a></li>
+                <li><a href="informazioni.html">Informazioni</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn" id="login-area">
+                    <a id="login-link" href="auth.html">Accedi</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="hero">
+            <div class="hero-carousel">
+                <div class="carousel-img" style="background-image: url('../image/citta4.jpg');"></div>
+                <div class="carousel-img" style="background-image: url('../image/citta6.jpg');"></div>
+                <div class="carousel-img" style="background-image: url('../image/citta5.jpg');"></div>
+            </div>
+
+            <div class="hero-content">
+                <h1>Benvenuto su BetterTrento</h1>
+                <p>Partecipa attivamente alla vita della tua città. Segnala disservizi, scopri gli eventi e rimani
+                    informato.</p>
+                <a href="segnalazioni.html" class="btn-hero-modern">
+                    <span>Invia una Segnalazione</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                </a>
+            </div>
+        </section>
+
+        <section class="services">
+            <div class="card">
+                <h3>Calendario Rifiuti</h3>
+                <p>Controlla la raccolta differenziata al tuo indirizzo.</p>
+                <button class="secondary" onclick="window.location.href='rifiuti.html'">Visualizza</button>
+            </div>
+            <div class="card">
+                <h3>Eventi Locali</h3>
+                <p>Scopri cosa succede vicino a te</p>
+                <button class="secondary" onclick="window.location.href='informazioni.html'">Esplora</button>
+            </div>
+            <div class="card">
+                <h3>Numeri Utili</h3>
+                <p>Contatti rapidi per emergenze e servizi comunali.</p>
+                <button class="secondary" onclick="window.location.href='numeri_utili.html'">Chiama</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path>
+                        <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
+                        <path d="M19 21V11"></path>
+                        <path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e
+                    rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="informazioni.html">Esplora le Informazioni</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html" id="accesso-personale">Accesso Personale</a></li>
+                    <li><a href="linee_guida.html">Linee Guida OCL</a></li>
+                    <li><a href="privacy.html">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>

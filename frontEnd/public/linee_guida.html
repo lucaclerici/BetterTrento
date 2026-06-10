@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Linee Guida OCL</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="frontend.js" defer></script>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <!--Bottone hamburger-->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="informazioni.html">Informazioni</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn" id="login-area">
+                    <a id="login-link" href="auth.html">Accedi</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width: 800px; margin: 40px auto; padding: 0 20px; flex: 1;">
+        <section style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h1 style="color: #2c3e50; margin-top: 0; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Linee Guida della Community (OCL)</h1>
+            <p style="color: #7f8c8d; font-size: 0.95rem; line-height: 1.6;">Benvenuto su BetterTrento. Per garantire uno spazio digitale sicuro, costruttivo e rispettoso per tutti i cittadini di Trento, chiediamo di seguire queste regole fondamentali di comportamento all'interno della piattaforma.</p>
+            
+            <h3 style="color: #2c3e50; margin-top: 30px;">1. Segnalazioni Costruttive e Veritiere</h3>
+            <p style="color: #555; line-height: 1.6;">Quando invii una segnalazione riguardante disservizi urbani o rifiuti, assicurati di inserire dati reali, descrizioni chiare e la via corretta. Non è consentito l'invio di segnalazioni false o palesemente goliardiche al solo scopo di testare il sistema.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">2. Rispetto del Personale e della Community</h3>
+            <p style="color: #555; line-height: 1.6;">Nei testi delle segnalazioni o nelle interazioni relative agli eventi cittadini, è severamente vietato l'uso di un linguaggio offensivo, scurrile, diffamatorio o discriminatorio nei confronti degli altri utenti o del personale comunale incaricato della gestione.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">3. Protezione della Privacy Altrui</h3>
+            <p style="color: #555; line-height: 1.6;">Nelle descrizioni pubbliche o nelle eventuali immagini/allegati inseriti, evita di includere dati personali sensibili di terzi individui (es. volti nitidi di passanti, targhe automobilistiche leggibili o numeri di telefono privati) senza il loro esplicito consenso.</p>
+
+            <h3 style="color: #2c3e50; margin-top: 25px;">4. Moderazione e Sanzioni</h3>
+            <p style="color: #555; line-height: 1.6;">Il team del Gruppo 26 si riserva il diritto di moderare, nascondere o rimuovere segnalazioni e contenuti che violino queste linee guida, provvedendo nei casi più gravi alla sospensione temporanea o permanente dell'account dell'utente.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path>
+                        <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
+                        <path d="M19 21V11"></path>
+                        <path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e
+                    rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="informazioni.html">Esplora le Informazioni</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html" id="accesso-personale">Accesso Personale</a></li>
+                    <li><a href="linee_guida.html">Linee Guida OCL</a></li>
+                    <li><a href="privacy.html">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

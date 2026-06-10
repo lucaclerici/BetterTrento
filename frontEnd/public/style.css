@@ -1,0 +1,1458 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%; 
+    max-width: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f7f6;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 5%;
+    flex-shrink: 0; /* Impedisce all'header di rimpicciolirsi */
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a { color: white; text-decoration: none; font-weight: 500; }
+
+.hero {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    max-width: 100vw; 
+    height: 500px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    background-color: #1e293b; 
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.hero button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 50px 10%;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.secondary {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.no-scroll {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.auth-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-box {
+    background: white;
+    padding: 30px; 
+    padding-bottom: 40px; /* Si aggiunge spazio extra in basso */
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    max-height: 85vh; /* Leggermente più basso per non toccare i bordi dello schermo */
+    overflow-y: auto;
+    box-sizing: border-box; /* Fondamentale per la gestione dei calcoli del padding */
+}
+
+.auth-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.auth-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.auth-box::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.auth-box::-webkit-scrollbar-thumb:hover {
+    background: #2c3e50;
+}
+
+.auth-box h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
+
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.auth-box button {
+    width: 100%;
+    padding: 12px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+form button {
+    margin-top: 20px; /* Crea spazio sopra il bottone "Registrati" */
+    width: 100%;
+    padding: 12px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.logo {
+    display: flex;
+    align-items: center; /* Allinea verticalmente logo e testo */
+    gap: 10px;           /* Crea spazio tra l'immagine e la scritta */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo-img {
+    height: 40px;        /* Regola l'altezza del logo */
+    width: auto;         /* Mantiene le proporzioni */
+    border-radius: 4px;  /* Opzionale: arrotonda i bordi del logo */
+}
+
+
+.page-title {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.page-title h1 {
+    margin: 0 0 10px 0;
+    font-size: 2.5rem;
+}
+
+.page-title p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #bdc3c7;
+}
+
+.numbers-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 50px 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.number-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 4px solid #3498db; /* Riga colorata in alto */
+}
+
+.number-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.number-card.emergency {
+    border-top: 4px solid #e74c3c; /* Rosso per l'emergenza */
+}
+
+.number-card.emergency .icon-wrapper svg {
+    stroke: #e74c3c;
+}
+
+.icon-wrapper {
+    margin-bottom: 15px;
+}
+
+.icon-wrapper svg {
+    stroke: #2c3e50;
+}
+
+.number-card h3 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.number-card p {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    min-height: 40px; /* Allinea i pulsanti se i testi hanno lunghezze diverse */
+}
+
+.phone-link {
+    display: inline-block;
+    background-color: #f4f7f6;
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 25px;
+    border-radius: 30px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.phone-link:hover {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.number-card.emergency .phone-link {
+    background-color: #fdf0ed;
+    color: #e74c3c;
+}
+
+.number-card.emergency .phone-link:hover {
+    background-color: #e74c3c;
+    color: white;
+}
+
+
+/* --- FOOTER --- */
+footer {
+    background-color: #1a252f; /* Un blu ancora più scuro dell'header per dare stacco */
+    color: #cbd5e1;
+    padding: 50px 10% 20px;
+    margin-top: auto; /* Trucco fondamentale: spinge il footer in basso se c'è poco contenuto */
+    box-sizing: border-box;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Piccola linea decorativa sotto i titoli del footer */
+.footer-col h4::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    background-color: #3498db;
+    margin-top: 8px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.footer-col p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #94a3b8;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 12px;
+}
+
+.footer-col ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #3498db; /* Evidenzia in azzurro al passaggio del mouse */
+    padding-left: 5px; /* Piccolo effetto movimento */
+}
+
+/* Barra finale dei copyright */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #334155;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+/* --- SEZIONE EVENTI HERO --- */
+.events-hero {
+    background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 60px 5%;
+    text-align: center;
+}
+
+.hero-content {max-width: 800px; margin: 0 auto;
+    h1 { font-size: 2.5rem; margin-bottom: 15px; }
+    p { font-size: 1.1rem; color: #cbd5e1; line-height: 1.5; }
+}
+
+/* --- PANNELLO FILTRI --- */
+.filters-section {
+    background-color: white;
+    padding: 20px 10%;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filters-wrapper {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+}
+
+.filter-group select {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #f8fafc;
+    color: #334155;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.filter-group select:focus {
+    border-color: #3498db;
+}
+
+/* --- GRIGLIA EVENTI --- */
+.events-main {
+    padding: 40px 10%;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 400px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-image-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.event-card:hover .card-image-wrapper img {
+    transform: scale(1.05);
+}
+
+.date-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #e74c3c;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.card-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.category-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #3498db;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.card-content h3 {
+    margin: 0 0 10px 0;
+    color: #1e293b;
+    font-size: 1.3rem;
+    line-height: 1.4;
+}
+
+.event-desc {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    flex-grow: 1;
+}
+
+.card-meta {
+    border-top: 1px solid #f1f5f9;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.btn-info {
+    width: 100%;
+    padding: 10px;
+    background: #f1f5f9;
+    color: #1e293b;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-info:hover {
+    background: #2c3e50;
+    color: white;
+}
+
+/* Stati speciali */
+.loading, .no-events, .error-msg {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 50px;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* --- PAGINA SEGNALAZIONI (LAYOUT DUE COLONNE) --- */
+.reports-main {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 5%;
+    gap: 40px;
+    box-sizing: border-box;
+}
+
+.form-section {
+    flex: 1;
+    min-width: 320px;
+}
+
+.list-section {
+    flex: 1.2;
+    min-width: 320px;
+}
+
+/* Responsive per Tablet e Smartphone */
+@media (max-width: 900px) {
+    .reports-main {
+        flex-direction: column;
+    }
+}
+
+/* Card del Form */
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 40px; /* Rimane fissa in alto mentre si scorrono le segnalazioni a destra */
+}
+
+.form-card h2, .list-header h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.input-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.input-group input, .input-group select, .input-group textarea {
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    background-color: #f8fafc;
+}
+
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+    border-color: #3498db;
+    background-color: white;
+}
+
+/* Upload file camuffato elegante */
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #e2e8f0;
+    color: #475569;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.custom-file-upload:hover {
+    background-color: #cbd5e1;
+}
+
+.file-name-text {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #e74c3c; /* Rosso azione di BetterTrento */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #c0392b;
+}
+
+/* --- FEED DELLE SEGNALAZIONI ATTIIVE --- */
+.list-header {
+    margin-bottom: 25px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.search-input-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 15px;
+    position: relative;        /*FONDAMENTALE: permette alla tendina di allinearsi a questo box */
+}
+
+.reports-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    border-left: 5px solid #bdc3c7; /* Colore di default per lo stato */
+}
+
+/* Stati OCL legati ai colori dei bordi */
+.report-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Regole CSS specifiche per gli Stati */
+.badge.in-attesa { background-color: #fef3c7; color: #d97706; }
+.report-card:has(.badge.in-attesa) { border-left-color: #f59e0b; }
+
+.badge.in-carico { background-color: #dbeafe; color: #2563eb; }
+.report-card:has(.badge.in-carico) { border-left-color: #3498db; }
+
+.badge.risolta { background-color: #dcfce7; color: #16a34a; }
+.report-card:has(.badge.risolta) { border-left-color: #2ecc71; }
+
+.report-card h3 { margin: 0 0 5px 0; color: #1e293b; }
+.report-via { margin: 0 0 12px 0; color: #64748b; font-size: 0.9rem; }
+.report-text { color: #334155; line-height: 1.5; font-size: 0.95rem; margin-bottom: 15px; }
+
+.report-img-container {
+    width: 100%;
+    max-height: 250px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.report-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- PAGINA CALENDARIO RIFIUTI --- */
+.rifiuti-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 5%;
+    min-height: 600px;
+}
+
+.rifiuti-search-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.rifiuti-search-section h1 {
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.rifiuti-search-section p {
+    color: #64748b;
+    font-size: 1.05rem;
+}
+
+.search-container {
+    display: flex;
+    max-width: 600px;
+    margin: 25px auto 0;
+    gap: 10px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 14px 20px;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    outline: none;
+}
+
+.search-container input:focus {
+    border-color: #3498db;
+}
+
+.btn-search {
+    padding: 14px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: #2980b9;
+}
+
+/* WIDGET PROSSIMO RITIRO */
+.next-pickup-widget {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    margin-bottom: 40px;
+    border: 1px solid #e2e8f0;
+}
+
+.widget-info {
+    padding: 25px;
+}
+
+.widget-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #e74c3c;
+    letter-spacing: 1px;
+}
+
+.widget-info h2 {
+    margin: 5px 0;
+    font-size: 1.8rem;
+    color: #1e293b;
+}
+
+.widget-info p {
+    margin: 0;
+    color: #64748b;
+}
+
+.widget-icon {
+    width: 120px;
+    background-color: #cbd5e1; /* Cambia dinamicamente */
+}
+
+
+/* GRIGLIA SETTIMANALE */
+.settimana-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.giorno-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.giorno-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #334155;
+    font-size: 1.1rem;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.rifiuti-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.nessun-ritiro {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-style: italic;
+}
+
+
+/* BADGE COLORATI RIFIUTI TRENTO */
+.rifiuto-tag {
+    display: inline-block;
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 4px;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+.rifiuto-tag.organico { background-color: #5d4037; }
+.rifiuto-tag.carta-e-cartone { background-color: #0288d1; }
+.rifiuto-tag.imballaggi-leggeri { background-color: #fbc02d; color: #1e293b; } /* Giallo testo scuro */
+.rifiuto-tag.residuo { background-color: #78909c; }
+
+.placeholder-msg {
+    text-align: center;
+    padding: 50px;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.no-data { text-align: center; color: #94a3b8; padding: 40px; }
+
+.google-btn { background: #4285F4 !important; margin-top: 10px; }
+
+.separator { text-align: center; margin: 15px 0; color: #777; font-size: 0.9rem; }
+
+.toggle-text { text-align: center; margin-top: 20px; font-size: 0.9rem; }
+
+
+/*SCRITTA ACCEDI*/
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.user-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-greeting {
+    font-weight: bold;
+    color: #2ecc71;
+}
+
+
+/*BOTTONE LOGOUT/DISCONETTITI*/
+.logout-button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 200px;
+    margin-bottom: 100px;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+
+/*PER AUTOCOMPLETE DELLA VIA*/
+.autocomplete-list {
+    display: none;
+    position: absolute;
+    width: 100%;                /* Prende la stessa identica larghezza del box di ricerca */
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 0 0 8px 8px; /* Arrotonda solo i due angoli in basso */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 9999;              /* Sta sopra a qualsiasi altro elemento della pagina */
+    max-height: 200px;          /* Limita l'altezza massima se ci sono tante vie */
+    overflow-y: auto;           /* Se le vie superano l'altezza, crea una barra di scorrimento interna */
+    box-sizing: border-box;
+}
+
+.input-group {
+    position: relative;
+}
+
+.autocomplete-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover {
+    background-color: #f0f0f0;
+}
+
+
+/*SEZIONE GESTIONE EVENTI ADMIN*/
+.admin-eventi-container {
+    display: flex;
+    gap: 30px;
+    padding: 20px;
+}
+
+.col-sx, .col-dx {
+    flex: 1;
+}
+
+.evento-card {
+    border: 1px solid #ccc;
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+/* GESTIONE COMPORTAMENTO MENU HAMBURGER */
+/* Di base su computer il pulsante hamburger deve essere nascosto */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+/*AGGIUNTA RESPONSIVE: NAVBAR ED HAMBURGER MENU CORRETTO (LOGO A SINISTRA)*/
+@media (max-width: 768px) {
+    /* Mostra il pulsante hamburger */
+    .menu-toggle {
+        display: block !important;
+    }
+
+    /* Permette agli elementi della nav di andare a capo, mantenendo la riga principale */
+    nav {
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    /* Il logo resta ancorato a sinistra e non si sposta */
+    .logo {
+        flex: 1;
+        justify-content: flex-start;
+    }
+
+    /* Nasconde la lista dei link e la mette in verticale al centro */
+    nav ul {
+        display: none;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        order: 3; /* Lo spinge sotto la riga del logo e dell'hamburger */
+        gap: 15px !important;
+        padding: 15px 0 5px 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Quando clicchi sull'hamburger, mostra la lista dei link */
+    nav ul.active {
+        display: flex !important;
+    }
+
+    /*STRUTTURA DEL "CIAO" SU MOBILE: non lo nascondiamo più a monte */
+    .user-box {
+        width: 100% !important;
+        justify-content: center !important; /* Forza il contenuto al centro */
+        order: 4; /* Lo mette sempre in fondo, sotto ai link */
+        margin: 10px 0 0 0 !important;
+        padding-bottom: 10px;
+    }
+}
+
+/* SEZIONE HERO CON CAROSELLO COSTRRETTO A RIMANERE VISIBILE */
+.hero {
+    position: relative;
+    text-align: center;
+    width: 100%;
+    /* Cambiamo da min-height a height fissa per costringere il carosello a prendere forma */
+    height: 500px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #1e293b; /* Colore di fallback scuro */
+    padding: 0 20px;
+}
+
+/* Contenitore principale del carosello */
+.hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; 
+}
+
+/* Le singole immagini di sfondo */
+.carousel-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0; 
+    z-index: 1;
+    animation: caroselloAnimazione 18s infinite linear;
+}
+
+/* Pellicola scura sopra le foto per leggibilità del testo */
+.hero-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 2; 
+}
+
+/* Ritardi per la rotazione delle 3 immagini */
+.carousel-img:nth-child(1) { animation-delay: 0s; }
+.carousel-img:nth-child(2) { animation-delay: 6s; }
+.carousel-img:nth-child(3) { animation-delay: 12s; }
+
+/* Il contenuto testuale fluttua sopra a tutto */
+.hero-content {
+    position: relative; 
+    z-index: 99;        
+    max-width: 800px;
+    margin: 0 auto;     
+}
+
+/*ASSICURA CHE I TESTI SIANO VISIBILI */
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #ffffff !important; 
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.8); 
+}
+
+.hero p {
+    font-size: 1.25rem;
+    margin-bottom: 35px;
+    color: #ffffff !important; 
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/*IL  BOTTONE stile moderno*/
+.btn-hero-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white !important;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 100; 
+}
+
+.btn-hero-modern:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, #2980b9, #1f6391);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.6);
+}
+
+.btn-hero-modern:active {
+    transform: translateY(-1px);
+}
+
+.btn-hero-modern svg {
+    transition: transform 0.3s ease;
+}
+
+.btn-hero-modern:hover svg {
+    transform: translate(3px, -3px);
+}
+
+/* Timeline per l'animazione fluida del carosello */
+@keyframes caroselloAnimazione {
+    0% { opacity: 0; transform: scale(1); }
+    5% { opacity: 1; }
+    33.33% { opacity: 1; }
+    38.33% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 0; }
+}
+
+/*LAYOUT BARRA DI RICERCA UNIFICATA (PAGINA INFORMAZIONI)*/
+.modern-search-box-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin: 30px auto 0 auto; 
+}
+
+.modern-search-box {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 50px; 
+    padding: 6px 6px 6px 18px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); 
+    transition: all 0.3s ease;
+}
+
+.modern-search-box:focus-within {
+    border-color: #3498db;
+    box-shadow: 0 10px 30px rgba(52, 152, 219, 0.25);
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 12px;
+}
+
+.modern-search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.05rem;
+    color: #2c3e50;
+    background: transparent;
+    padding: 10px 0;
+}
+
+.modern-search-box input::placeholder {
+    color: #94a3b8;
+}
+
+/* Pulsante cerca moderno dentro la barra */
+.btn-search-modern {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white !important;
+    border: none;
+    outline: none;
+    padding: 12px 28px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.2);
+}
+
+.btn-search-modern:hover {
+    background: linear-gradient(135deg, #2980b9, #1f6391);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.3);
+}
+
+/* Sistema l'autocomplete sotto la barra arrotondata di informazioni.html */
+.modern-search-box-container .autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    z-index: 9999;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: none; /* Gestito dallo script frontend.js */
+}
+
+/*PERSONALIZZAZIONE DEI SUGGERIMENTI DELLE VIE (AUTOCOMPLETE)*/
+/* Forza il colore del testo di ogni via proposta a grigio scuro/nero per leggerlo perfettamente */
+.autocomplete-item {
+    padding: 12px 18px !important;
+    cursor: pointer !important;
+    text-align: left !important;         /* Allinea i nomi delle vie a sinistra */
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    color: #2c3e50 !important;           /*Grigio scuro/Antracite, alta leggibilità */
+    background-color: #ffffff !important; /* Forza lo sfondo della singola riga bianco */
+    transition: background-color 0.2s ease, color 0.2s ease !important;
+    border-bottom: 1px solid #f1f5f9 !important; /* Sottile linea tra una via e l'altra */
+}
+
+/* Rimuove l'ultimo bordino in basso per non rovinare gli angoli arrotondati */
+.autocomplete-item:last-child {
+    border-bottom: none !important;
+}
+
+/* Effetto evidenziatore quando passi sopra a una via con il mouse o con il dito */
+.autocomplete-item:hover {
+    background-color: #3498db !important; /*Lo sfondo della riga diventa azzurro/blu BetterTrento */
+    color: #ffffff !important;            /*Il testo della via diventa bianco per un contrasto perfetto */
+}
+
+/*STILIZZAZIONE FEED RISULTATI E CARDS (INFORMAZIONI)*/
+/* Titoli delle sezioni dei feed */
+.feed-section-title {
+    font-size: 1.6rem;
+    color: #2c3e50;
+    margin: 40px 0 20px 0;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+/* Griglia flessibile per le schede */
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 350px)); 
+    gap: 25px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+    justify-content: center; /* Centra perfettamente le card */
+}
+
+/* Stile Base della Card Moderna */
+.modern-info-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: left;
+}
+
+.modern-info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modern-info-card h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin: 15px 0 10px 0;
+    font-weight: 600;
+}
+
+.modern-info-card .card-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+/* Dettagli in basso alla card */
+.card-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 12px;
+}
+
+/* Badge per gli Eventi */
+.card-badge {
+    align-self: flex-start;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+}
+
+/* Badge di stato per le segnalazioni */
+.card-badge-stato {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+}
+.stato-aperto { background-color: #fee2e2; color: #b91c1c; }
+.stato-lavoro { background-color: #fef3c7; color: #b45309; }
+.stato-risolto { background-color: #dcfce7; color: #15803d; }
+
+/* STATO VUOTO (Nessun risultato) */
+.info-empty-state {
+    background: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-empty-state p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/*CENTRATURA E ALLINEAMENTO FEED EVENTI*/
+/* Contenitore principale per limitare la larghezza e centrare il contenuto */
+.info-container-centrato {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Centriamo il titolo principale della sezione */
+.info-container-centrato .feed-section-title {
+    text-align: center !important;
+    margin: 40px auto 30px auto;
+    display: table; /* Fa in modo che la linea sotto si adatti alla scritta o rimanga pulita */
+}
+
+/* Modifica alla griglia: ora centra perfettamente sia una card singola che gruppi di card */
+.info-cards-grid {
+    display: grid;
+    /* Usa auto-fit invece di auto-fill per permettere il calcolo della centratura su singoli elementi */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 350px)); 
+    gap: 25px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+    justify-content: center; /* Centra il contenuto della griglia nella pagina */
+}
+
+.reports-feed h2.feed-section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 40px auto 30px auto;
+    text-align: center;
+    width: 100%;
+}
+
+/* Forza la centratura anche dello stato vuoto */
+.info-empty-state {
+    margin: 20px auto !important;
+    max-width: 600px; /* Evita che il box tratteggiato diventi troppo largo su PC */
+}

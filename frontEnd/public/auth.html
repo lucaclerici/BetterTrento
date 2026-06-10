@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Accesso</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="frontend.js" defer></script>
+    <script src="authFrontend.js" defer></script>
+</head>
+
+<body class="no-scroll">
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <!--Bottone hamburger-->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="informazioni.html">Informazioni</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn"><a href="auth.html" style="color: #3498db; font-weight: bold;">Accedi</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2 id="auth-title">Accedi a BetterTrento</h2>
+
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Accedi</button>
+                <div class="separator">oppure</div>
+                <button type="button" class="google-btn">Accedi con Google</button>
+            </form>
+
+            <form id="register-form" style="display: none;">
+                <input type="text" id="r-nome" placeholder="Nome" required>
+                <input type="text" id="r-cognome" placeholder="Cognome" required>
+                <input type="email" id="r-email" placeholder="Email" required>
+                <input type="password" id="r-psw" placeholder="Password" required>
+                <input type="text" id="via" placeholder="Indirizzo (Via/Piazza)" require style="margin-bottom: 5px;">
+                <div class="autocomplete-list" id="autocomplete-vie-via" style="max-width: 250px;"></div>
+                <button type="submit">Registrati</button>
+            </form>
+
+            <p class="toggle-text">
+                Non hai un account? <a href="#" id="show-register">Registrati qui</a>
+            </p>
+        </div>
+    </div>
+
+</body>
+
+</html>

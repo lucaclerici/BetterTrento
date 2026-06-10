@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Numeri Utili</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="frontend.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <!--Bottone hamburger-->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="informazioni.html">Informazioni</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn" id="login-area">
+                    <a id="login-link" href="auth.html">Accedi</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-title">
+            <h1>Numeri Utili e Contatti</h1>
+            <p>I principali riferimenti per le emergenze e i servizi della città di Trento.</p>
+        </section>
+
+        <section class="numbers-container">
+            <div class="number-card emergency">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                        </path>
+                    </svg>
+                </div>
+                <h3>Numero Unico Emergenze</h3>
+                <p>Ambulanza, Carabinieri, Polizia, Vigili del Fuoco</p>
+                <a href="tel:112" class="phone-link">112</a>
+            </div>
+
+            <div class="number-card">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <h3>Polizia Locale Trento</h3>
+                <p>Centrale operativa e pronto intervento viabilità</p>
+                <a href="tel:0461889111" class="phone-link">0461 889111</a>
+            </div>
+
+            <div class="number-card">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                        <path d="M9 9h6"></path>
+                        <path d="M9 13h6"></path>
+                        <path d="M9 17h6"></path>
+                    </svg>
+                </div>
+                <h3>Comune di Trento (URP)</h3>
+                <p>Ufficio Relazioni con il Pubblico e informazioni generali</p>
+                <a href="tel:800017615" class="phone-link">800 017 615</a>
+            </div>
+
+            <div class="number-card">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </div>
+                <h3>Dolomiti Ambiente</h3>
+                <p>Segnalazioni rifiuti, ingombranti e spazzamento</p>
+                <a href="tel:800867036" class="phone-link">800 867 036</a>
+            </div>
+
+            <div class="number-card">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <h3>Segnalazione Guasti</h3>
+                <p>Emergenze rete elettrica, acqua e gas (Novareti)</p>
+                <a href="tel:800289422" class="phone-link">800 289 422</a>
+            </div>
+
+            <div class="number-card">
+                <div class="icon-wrapper">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20"></path>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <h3>Viabilità Provincia</h3>
+                <p>Servizio gestione strade e viabilità provinciale</p>
+                <a href="tel:800994411" class="phone-link">800 994 411</a>
+            </div>
+        </section>
+    </main>
+
+   <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path>
+                        <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
+                        <path d="M19 21V11"></path>
+                        <path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e
+                    rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="informazioni.html">Esplora le Informazioni</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html" id="accesso-personale">Accesso Personale</a></li>
+                    <li><a href="linee_guida.html">Linee Guida OCL</a></li>
+                    <li><a href="privacy.html">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

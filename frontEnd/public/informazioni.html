@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetterTrento - Informazioni del Territorio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="frontend.js" defer></script>
+    <script src="informazioni.js" defer></script>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="..\image\stemma_trentino.jpg" class="logo-img">
+                <span><a href="index.html">BetterTrento</a></span>
+            </div>
+            <!-- Bottone hamburger -->
+            <button class="menu-toggle" id="mobile-menu-btn">☰</button>
+            <ul id="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="informazioni.html" style="color: #3498db; font-weight: bold;">Informazioni</a></li>
+                <li id="nav-gestione-eventi" style="display: none;">
+                    <a href="gestioneEventi.html">Gestione Eventi</a>
+                </li>
+                <li><a href="segnalazioni.html">Segnalazioni</a></li>
+                <li class="login-btn" id="login-area">
+                    <a id="login-link" href="auth.html">Accedi</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="events-hero">
+        <div class="hero-content">
+            <h1>Cosa succede a Trento</h1>
+            <p>Scopri iniziative culturali, eventi straordinari e segnalazioni nella tua via</p>
+            
+            <div class="modern-search-box-container">
+                <div class="modern-search-box">
+                    <div class="search-input-wrapper">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#7f8c8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="geo-icon">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        <input type="text" id="via-info" placeholder="Inserisci la tua via di residenza... (Es. Piazza Duomo)" autocomplete="off">
+                    </div>
+                    <button type="button" id="btn-cerca" class="btn-search-modern">
+                        <span>Cerca</span>
+                    </button>
+                </div>
+                <div id="autocomplete-vie-via-info" class="autocomplete-list" style="display: none; width: 94%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="search-filter-container">
+        <div class="info-container-centrato">
+            <div id="reports-feed-eventi" class="reports-feed"></div>
+        </div>
+        
+        <div style="height: 30px; width: 100%;"></div>
+
+        <div class="info-container-centrato">
+            <div id="reports-feed-segnalazioni" class="reports-feed"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 21h18"></path>
+                        <path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3"></path>
+                        <path d="M19 21V11"></path>
+                        <path d="M5 21V11"></path>
+                    </svg>
+                    <span>BetterTrento</span>
+                </div>
+                <p>Una piattaforma smart per migliorare la vivibilità della città di Trento, segnalare disservizi e
+                    rimanere informati.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Mappa del Sito</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="informazioni.html">Esplora le Informazioni</a></li>
+                    <li><a href="segnalazioni.html">Invia Segnalazione</a></li>
+                    <li><a href="numeri_utili.html">Numeri Utili</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Amministrazione</h4>
+                <ul>
+                    <li><a href="auth.html" id="accesso-personale">Accesso Personale</a></li>
+                    <li><a href="linee_guida.html">Linee Guida OCL</a></li>
+                    <li><a href="privacy.html">Privacy & Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 BetterTrento - Progetto realizzato dal Gruppo 26. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
