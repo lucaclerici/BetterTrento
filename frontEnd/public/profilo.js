@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     //CARICA I DATI DELL'UTENTE: email - nome - cognome - via
     try {
-        const response = await fetch('http://localhost:3000/api/utenti/me', {
+        const response = await fetch('https://bettertrento.onrender.com/api/utenti/me', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById("profile-cognome").value = data.cognome || "";
 
             const viaId = data.via;
-            const res = await fetch(`http://localhost:3000/api/vie/via/${viaId}`, {//chiedo dal backend la via tramite ID
+            const res = await fetch(`https://bettertrento.onrender.com/api/vie/via/${viaId}`, {//chiedo dal backend la via tramite ID
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
 
             try{//proviamo a chiamare l'API di modifica del profilo
-                const response = await fetch('http://localhost:3000/api/utenti/me', {
+                const response = await fetch('https://bettertrento.onrender.com/api/utenti/me', {
                     method: 'PUT',
                     headers: {
                         'Authorization': `Bearer ${token}`,

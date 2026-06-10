@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function proteggiPagina() {//ritorno il ruolo dell'utente
     const token = localStorage.getItem("token");
     //mi prendo il ruolo
-    const res = await fetch("http://localhost:3000/api/utenti/me", {
+    const res = await fetch("https://bettertrento.onrender.com/api/utenti/me", {
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -48,7 +48,7 @@ async function proteggiPagina() {//ritorno il ruolo dell'utente
 async function caricaTuttiEventi() {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:3000/api/eventi", {
+    const res = await fetch("https://bettertrento.onrender.com/api/eventi", {
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -61,7 +61,7 @@ async function caricaTuttiEventi() {
 async function caricaEventiPerVia(viaId) {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/api/eventi/via/${viaId}`, {
+    const res = await fetch(`https://bettertrento.onrender.com/api/eventi/via/${viaId}`, {
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -113,7 +113,7 @@ function setupAzioniEventi() {
         btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
 
-            const res = await fetch(`http://localhost:3000/api/eventi/evento/${id}`, {
+            const res = await fetch(`https://bettertrento.onrender.com/api/eventi/evento/${id}`, {
                 headers: { "Authorization": "Bearer " + token }
             });
 
@@ -143,7 +143,7 @@ function setupAzioniEventi() {
 
             if (!confirm("Vuoi davvero eliminare questo evento?")) return;
 
-            await fetch(`http://localhost:3000/api/eventi/${id}`, {
+            await fetch(`https://bettertrento.onrender.com/api/eventi/${id}`, {
                 method: "DELETE",
                 headers: { "Authorization": "Bearer " + token }
             });
@@ -178,8 +178,8 @@ async function salvaEvento(e) {
     const payload = { nome, descrizione, data, via: viaId };
 
     const url = eventoId
-        ? `http://localhost:3000/api/eventi/update/${eventoId}`
-        : `http://localhost:3000/api/eventi/create`;
+        ? `https://bettertrento.onrender.com/api/eventi/update/${eventoId}`
+        : `https://bettertrento.onrender.com/api/eventi/create`;
 
     const res = await fetch(url, {
         method: "POST",

@@ -36,6 +36,9 @@ app.use("/api/eventi", eventiRoutes);
 app.use("/api/vie", vieRoutes);
 
 // Avvio server
-app.listen(3000, () => {
-  console.log('Server avviato sulla porta 3000');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server avviato sulla porta ${PORT}`);
 });
+

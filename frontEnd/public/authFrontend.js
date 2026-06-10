@@ -30,7 +30,7 @@ loginForm.addEventListener('submit', async (e) => {
 
     try {
         // Chiama l'API del backend per effettuare il login
-        const response = await fetch('http://localhost:3000/api/utenti/login', {
+        const response = await fetch('https://bettertrento.onrender.com/api/utenti/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -70,7 +70,7 @@ registerForm.addEventListener('submit', async (e) => {
     const via = viaInput.dataset.viaId;
 
     try {
-        const response = await fetch('http://localhost:3000/api/utenti/registrazione', {
+        const response = await fetch('https://bettertrento.onrender.com/api/utenti/registrazione', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({email, password, nome, cognome, via})

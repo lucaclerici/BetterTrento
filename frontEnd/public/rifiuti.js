@@ -132,7 +132,7 @@ async function controllaProfiloEVia() {
     const token = localStorage.getItem("token");
     if (token) {
         try {
-            const response = await fetch(`http://localhost:3000/api/utenti/me`, {
+            const response = await fetch(`https://bettertrento.onrender.com/api/utenti/me`, {
                 method: 'GET',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -141,7 +141,7 @@ async function controllaProfiloEVia() {
                 const utente = await response.json();
                 if (utente.via) {
                     const viaId = utente.via;
-                    const res = await fetch(`http://localhost:3000/api/vie/via/${viaId}`, {
+                    const res = await fetch(`https://bettertrento.onrender.com/api/vie/via/${viaId}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,

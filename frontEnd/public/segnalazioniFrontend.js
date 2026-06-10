@@ -10,7 +10,7 @@ async function proteggiPagina() {
     }
 
     //Verifica token col backend
-    const res = await fetch("http://localhost:3000/api/utenti/verificaToken", {
+    const res = await fetch("https://bettertrento.onrender.com/api/utenti/verificaToken", {
         headers: { "Authorization": "Bearer " + token }
     });
 
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //CARICA I PROBLEMI DAL DB DENTRO LA CATEGORIA (nella creazione della segnalazione)
 async function caricaProblemi() {
-    const problemi = await fetch("http://localhost:3000/api/segnalazioni/problemi", {
+    const problemi = await fetch("https://bettertrento.onrender.com/api/segnalazioni/problemi", {
         headers: {
             "Authorization": "Bearer " + localStorage.getItem("token")
         }
@@ -95,7 +95,7 @@ document.getElementById("form-segnalazione").addEventListener("submit", async (e
     if (foto) formData.append("immagini", foto);
 
     //INVIO AL BACKEND
-    const res = await fetch("http://localhost:3000/api/segnalazioni/", {
+    const res = await fetch("https://bettertrento.onrender.com/api/segnalazioni/", {
         method: "POST",
         headers: {
             "Authorization": "Bearer " + token
@@ -120,7 +120,7 @@ async function caricaSegnalazioniPerVia(idVia) {
     const feed = document.getElementById("reports-feed");
 
     const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:3000/api/segnalazioni/per-via/${idVia}`);
+    const res = await fetch(`https://bettertrento.onrender.com/api/segnalazioni/per-via/${idVia}`);
 
     const segnalazioni = await res.json();
 
@@ -202,7 +202,7 @@ function setupAdminActions() {
 
             if (!confirm("Vuoi davvero eliminare questa segnalazione?")) return;
 
-            await fetch(`http://localhost:3000/api/segnalazioni/${id}`, {
+            await fetch(`https://bettertrento.onrender.com/api/segnalazioni/${id}`, {
                 method: "DELETE",
                 headers: { "Authorization": "Bearer " + token }
             });
@@ -217,7 +217,7 @@ function setupAdminActions() {
             const id = sel.dataset.id;
             const nuovoStato = sel.value;
 
-            await fetch(`http://localhost:3000/api/segnalazioni/${id}/stato`, {
+            await fetch(`https://bettertrento.onrender.com/api/segnalazioni/${id}/stato`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

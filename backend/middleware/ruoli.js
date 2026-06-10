@@ -24,6 +24,6 @@ const utenteSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     via: { type: String },
-    // 🌟 AGGIUNGI QUESTA RIGA:
+    
     ruolo: { type: String, enum: ['user', 'admin'], default: 'user' } 
 });

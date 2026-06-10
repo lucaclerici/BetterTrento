@@ -49,7 +49,7 @@ function setupAutocompleteVie(inputId = "via") {
         }
         
         //chiediamo al backend tutte le vie che iniziano con quella stringa
-        const res = await fetch(`http://localhost:3000/api/vie/search?query=${encodeURIComponent(query)}`);
+        const res = await fetch(`https://bettertrento.onrender.com/api/vie/search?query=${encodeURIComponent(query)}`);
         const vie = await res.json();
 
         lista.innerHTML = "";
@@ -118,7 +118,7 @@ async function aggiornaNavbarRuolo() {
 
     if (!token || localStorage.getItem("isLogged") !== "true") return;
 
-    const res = await fetch("http://localhost:3000/api/utenti/me", {//richiesta profilo per vedere il ruolo
+    const res = await fetch("https://bettertrento.onrender.com/api/utenti/me", {//richiesta profilo per vedere il ruolo
         headers: { "Authorization": "Bearer " + token }
     });
 
