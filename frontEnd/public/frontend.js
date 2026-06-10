@@ -9,7 +9,7 @@ if (loginArea && isLogged === "true") {
     linkAccesso.href = "profilo.html";
     loginArea.innerHTML = `
         <div class="user-box" id="user-box">
-            <img src="/BetterTrento/frontEnd/image/immagine_ominoProfilo.jpg" class="user-icon">
+            <img src="https://bettertrento.onrender.com/frontEnd/image/immagine_ominoProfilo.jpg" class="user-icon">
             <span class="user-greeting">Ciao</span>
         </div>
     `;
